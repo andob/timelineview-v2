@@ -4,6 +4,7 @@
         package="ro.dobrescuandrei.timelineviewv2">
 
     <application
+            android:name=".App"
             android:allowBackup="true"
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
