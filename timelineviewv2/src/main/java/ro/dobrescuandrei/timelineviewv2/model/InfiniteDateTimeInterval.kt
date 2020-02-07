@@ -17,6 +17,11 @@ class InfiniteDateTimeInterval : DateTimeInterval<InfiniteDateTimeInterval>
     override fun getNextDateTimeInterval() : InfiniteDateTimeInterval? = null
     override fun getShiftedDateTimeInterval(amount : Int) : InfiniteDateTimeInterval? = null
 
+    override fun toYearlyDateTimeInterval() = YearlyDateTimeInterval()
+    override fun toMonthlyDateTimeInterval() = MonthlyDateTimeInterval()
+    override fun toWeeklyDateTimeInterval() = WeeklyDateTimeInterval()
+    override fun toDailyDateTimeInterval() = DailyDateTimeInterval()
+
     override fun minus(another : DateTimeInterval<*>) = 0
 
     override fun toString(resources : Resources) =

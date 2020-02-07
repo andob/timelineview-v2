@@ -17,7 +17,6 @@
                 android:layout_height="match_parent"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:background="#000000"
                 android:textColor="#ffffff"
                 android:src="@drawable/ic_arrow_down_white_18dp"
                 android:id="@+id/decrementDateIntervalTypeButton"/>
@@ -27,11 +26,10 @@
                 android:layout_height="match_parent"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:background="#000000"
                 android:textColor="#ffffff"
                 android:visibility="gone"
                 android:src="@drawable/ic_calendar_range_outline_white_18dp"
-                android:id="@+id/changeDateIntervalTypeButton1"/>
+                android:id="@+id/changeDateIntervalTypeLeftButton"/>
 
     </LinearLayout>
 
@@ -54,7 +52,6 @@
                 android:layout_height="match_parent"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:background="#000000"
                 android:textColor="#ffffff"
                 android:src="@drawable/ic_arrow_up_white_18dp"
                 android:id="@+id/incrementDateIntervalTypeButton"/>
@@ -64,11 +61,10 @@
                 android:layout_height="match_parent"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:background="#000000"
                 android:textColor="#ffffff"
                 android:visibility="gone"
                 android:src="@drawable/ic_calendar_range_outline_white_18dp"
-                android:id="@+id/changeDateIntervalTypeButton2"/>
+                android:id="@+id/changeDateIntervalTypeRightButton"/>
 
     </LinearLayout>
 

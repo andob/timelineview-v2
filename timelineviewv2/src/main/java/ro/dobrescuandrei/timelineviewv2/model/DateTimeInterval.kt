@@ -17,12 +17,23 @@ abstract class DateTimeInterval<SELF>
 
     abstract operator fun minus(another : DateTimeInterval<*>) : Int
 
-    fun toInfiniteDateTimeInterval() = InfiniteDateTimeInterval()
-    fun toYearlyDateTimeInterval() = YearlyDateTimeInterval(referenceDateTime = fromDateTime)
-    fun toMonthlyDateTimeInterval() = MonthlyDateTimeInterval(referenceDateTime = fromDateTime)
-    fun toWeeklyDateTimeInterval() = WeeklyDateTimeInterval(referenceDateTime = fromDateTime)
-    fun toDailyDateTimeInterval() = DailyDateTimeInterval(referenceDateTime = fromDateTime)
-    fun toCustomDateTimeInterval() = CustomDateTimeInterval(fromDateTime, toDateTime)
+    open fun toInfiniteDateTimeInterval() = InfiniteDateTimeInterval()
+    open fun toYearlyDateTimeInterval() = YearlyDateTimeInterval(referenceDateTime = fromDateTime)
+    open fun toMonthlyDateTimeInterval() = MonthlyDateTimeInterval(referenceDateTime = fromDateTime)
+    open fun toWeeklyDateTimeInterval() = WeeklyDateTimeInterval(referenceDateTime = fromDateTime)
+    open fun toDailyDateTimeInterval() = DailyDateTimeInterval(referenceDateTime = fromDateTime)
+    open fun toCustomDateTimeInterval() = CustomDateTimeInterval(fromDateTime, toDateTime)
+
+    fun toDateTimeInterval(type : Class<DateTimeInterval<*>>) : DateTimeInterval<*> = when(type)
+    {
+        InfiniteDateTimeInterval::class.java -> toInfiniteDateTimeInterval()
+        YearlyDateTimeInterval::class.java -> toYearlyDateTimeInterval()
+        MonthlyDateTimeInterval::class.java -> toMonthlyDateTimeInterval()
+        WeeklyDateTimeInterval::class.java -> toWeeklyDateTimeInterval()
+        DailyDateTimeInterval::class.java -> toDailyDateTimeInterval()
+        CustomDateTimeInterval::class.java -> toCustomDateTimeInterval()
+        else -> throw ClassCastException()
+    }
 
     abstract fun toRecyclerViewAdapter(context : Context) : BaseTimelineRecyclerViewAdapter<*>
 

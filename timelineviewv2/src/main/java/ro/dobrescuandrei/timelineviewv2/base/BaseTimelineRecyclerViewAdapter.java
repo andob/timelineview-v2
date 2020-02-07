@@ -1,6 +1,7 @@
 package ro.dobrescuandrei.timelineviewv2.base;
 
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -51,7 +52,12 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
     public TimelineRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         TimelineRecyclerViewHolder viewHolder=new TimelineRecyclerViewHolder(context);
-        viewHolder.getCellView().setWidthInPixels(getCellWidthInPixels());
+
+        int widthInPixels=getCellWidthInPixels();
+        if (widthInPixels==ViewGroup.LayoutParams.MATCH_PARENT)
+            viewHolder.getCellView().setWidthInPixels(parent.getMeasuredWidth());
+        else viewHolder.getCellView().setWidthInPixels(getCellWidthInPixels());
+
         return viewHolder;
     }
 
