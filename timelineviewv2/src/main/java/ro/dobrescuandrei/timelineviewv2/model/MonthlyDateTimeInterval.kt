@@ -1,9 +1,12 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.Resources
 import org.joda.time.DateTime
+import org.joda.time.Months
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
+import ro.dobrescuandrei.timelineviewv2.recycler.adapter.MonthlyDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
 import ro.dobrescuandrei.timelineviewv2.utils.atEndOfDay
 import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
@@ -24,10 +27,16 @@ class MonthlyDateTimeInterval
 )
 {
     override fun getPreviousDateTimeInterval() =
-        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.withMonthOfYear(fromDateTime.monthOfYear-1))
+        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.minusYears(1))
 
     override fun getNextDateTimeInterval() =
-        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.withMonthOfYear(fromDateTime.monthOfYear+1))
+        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(1))
+
+    override fun getShiftedDateTimeInterval(amount : Int) =
+        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(amount))
+
+    override fun minus(another : DateTimeInterval<*>) =
+        Months.monthsBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).months
 
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String
@@ -41,4 +50,7 @@ class MonthlyDateTimeInterval
         dateFormatter.timeZone=TimelineViewDefaults.timezone.toTimeZone()!!
         return dateFormatter.formatJodaDateTime(fromDateTime)
     }
+
+    override fun toRecyclerViewAdapter(context : Context) =
+        MonthlyDateTimeIntervalAdapter(context)
 }

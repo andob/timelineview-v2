@@ -1,9 +1,11 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.Resources
 import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
+import ro.dobrescuandrei.timelineviewv2.recycler.adapter.CustomDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
 import ro.dobrescuandrei.timelineviewv2.utils.atEndOfDay
 import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
@@ -16,7 +18,10 @@ class CustomDateTimeInterval : DateTimeInterval<CustomDateTimeInterval>
         toDateTime = toDateTime.atEndOfDay())
 
     override fun getPreviousDateTimeInterval() : CustomDateTimeInterval? = null
-    override fun getNextDateTimeInterval(): CustomDateTimeInterval? = null
+    override fun getNextDateTimeInterval() : CustomDateTimeInterval? = null
+    override fun getShiftedDateTimeInterval(amount : Int) : CustomDateTimeInterval? = null
+
+    override fun minus(another : DateTimeInterval<*>) = 0
 
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String
@@ -39,4 +44,7 @@ class CustomDateTimeInterval : DateTimeInterval<CustomDateTimeInterval>
 
         return "$startDateStr - $endDateStr"
     }
+
+    override fun toRecyclerViewAdapter(context : Context) =
+        CustomDateTimeIntervalAdapter(context)
 }

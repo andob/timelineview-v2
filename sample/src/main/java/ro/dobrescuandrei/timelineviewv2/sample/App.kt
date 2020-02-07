@@ -1,8 +1,9 @@
-package ro.dobrescuandrei.timelineviewv2
+package ro.dobrescuandrei.timelineviewv2.sample
 
 import android.app.Application
 import net.danlew.android.joda.JodaTimeAndroid
 import org.joda.time.DateTimeZone
+import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import java.util.*
 
 class App : Application()
@@ -13,6 +14,6 @@ class App : Application()
 
         JodaTimeAndroid.init(this)
 
-        TimelineViewDefaults.timezone=DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Bucharest"))
+        TimelineViewDefaults.timezone =DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Bucharest"))
     }
 }

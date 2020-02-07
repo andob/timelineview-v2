@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="all_time">Din totdeauna</string>
+    <string name="yesterday">Ieri</string>
+    <string name="today">Azi</string>
+    <string name="tomorrow">Maine</string>
 </resources>

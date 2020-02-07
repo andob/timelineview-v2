@@ -6,8 +6,8 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "ro.dobrescuandrei.timelineviewv2"
-        minSdkVersion 14
+        applicationId "ro.dobrescuandrei.timelineviewv2.sample"
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -23,6 +23,9 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    
+    implementation 'com.squareup.leakcanary:leakcanary-android:2.1'
+
     implementation 'net.danlew:android.joda:2.10.3'
     implementation project(":timelineviewv2")
 }
