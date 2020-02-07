@@ -4,12 +4,16 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import kotlinx.android.synthetic.main.timeline_view.view.*
+import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineView
+import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
 import ro.dobrescuandrei.timelineviewv2.utils.setOnFirstMeasureListener
 
 class TimelineView : BaseTimelineView
 {
+    private val dateTimeIntervalConverter = DateTimeIntervalConverter()
+
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
 
@@ -47,13 +51,17 @@ class TimelineView : BaseTimelineView
 
     fun setDateTimeIntervalTypeChangeFlow(flow : DateTimeIntervalTypeChangeFlow)
     {
-        dateTimeInterval=flow.getFirstFlowNode().newInstance()
+        val todayAndNow=DateTime(TimelineViewDefaults.timezone)
+
+        dateTimeInterval=flow.getFirstFlowNode().constructors.find { constructor ->
+            DateTime::class.java in constructor.parameterTypes
+        }!!.newInstance(todayAndNow) as DateTimeInterval<*>
 
         updateUiFromIntervalTypeChangeFlowUi(flow)
 
         decrementDateIntervalTypeButton.setOnClickListener {
             flow.previousNode()?.let { type ->
-                dateTimeInterval=dateTimeInterval.toDateTimeInterval(type = type)
+                dateTimeInterval=dateTimeIntervalConverter.convert(from = dateTimeInterval, to = type)
 
                 updateUiFromIntervalTypeChangeFlowUi(flow)
             }
@@ -61,7 +69,7 @@ class TimelineView : BaseTimelineView
 
         incrementDateIntervalTypeButton.setOnClickListener {
             flow.nextNode()?.let { type ->
-                dateTimeInterval=dateTimeInterval.toDateTimeInterval(type = type)
+                dateTimeInterval=dateTimeIntervalConverter.convert(from = dateTimeInterval, to = type)
 
                 updateUiFromIntervalTypeChangeFlowUi(flow)
             }

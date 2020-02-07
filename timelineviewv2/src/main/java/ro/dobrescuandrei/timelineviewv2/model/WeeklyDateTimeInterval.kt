@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 
 class WeeklyDateTimeInterval
 (
-    val referenceDateTime : DateTime = DateTime.now(TimelineViewDefaults.timezone)
+    val referenceDateTime : DateTime
 ) : DateTimeInterval<WeeklyDateTimeInterval>
 (
     fromDateTime = referenceDateTime
@@ -26,6 +26,13 @@ class WeeklyDateTimeInterval
         .atEndOfDay()
 )
 {
+    companion object
+    {
+        @JvmStatic
+        fun aroundToday() = WeeklyDateTimeInterval(
+            referenceDateTime = DateTime.now(TimelineViewDefaults.timezone))
+    }
+
     override fun getPreviousDateTimeInterval() =
         WeeklyDateTimeInterval(referenceDateTime = fromDateTime.minusWeeks(1))
 

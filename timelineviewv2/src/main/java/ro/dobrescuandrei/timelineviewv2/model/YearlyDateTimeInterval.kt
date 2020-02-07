@@ -11,7 +11,7 @@ import ro.dobrescuandrei.timelineviewv2.utils.atEndOfDay
 
 class YearlyDateTimeInterval
 (
-    referenceDateTime : DateTime = DateTime.now(TimelineViewDefaults.timezone)
+    referenceDateTime : DateTime
 ) : DateTimeInterval<YearlyDateTimeInterval>
 (
     fromDateTime = referenceDateTime
@@ -23,6 +23,13 @@ class YearlyDateTimeInterval
         .atEndOfDay()
 )
 {
+    companion object
+    {
+        @JvmStatic
+        fun aroundToday() = YearlyDateTimeInterval(
+            referenceDateTime = DateTime.now(TimelineViewDefaults.timezone))
+    }
+
     override fun getPreviousDateTimeInterval() =
         YearlyDateTimeInterval(referenceDateTime = fromDateTime.minusYears(1))
 

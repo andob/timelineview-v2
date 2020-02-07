@@ -17,24 +17,6 @@ abstract class DateTimeInterval<SELF>
 
     abstract operator fun minus(another : DateTimeInterval<*>) : Int
 
-    open fun toInfiniteDateTimeInterval() = InfiniteDateTimeInterval()
-    open fun toYearlyDateTimeInterval() = YearlyDateTimeInterval(referenceDateTime = fromDateTime)
-    open fun toMonthlyDateTimeInterval() = MonthlyDateTimeInterval(referenceDateTime = fromDateTime)
-    open fun toWeeklyDateTimeInterval() = WeeklyDateTimeInterval(referenceDateTime = fromDateTime)
-    open fun toDailyDateTimeInterval() = DailyDateTimeInterval(referenceDateTime = fromDateTime)
-    open fun toCustomDateTimeInterval() = CustomDateTimeInterval(fromDateTime, toDateTime)
-
-    fun toDateTimeInterval(type : Class<DateTimeInterval<*>>) : DateTimeInterval<*> = when(type)
-    {
-        InfiniteDateTimeInterval::class.java -> toInfiniteDateTimeInterval()
-        YearlyDateTimeInterval::class.java -> toYearlyDateTimeInterval()
-        MonthlyDateTimeInterval::class.java -> toMonthlyDateTimeInterval()
-        WeeklyDateTimeInterval::class.java -> toWeeklyDateTimeInterval()
-        DailyDateTimeInterval::class.java -> toDailyDateTimeInterval()
-        CustomDateTimeInterval::class.java -> toCustomDateTimeInterval()
-        else -> throw ClassCastException()
-    }
-
     abstract fun toRecyclerViewAdapter(context : Context) : BaseTimelineRecyclerViewAdapter<*>
 
     override fun toString() = "${this::class.java.simpleName} $fromDateTime - $toDateTime"

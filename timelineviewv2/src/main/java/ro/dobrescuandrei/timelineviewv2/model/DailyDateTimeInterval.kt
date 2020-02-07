@@ -15,13 +15,20 @@ import java.text.SimpleDateFormat
 
 class DailyDateTimeInterval
 (
-    val referenceDateTime : DateTime = DateTime.now(TimelineViewDefaults.timezone)
+    val referenceDateTime : DateTime
 ) : DateTimeInterval<DailyDateTimeInterval>
 (
     fromDateTime = referenceDateTime.atBeginningOfDay(),
     toDateTime = referenceDateTime.atEndOfDay()
 )
 {
+    companion object
+    {
+        @JvmStatic
+        fun today() = DailyDateTimeInterval(
+            referenceDateTime = DateTime.now(TimelineViewDefaults.timezone))
+    }
+
     override fun getPreviousDateTimeInterval() =
         DailyDateTimeInterval(referenceDateTime = fromDateTime.minusDays(1))
 

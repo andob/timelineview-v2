@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat
 
 class MonthlyDateTimeInterval
 (
-    val referenceDateTime : DateTime = DateTime.now(TimelineViewDefaults.timezone)
+    val referenceDateTime : DateTime
 ) : DateTimeInterval<MonthlyDateTimeInterval>
 (
     fromDateTime = referenceDateTime
@@ -26,6 +26,13 @@ class MonthlyDateTimeInterval
         .atEndOfDay()
 )
 {
+    companion object
+    {
+        @JvmStatic
+        fun aroundToday() = MonthlyDateTimeInterval(
+            referenceDateTime = DateTime.now(TimelineViewDefaults.timezone))
+    }
+
     override fun getPreviousDateTimeInterval() =
         MonthlyDateTimeInterval(referenceDateTime = fromDateTime.minusYears(1))
 
