@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TimelineView">
+        <attr name="tv_selected_cell_text_color" format="color" />
+        <attr name="tv_selected_cell_text_size" format="dimension" />
+        <attr name="tv_selected_cell_background_color" format="color" />
+        <attr name="tv_selected_cell_indicator_color" format="color" />
+        <attr name="tv_selected_cell_indicator_width" format="dimension" />
+        <attr name="tv_unselected_cell_text_color" format="color" />
+        <attr name="tv_unselected_cell_text_size" format="dimension" />
+        <attr name="tv_unselected_cell_background_color" format="color" />
+        <attr name="tv_up_icon" format="reference" />
+        <attr name="tv_down_icon" format="reference" />
+        <attr name="tv_calendar_icon" format="reference" />
+        <attr name="tv_left_buttons_container_background" format="reference" />
+        <attr name="tv_right_buttons_container_background" format="reference" />
+    </declare-styleable>
+
+</resources>

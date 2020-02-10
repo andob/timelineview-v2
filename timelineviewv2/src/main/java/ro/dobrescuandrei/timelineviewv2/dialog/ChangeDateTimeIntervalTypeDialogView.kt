@@ -17,10 +17,6 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
 
     override fun getLayoutId() = R.layout.change_date_time_interval_type_dialog_view
 
-    override fun resolveAttributeSetAfterOnCreate(attributeSet : AttributeSet) {}
-
-    override fun onCreate() {}
-
     fun setup(timelineView : TimelineView, dialog : AlertDialog)
     {
         val radioButtonsToIntervalTypes=mapOf(

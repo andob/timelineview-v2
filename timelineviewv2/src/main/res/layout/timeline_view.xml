@@ -15,6 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="left"
+            android:background="@drawable/fading_right_gradient_background"
             android:id="@+id/leftButtonsContainer"
             android:orientation="horizontal">
 
@@ -43,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"
+            android:background="@drawable/fading_left_gradient_background"
             android:id="@+id/rightButtonsContainer"
             android:orientation="horizontal">
 

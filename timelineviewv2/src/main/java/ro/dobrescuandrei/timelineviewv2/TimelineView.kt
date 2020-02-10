@@ -7,13 +7,12 @@ import android.view.View
 import kotlinx.android.synthetic.main.timeline_view.view.*
 import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
-import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineView
 import ro.dobrescuandrei.timelineviewv2.dialog.ChangeDateTimeIntervalTypeDialog
 import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
 
-class TimelineView : BaseTimelineView
+class TimelineView : TimelineViewApi
 {
     internal val dateTimeIntervalConverter = DateTimeIntervalConverter()
 
@@ -22,14 +21,19 @@ class TimelineView : BaseTimelineView
 
     override fun getLayoutId() = R.layout.timeline_view
 
-    override fun resolveAttributeSetAfterOnCreate(attributeSet : AttributeSet) {}
-
-    override fun onCreate()
+    init
     {
         this.dateTimeIntervalTypeChangeFlow=TimelineViewDefaults.dateTimeIntervalTypeChangeFlow
 
         changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
         changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+
+        decrementDateIntervalTypeButton.setImageResource(appearance.downIconResourceId)
+        incrementDateIntervalTypeButton.setImageResource(appearance.upIconResourceId)
+        changeDateIntervalTypeLeftButton.setImageResource(appearance.calendarIconResourceId)
+        changeDateIntervalTypeRightButton.setImageResource(appearance.calendarIconResourceId)
+        leftButtonsContainer.setBackgroundResource(appearance.leftButtonsContainerBackgroundResourceId)
+        rightButtonsContainer.setBackgroundResource(appearance.rightButtonsContainerBackgroundResourceId)
     }
 
     override fun onWindowFocusChanged(windowHasFocus : Boolean)
@@ -76,7 +80,7 @@ class TimelineView : BaseTimelineView
 
         recyclerView.adapter?.dispose()
 
-        recyclerView.adapter=dateTimeInterval.toRecyclerViewAdapter(context = context)
+        recyclerView.adapter=dateTimeInterval.toRecyclerViewAdapter(context, appearance)
         recyclerView.adapter?.selectedDateTimeInterval=dateTimeInterval
 
         recyclerView.adapter?.setOnSelectedDateTimeIntervalChangedListener { dateTimeInterval ->

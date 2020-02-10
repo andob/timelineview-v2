@@ -1,16 +1,15 @@
-package ro.dobrescuandrei.timelineviewv2.base;
+package ro.dobrescuandrei.timelineviewv2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import ro.dobrescuandrei.timelineviewv2.DateTimeIntervalTypeChangeFlow;
-import ro.dobrescuandrei.timelineviewv2.OnDateTimeIntervalChangedListener;
+import ro.dobrescuandrei.timelineviewv2.base.BaseCustomView;
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
 
-public abstract class BaseTimelineView extends BaseCustomView
+public abstract class TimelineViewApi extends BaseCustomView
 {
     protected @Nullable OnDateTimeIntervalChangedListener onDateTimeIntervalChangedListener;
 
@@ -20,14 +19,22 @@ public abstract class BaseTimelineView extends BaseCustomView
 
     protected boolean isCustomDateTimeIntervalSupported;
 
-    public BaseTimelineView(Context context)
+    private final TimelineViewAppearance appearance;
+
+    public TimelineViewApi(Context context)
     {
         super(context);
+        appearance=new TimelineViewAppearance(context);
     }
 
-    public BaseTimelineView(Context context, AttributeSet attrs)
+    @SuppressLint("CustomViewStyleable")
+    public TimelineViewApi(Context context, AttributeSet attributeSet)
     {
-        super(context, attrs);
+        super(context, attributeSet);
+
+        TypedArray attributes=context.obtainStyledAttributes(attributeSet, R.styleable.TimelineView);
+        appearance=new TimelineViewAppearance(context, attributes);
+        attributes.recycle();
     }
 
     public void setOnDateTimeIntervalChangedListener(OnDateTimeIntervalChangedListener listener)
@@ -66,5 +73,10 @@ public abstract class BaseTimelineView extends BaseCustomView
     public void setCustomDateTimeIntervalSupported(boolean isSupported)
     {
         isCustomDateTimeIntervalSupported=isSupported;
+    }
+
+    public TimelineViewAppearance getAppearance()
+    {
+        return appearance;
     }
 }

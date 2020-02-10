@@ -2,25 +2,24 @@ package ro.dobrescuandrei.timelineviewv2.recycler
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.timeline_recycler_view_cell.view.*
 import ro.dobrescuandrei.timelineviewv2.R
+import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
 import ro.dobrescuandrei.timelineviewv2.base.BaseCustomView
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 
-class TimelineRecyclerViewCell : BaseCustomView
+class TimelineRecyclerViewCell
+(
+    context : Context,
+    val appearance : TimelineViewAppearance
+): BaseCustomView(context)
 {
     private var _isSelected = false
 
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-
     override fun getLayoutId() = R.layout.timeline_recycler_view_cell
-
-    override fun resolveAttributeSetAfterOnCreate(attributeSet : AttributeSet) {}
-
-    override fun onCreate() {}
 
     fun setDateTimeInterval(dateTimeInterval : DateTimeInterval<*>)
     {
@@ -37,8 +36,23 @@ class TimelineRecyclerViewCell : BaseCustomView
         _isSelected=isSelected
 
         if (_isSelected)
+        {
+            intervalDescriptionLabel.setTextColor(appearance.selectedCellTextColor)
+            intervalDescriptionLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, appearance.selectedCellTextSizeInPx.toFloat())
+            cell.setBackgroundColor(appearance.selectedCellBackgroundColor)
+            selectedIndicatorView.setBackgroundColor(appearance.selectedCellIndicatorColor)
+            selectedIndicatorView.layoutParams=FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                appearance.selectedCellIndicatorWidthInPx)
             selectedIndicatorView.visibility=View.VISIBLE
-        else selectedIndicatorView.visibility=View.GONE
+        }
+        else
+        {
+            intervalDescriptionLabel.setTextColor(appearance.unselectedCellTextColor)
+            intervalDescriptionLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, appearance.unselectedCellTextSizeInPx.toFloat())
+            cell.setBackgroundColor(appearance.unselectedCellBackgroundColor)
+            selectedIndicatorView.visibility=View.GONE
+        }
     }
 
     fun setWidthInPixels(width : Int)

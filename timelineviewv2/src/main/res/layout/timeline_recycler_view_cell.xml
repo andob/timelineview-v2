@@ -4,7 +4,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000000">
+        android:id="@+id/cell"
+        android:background="@color/default_unselected_cell_background_color">
 
     <FrameLayout
             android:layout_width="match_parent"
@@ -14,19 +15,26 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="#ffffff"
+                android:textColor="@color/default_unselected_cell_text_color"
+                android:textSize="@dimen/default_unselected_cell_text_size"
                 tools:text="TODAY"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:id="@+id/intervalDescriptionLabel"/>
 
-        <View
+        <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_gravity="bottom"
-                android:id="@+id/selectedIndicatorView"
-                android:visibility="gone"
-                android:background="#ffffff"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:id="@+id/selectedIndicatorView"
+                    android:visibility="gone"
+                    android:background="@color/default_selected_cell_indicator_color"/>
+
+        </FrameLayout>
 
     </FrameLayout>
 

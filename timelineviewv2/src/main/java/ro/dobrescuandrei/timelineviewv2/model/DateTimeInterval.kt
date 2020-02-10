@@ -3,6 +3,7 @@ package ro.dobrescuandrei.timelineviewv2.model
 import android.content.Context
 import android.content.res.Resources
 import org.joda.time.DateTime
+import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
 
 abstract class DateTimeInterval<SELF>
@@ -19,7 +20,7 @@ abstract class DateTimeInterval<SELF>
 
     fun contains(dateTime : DateTime) = dateTime in fromDateTime..toDateTime
 
-    abstract fun toRecyclerViewAdapter(context : Context) : BaseTimelineRecyclerViewAdapter<*>
+    abstract fun toRecyclerViewAdapter(context : Context, appearance : TimelineViewAppearance) : BaseTimelineRecyclerViewAdapter<*>
 
     override fun toString() = "${this::class.java.simpleName} $fromDateTime - $toDateTime"
     abstract fun toString(resources : Resources) : String

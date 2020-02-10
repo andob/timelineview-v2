@@ -6,6 +6,7 @@ import android.content.res.Resources
 import org.joda.time.DateTime
 import org.joda.time.Days
 import ro.dobrescuandrei.timelineviewv2.R
+import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.DailyDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
@@ -72,6 +73,6 @@ class DailyDateTimeInterval
         return dateFormatter.formatJodaDateTime(fromDateTime)
     }
 
-    override fun toRecyclerViewAdapter(context : Context) =
-        DailyDateTimeIntervalAdapter(context)
+    override fun toRecyclerViewAdapter(context : Context, appearance : TimelineViewAppearance) =
+        DailyDateTimeIntervalAdapter(context, appearance)
 }

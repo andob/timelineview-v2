@@ -1,9 +1,11 @@
 package ro.dobrescuandrei.timelineviewv2.sample
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
+import org.joda.time.LocalDate
 import ro.dobrescuandrei.timelineviewv2.DateTimeIntervalTypeChangeFlow
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 
@@ -15,16 +17,18 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        timelineView.dateTimeIntervalTypeChangeFlow=DateTimeIntervalTypeChangeFlow.build {
-            from(DailyDateTimeInterval::class.java)
-        }
-
-        timelineView.isCustomDateTimeIntervalSupported=false
+//        timelineView.dateTimeIntervalTypeChangeFlow=DateTimeIntervalTypeChangeFlow.build {
+//            from(DailyDateTimeInterval::class.java)
+//        }
+//
+//        timelineView.isCustomDateTimeIntervalSupported=false
 
         timelineView.setOnDateTimeIntervalChangedListener { dateTimeInterval ->
             timeIntervalLabel.text=dateTimeInterval.toString(resources = resources)
         }
 
         timelineView.dateTimeInterval=DailyDateTimeInterval.today()
+
+//        timelineView.appearance.selectedCellTextColor=Color.RED
     }
 }
