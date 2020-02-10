@@ -1,6 +1,7 @@
 package ro.dobrescuandrei.timelineviewv2
 
 import android.content.Context
+import android.content.res.Configuration
 import android.util.AttributeSet
 import android.view.View
 import kotlinx.android.synthetic.main.timeline_view.view.*
@@ -8,6 +9,8 @@ import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineView
 import ro.dobrescuandrei.timelineviewv2.dialog.ChangeDateTimeIntervalTypeDialog
+import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
+import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
 
 class TimelineView : BaseTimelineView
@@ -19,7 +22,7 @@ class TimelineView : BaseTimelineView
 
     override fun getLayoutId() = R.layout.timeline_view
 
-    override fun resolveAttributeSetOnCreate(attributeSet : AttributeSet) {}
+    override fun resolveAttributeSetAfterOnCreate(attributeSet : AttributeSet) {}
 
     override fun onCreate()
     {
@@ -27,6 +30,27 @@ class TimelineView : BaseTimelineView
 
         changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
         changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+    }
+
+    override fun onWindowFocusChanged(windowHasFocus : Boolean)
+    {
+        super.onWindowFocusChanged(windowHasFocus)
+
+        if (windowHasFocus)
+        {
+            //on activity resumed, refresh if the day has passed in the meantime...
+            if (dateTimeInterval is DailyDateTimeInterval&&(dateTimeInterval as DailyDateTimeInterval).isToday&&
+                DateTime.now(TimelineViewDefaults.timezone).toLocalDate()!=dateTimeInterval.fromDateTime.toLocalDate())
+                dateTimeInterval=DailyDateTimeInterval.today()
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig : Configuration?)
+    {
+        super.onConfigurationChanged(newConfig)
+
+        //maybe screen orientation has changed???
+        recyclerView.scrollMiddleCellToMiddleOfTheScreen()
     }
 
     override fun setOnDateTimeIntervalChangedListener(listener : OnDateTimeIntervalChangedListener?)
@@ -38,6 +62,10 @@ class TimelineView : BaseTimelineView
 
     override fun setDateTimeInterval(dateTimeInterval : DateTimeInterval<*>)
     {
+        if (dateTimeInterval::class.java !in dateTimeIntervalTypeChangeFlow.toList()||
+           (dateTimeInterval is CustomDateTimeInterval&&isCustomDateTimeIntervalSupported))
+            throw RuntimeException("Invalid interval type!")
+
         if (this.dateTimeInterval!=dateTimeInterval)
         {
             dateTimeIntervalTypeChangeFlow.seekToNode(dateTimeInterval::class.java)
@@ -114,6 +142,18 @@ class TimelineView : BaseTimelineView
             changeDateIntervalTypeLeftButton.visibility=View.VISIBLE
             changeDateIntervalTypeRightButton.visibility=View.GONE
         }
+
+        if (flow.toList().size<=1&&!isCustomDateTimeIntervalSupported)
+        {
+            changeDateIntervalTypeLeftButton.visibility=View.GONE
+            changeDateIntervalTypeRightButton.visibility=View.GONE
+        }
+    }
+
+    override fun setCustomDateTimeIntervalSupported(isSupported : Boolean)
+    {
+        super.setCustomDateTimeIntervalSupported(isSupported)
+        updateUiFromIntervalTypeChangeFlow()
     }
 
     override fun onDetachedFromWindow()

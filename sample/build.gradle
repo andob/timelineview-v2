@@ -11,6 +11,11 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        manifestPlaceholders = [
+                configChanges: "mcc|mnc|locale|touchscreen|keyboard|keyboardHidden" +
+                        "|navigation|screenLayout|fontScale|uiMode|orientation" +
+                        "|density|screenSize|smallestScreenSize"
+        ]
     }
     buildTypes {
         release {
@@ -23,7 +28,7 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    
+
     implementation 'com.squareup.leakcanary:leakcanary-android:2.1'
 
     implementation 'net.danlew:android.joda:2.10.3'

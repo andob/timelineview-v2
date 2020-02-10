@@ -19,9 +19,10 @@ public abstract class BaseCustomView extends RelativeLayout
     public BaseCustomView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        resolveAttributeSetOnCreate(attrs);
         inflateLayout();
         onCreate();
+
+        resolveAttributeSetAfterOnCreate(attrs);
     }
 
     private void inflateLayout()
@@ -32,7 +33,7 @@ public abstract class BaseCustomView extends RelativeLayout
 
     public abstract void onCreate();
 
-    public abstract void resolveAttributeSetOnCreate(@NonNull AttributeSet attributeSet);
+    public abstract void resolveAttributeSetAfterOnCreate(@NonNull AttributeSet attributeSet);
 
     public abstract int getLayoutId();
 }

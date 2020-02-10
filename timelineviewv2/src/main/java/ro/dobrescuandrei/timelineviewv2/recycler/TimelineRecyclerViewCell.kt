@@ -18,7 +18,7 @@ class TimelineRecyclerViewCell : BaseCustomView
 
     override fun getLayoutId() = R.layout.timeline_recycler_view_cell
 
-    override fun resolveAttributeSetOnCreate(attributeSet : AttributeSet) {}
+    override fun resolveAttributeSetAfterOnCreate(attributeSet : AttributeSet) {}
 
     override fun onCreate() {}
 

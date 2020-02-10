@@ -14,6 +14,6 @@ class App : Application()
 
         JodaTimeAndroid.init(this)
 
-        TimelineViewDefaults.timezone =DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Bucharest"))
+        TimelineViewDefaults.timezone=DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Bucharest"))
     }
 }

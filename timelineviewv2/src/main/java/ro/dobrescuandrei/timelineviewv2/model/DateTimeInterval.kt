@@ -17,6 +17,8 @@ abstract class DateTimeInterval<SELF>
 
     abstract operator fun minus(another : DateTimeInterval<*>) : Int
 
+    fun contains(dateTime : DateTime) = dateTime in fromDateTime..toDateTime
+
     abstract fun toRecyclerViewAdapter(context : Context) : BaseTimelineRecyclerViewAdapter<*>
 
     override fun toString() = "${this::class.java.simpleName} $fromDateTime - $toDateTime"

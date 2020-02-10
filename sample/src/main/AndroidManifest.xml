@@ -11,7 +11,7 @@
             tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".MainActivity"
-                android:configChanges="orientation">
+                android:configChanges="${configChanges}">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -22,6 +22,14 @@ class DailyDateTimeInterval
     toDateTime = referenceDateTime.atEndOfDay()
 )
 {
+    val isToday : Boolean
+
+    init
+    {
+        val todayAndNow=DateTime.now(TimelineViewDefaults.timezone)!!
+        this.isToday=todayAndNow in fromDateTime..toDateTime
+    }
+
     companion object
     {
         @JvmStatic

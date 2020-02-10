@@ -17,7 +17,7 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
 
     override fun getLayoutId() = R.layout.change_date_time_interval_type_dialog_view
 
-    override fun resolveAttributeSetOnCreate(attributeSet : AttributeSet) {}
+    override fun resolveAttributeSetAfterOnCreate(attributeSet : AttributeSet) {}
 
     override fun onCreate() {}
 
@@ -30,6 +30,10 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
             yearlyRadioButton to YearlyDateTimeInterval::class.java as Class<DateTimeInterval<*>>,
             allTimeRadioButton to InfiniteDateTimeInterval::class.java as Class<DateTimeInterval<*>>,
             customIntervalRadioButton to CustomDateTimeInterval::class.java as Class<DateTimeInterval<*>>)
+
+        if (timelineView.isCustomDateTimeIntervalSupported)
+            customIntervalButtonContainer.visibility=View.VISIBLE
+        else customIntervalButtonContainer.visibility=View.GONE
 
         val supportedIntervalTypes=timelineView.dateTimeIntervalTypeChangeFlow.toList()
 
