@@ -6,16 +6,14 @@ import android.content.res.Resources
 import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.CustomDateTimeIntervalAdapter
-import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
-import ro.dobrescuandrei.timelineviewv2.utils.atEndOfDay
-import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
+import ro.dobrescuandrei.timelineviewv2.utils.*
 import java.text.SimpleDateFormat
 
 class CustomDateTimeInterval : DateTimeInterval<CustomDateTimeInterval>
 {
     constructor(fromDateTime : DateTime, toDateTime : DateTime) : super(
-        fromDateTime = fromDateTime.atBeginningOfDay(),
-        toDateTime = toDateTime.atEndOfDay())
+        fromDateTime = min(fromDateTime, toDateTime).atBeginningOfDay(),
+        toDateTime = max(fromDateTime, toDateTime).atEndOfDay())
 
     override fun getPreviousDateTimeInterval() : CustomDateTimeInterval? = null
     override fun getNextDateTimeInterval() : CustomDateTimeInterval? = null
@@ -31,7 +29,7 @@ class CustomDateTimeInterval : DateTimeInterval<CustomDateTimeInterval>
         val startDateTimeFormatter=
             if (fromDateTime.year!=now.year)
                 SimpleDateFormat("dd MMM yyyy")
-            else SimpleDateFormat("dd MM")
+            else SimpleDateFormat("dd MMM")
         startDateTimeFormatter.timeZone=TimelineViewDefaults.timezone.toTimeZone()!!
         val startDateStr=startDateTimeFormatter.formatJodaDateTime(fromDateTime)
 

@@ -53,7 +53,26 @@ class DateTimeIntervalConverter
             {
                 items[type]=value
 
-                val typesToInvalidate : List<Class<*>> = when(type)
+                val lowerOrderTypes : List<Class<*>> = when(type)
+                {
+                    DailyDateTimeInterval::class.java -> listOf()
+
+                    WeeklyDateTimeInterval::class.java -> listOf(
+                        DailyDateTimeInterval::class.java)
+
+                    MonthlyDateTimeInterval::class.java -> listOf(
+                        WeeklyDateTimeInterval::class.java,
+                        DailyDateTimeInterval::class.java)
+
+                    YearlyDateTimeInterval::class.java -> listOf(
+                        MonthlyDateTimeInterval::class.java,
+                        WeeklyDateTimeInterval::class.java,
+                        DailyDateTimeInterval::class.java)
+
+                    else -> listOf()
+                }
+
+                val higherOrderTypes : List<Class<*>> = when(type)
                 {
                     DailyDateTimeInterval::class.java -> listOf(
                         WeeklyDateTimeInterval::class.java,
@@ -70,8 +89,12 @@ class DateTimeIntervalConverter
                     else -> listOf()
                 }
 
-                for (typeToInvalidate in typesToInvalidate)
-                    items.remove(typeToInvalidate)
+                for (lowerOrderType in lowerOrderTypes)
+                    if (!items.containsKey(lowerOrderType))
+                        items[lowerOrderType]=value
+
+                for (higherOrderType in higherOrderTypes)
+                    items.remove(higherOrderType)
             }
         }
     }

@@ -17,3 +17,6 @@ fun DateTime.atEndOfDay() = this
 
 fun SimpleDateFormat.formatJodaDateTime(dateTime : DateTime) =
     format(java.util.Date(dateTime.millis))
+
+fun min(x : DateTime, y : DateTime) = if (x<y) x else y
+fun max(x : DateTime, y : DateTime) = if (x>y) x else y

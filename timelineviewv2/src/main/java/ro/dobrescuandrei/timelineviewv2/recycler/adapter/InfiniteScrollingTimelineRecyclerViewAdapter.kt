@@ -25,7 +25,7 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
                 this.onSelectedDateTimeIntervalChangedListener?.invoke(dateTimeInterval)
 
                 (cellView.getParentRecyclerView() as? TimelineRecyclerView)
-                    ?.scrollSelectedCellToMiddleOfTheScreen()
+                    ?.scrollMiddleCellToMiddleOfTheScreen()
 
                 notifyDataSetChanged()
             }

@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#000000">
 
+    <ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerView"/>
+
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="left"
             android:id="@+id/leftButtonsContainer"
             android:orientation="horizontal">
 
@@ -33,17 +39,10 @@
 
     </LinearLayout>
 
-    <ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/leftButtonsContainer"
-            android:layout_toLeftOf="@+id/rightButtonsContainer"
-            android:id="@+id/recyclerView"/>
-
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
             android:id="@+id/rightButtonsContainer"
             android:orientation="horizontal">
 
@@ -68,4 +67,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import ro.dobrescuandrei.timelineviewv2.DateTimeIntervalTypeChangeFlow;
 import ro.dobrescuandrei.timelineviewv2.OnDateTimeIntervalChangedListener;
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
 
@@ -15,6 +16,8 @@ public abstract class BaseTimelineView extends BaseCustomView
 
     private DateTimeInterval dateTimeInterval;
 
+    private DateTimeIntervalTypeChangeFlow dateTimeIntervalTypeChangeFlow;
+
     public BaseTimelineView(Context context)
     {
         super(context);
@@ -23,6 +26,11 @@ public abstract class BaseTimelineView extends BaseCustomView
     public BaseTimelineView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+    }
+
+    public @Nullable OnDateTimeIntervalChangedListener getOnDateTimeIntervalChangedListener()
+    {
+        return onDateTimeIntervalChangedListener;
     }
 
     public void setOnDateTimeIntervalChangedListener(OnDateTimeIntervalChangedListener listener)
@@ -41,5 +49,15 @@ public abstract class BaseTimelineView extends BaseCustomView
 
         if (this.onDateTimeIntervalChangedListener!=null)
             this.onDateTimeIntervalChangedListener.invoke(this.dateTimeInterval);
+    }
+
+    public @NonNull DateTimeIntervalTypeChangeFlow getDateTimeIntervalTypeChangeFlow()
+    {
+        return dateTimeIntervalTypeChangeFlow;
+    }
+
+    public void setDateTimeIntervalTypeChangeFlow(@NonNull DateTimeIntervalTypeChangeFlow flow)
+    {
+        this.dateTimeIntervalTypeChangeFlow=flow;
     }
 }

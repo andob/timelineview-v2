@@ -7,12 +7,12 @@ import kotlinx.android.synthetic.main.timeline_view.view.*
 import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineView
+import ro.dobrescuandrei.timelineviewv2.dialog.ChangeDateTimeIntervalTypeDialog
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
-import ro.dobrescuandrei.timelineviewv2.utils.setOnFirstMeasureListener
 
 class TimelineView : BaseTimelineView
 {
-    private val dateTimeIntervalConverter = DateTimeIntervalConverter()
+    internal val dateTimeIntervalConverter = DateTimeIntervalConverter()
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
@@ -23,9 +23,10 @@ class TimelineView : BaseTimelineView
 
     override fun onCreate()
     {
-        setOnFirstMeasureListener {
-            setDateTimeIntervalTypeChangeFlow(TimelineViewDefaults.dateTimeIntervalTypeChangeFlow)
-        }
+        this.dateTimeIntervalTypeChangeFlow=TimelineViewDefaults.dateTimeIntervalTypeChangeFlow
+
+        changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+        changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
     }
 
     override fun setOnDateTimeIntervalChangedListener(listener : OnDateTimeIntervalChangedListener?)
@@ -37,6 +38,12 @@ class TimelineView : BaseTimelineView
 
     override fun setDateTimeInterval(dateTimeInterval : DateTimeInterval<*>)
     {
+        if (this.dateTimeInterval!=dateTimeInterval)
+        {
+            dateTimeIntervalTypeChangeFlow.seekToNode(dateTimeInterval::class.java)
+            updateUiFromIntervalTypeChangeFlow()
+        }
+
         super.setDateTimeInterval(dateTimeInterval)
 
         recyclerView.adapter?.dispose()
@@ -49,55 +56,63 @@ class TimelineView : BaseTimelineView
         }
     }
 
-    fun setDateTimeIntervalTypeChangeFlow(flow : DateTimeIntervalTypeChangeFlow)
+    override fun setDateTimeIntervalTypeChangeFlow(flow : DateTimeIntervalTypeChangeFlow)
     {
+        super.setDateTimeIntervalTypeChangeFlow(flow)
+
         val todayAndNow=DateTime(TimelineViewDefaults.timezone)
 
-        dateTimeInterval=flow.getFirstFlowNode().constructors.find { constructor ->
+        dateTimeInterval=flow.getFirstNode().constructors.find { constructor ->
             DateTime::class.java in constructor.parameterTypes
         }!!.newInstance(todayAndNow) as DateTimeInterval<*>
 
-        updateUiFromIntervalTypeChangeFlowUi(flow)
+        updateUiFromIntervalTypeChangeFlow()
 
         decrementDateIntervalTypeButton.setOnClickListener {
             flow.previousNode()?.let { type ->
                 dateTimeInterval=dateTimeIntervalConverter.convert(from = dateTimeInterval, to = type)
-
-                updateUiFromIntervalTypeChangeFlowUi(flow)
+                updateUiFromIntervalTypeChangeFlow()
             }
         }
 
         incrementDateIntervalTypeButton.setOnClickListener {
             flow.nextNode()?.let { type ->
                 dateTimeInterval=dateTimeIntervalConverter.convert(from = dateTimeInterval, to = type)
-
-                updateUiFromIntervalTypeChangeFlowUi(flow)
+                updateUiFromIntervalTypeChangeFlow()
             }
         }
     }
 
-    private fun updateUiFromIntervalTypeChangeFlowUi(flow : DateTimeIntervalTypeChangeFlow)
+    private fun updateUiFromIntervalTypeChangeFlow()
     {
-        if (flow.hasPreviousNode())
-        {
-            decrementDateIntervalTypeButton.visibility=View.VISIBLE
-            changeDateIntervalTypeLeftButton.visibility=View.GONE
-        }
-        else
-        {
-            decrementDateIntervalTypeButton.visibility=View.GONE
-            changeDateIntervalTypeLeftButton.visibility=View.VISIBLE
-        }
-
-        if (flow.hasNextNode())
+        val flow=dateTimeIntervalTypeChangeFlow
+        if (flow.hasPreviousNode()&&flow.hasNextNode())
         {
             incrementDateIntervalTypeButton.visibility=View.VISIBLE
+            decrementDateIntervalTypeButton.visibility=View.VISIBLE
+            changeDateIntervalTypeLeftButton.visibility=View.GONE
+            changeDateIntervalTypeRightButton.visibility=View.GONE
+        }
+        else if (flow.hasPreviousNode())
+        {
+            incrementDateIntervalTypeButton.visibility=View.GONE
+            decrementDateIntervalTypeButton.visibility=View.VISIBLE
+            changeDateIntervalTypeLeftButton.visibility=View.GONE
+            changeDateIntervalTypeRightButton.visibility=View.VISIBLE
+        }
+        else if (flow.hasNextNode())
+        {
+            incrementDateIntervalTypeButton.visibility=View.VISIBLE
+            decrementDateIntervalTypeButton.visibility=View.GONE
+            changeDateIntervalTypeLeftButton.visibility=View.VISIBLE
             changeDateIntervalTypeRightButton.visibility=View.GONE
         }
         else
         {
             incrementDateIntervalTypeButton.visibility=View.GONE
-            changeDateIntervalTypeRightButton.visibility=View.VISIBLE
+            decrementDateIntervalTypeButton.visibility=View.GONE
+            changeDateIntervalTypeLeftButton.visibility=View.VISIBLE
+            changeDateIntervalTypeRightButton.visibility=View.GONE
         }
     }
 

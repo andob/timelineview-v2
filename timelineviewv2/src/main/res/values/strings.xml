@@ -4,4 +4,12 @@
     <string name="yesterday">Yesterday</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
+    <string name="change_interval_type">Change interval type…</string>
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="custom_interval">Custom interval</string>
+    <string name="choose_interval_start_date">Choose interval start date</string>
+    <string name="choose_interval_end_date">Choose interval end date</string>
 </resources>

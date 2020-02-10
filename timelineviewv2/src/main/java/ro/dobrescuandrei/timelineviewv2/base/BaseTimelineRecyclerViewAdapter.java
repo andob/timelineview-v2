@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ro.dobrescuandrei.timelineviewv2.OnDateTimeIntervalChangedListener;
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder;
+import ro.dobrescuandrei.timelineviewv2.utils.ScreenSize;
 
 public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends DateTimeInterval> extends RecyclerView.Adapter<TimelineRecyclerViewHolder>
 {
@@ -55,7 +56,7 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
 
         int widthInPixels=getCellWidthInPixels();
         if (widthInPixels==ViewGroup.LayoutParams.MATCH_PARENT)
-            viewHolder.getCellView().setWidthInPixels(parent.getMeasuredWidth());
+            viewHolder.getCellView().setWidthInPixels(ScreenSize.width(context = context));
         else viewHolder.getCellView().setWidthInPixels(getCellWidthInPixels());
 
         return viewHolder;

@@ -1,5 +1,6 @@
 package ro.dobrescuandrei.timelineviewv2
 
+import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import java.util.*
 
@@ -18,13 +19,17 @@ class DateTimeIntervalTypeChangeFlow
         items.addAll(builder.results)
     }
 
-    internal fun getFirstFlowNode() : Class<DateTimeInterval<*>>
+    fun toList() = items
+
+    internal fun getFirstNode() : Class<DateTimeInterval<*>>
     {
         selectedPosition=0
         return items[selectedPosition]
     }
 
-    internal fun hasNextNode() = selectedPosition+1<items.size
+    internal fun hasNextNode() =
+        selectedPosition>=0&&selectedPosition<items.size
+        &&selectedPosition+1<items.size
 
     internal fun nextNode() : Class<DateTimeInterval<*>>?
     {
@@ -37,7 +42,9 @@ class DateTimeIntervalTypeChangeFlow
         return null
     }
 
-    internal fun hasPreviousNode() = selectedPosition-1>=0
+    internal fun hasPreviousNode() =
+        selectedPosition>=0&&selectedPosition<items.size
+        &&selectedPosition-1>=0
 
     internal fun previousNode() : Class<DateTimeInterval<*>>?
     {
@@ -48,6 +55,11 @@ class DateTimeIntervalTypeChangeFlow
         }
 
         return null
+    }
+
+    internal fun seekToNode(node : Class<out DateTimeInterval<*>>)
+    {
+        selectedPosition=items.indexOf(node)
     }
 
     companion object
@@ -65,14 +77,14 @@ class DateTimeIntervalTypeChangeFlow
     {
         val results=mutableListOf<Class<DateTimeInterval<*>>>()
 
-        fun <FROM : DateTimeInterval<*>> from(type : Class<FROM>) : Builder
-        {
-            results.add(type as Class<DateTimeInterval<*>>)
-            return this
-        }
+        fun <FROM : DateTimeInterval<*>> from(type : Class<FROM>) = addType(type)
+        fun <FROM : DateTimeInterval<*>> to(type : Class<FROM>) = addType(type)
 
-        fun <FROM : DateTimeInterval<*>> to(type : Class<FROM>) : Builder
+        private fun <FROM : DateTimeInterval<*>> addType(type : Class<FROM>) : Builder
         {
+            if (type==CustomDateTimeInterval::class.java)
+                throw RuntimeException("Cannot use CustomDateTimeInterval in the flow!")
+
             results.add(type as Class<DateTimeInterval<*>>)
             return this
         }

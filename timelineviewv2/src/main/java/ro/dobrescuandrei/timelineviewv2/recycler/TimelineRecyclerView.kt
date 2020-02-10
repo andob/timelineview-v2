@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.timeline_view.view.*
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.InfiniteScrollingTimelineRecyclerViewAdapter
+import ro.dobrescuandrei.timelineviewv2.utils.ScreenSize
 
 class TimelineRecyclerView : RecyclerView
 {
@@ -23,7 +24,7 @@ class TimelineRecyclerView : RecyclerView
         super.setAdapter(adapter)
 
         if (adapter is InfiniteScrollingTimelineRecyclerViewAdapter)
-            scrollSelectedCellToMiddleOfTheScreen()
+            scrollMiddleCellToMiddleOfTheScreen()
     }
 
     override fun getAdapter() : BaseTimelineRecyclerViewAdapter<*>?
@@ -32,11 +33,11 @@ class TimelineRecyclerView : RecyclerView
         return adapter as BaseTimelineRecyclerViewAdapter<*>
     }
 
-    fun scrollSelectedCellToMiddleOfTheScreen()
+    fun scrollMiddleCellToMiddleOfTheScreen()
     {
         if (adapter!=null&&adapter is InfiniteScrollingTimelineRecyclerViewAdapter)
             (layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(
                 /*position*/ adapter!!.itemCount/2,
-                /*offset*/ measuredWidth/2-adapter!!.cellWidthInPixels/2)
+                /*offset*/ (ScreenSize.width(context = context)-adapter!!.cellWidthInPixels)/2)
     }
 }
