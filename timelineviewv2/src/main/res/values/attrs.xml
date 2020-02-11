@@ -15,6 +15,7 @@
         <attr name="tv_calendar_icon" format="reference" />
         <attr name="tv_left_buttons_container_background" format="reference" />
         <attr name="tv_right_buttons_container_background" format="reference" />
+        <attr name="tv_is_custom_date_time_interval_supported" format="boolean" />
     </declare-styleable>
 
 </resources>

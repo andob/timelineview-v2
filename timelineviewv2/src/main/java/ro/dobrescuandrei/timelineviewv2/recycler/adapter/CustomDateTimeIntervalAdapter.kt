@@ -2,20 +2,23 @@ package ro.dobrescuandrei.timelineviewv2.recycler.adapter
 
 import android.content.Context
 import android.view.ViewGroup
-import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
+import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
 import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder
 
 class CustomDateTimeIntervalAdapter : BaseTimelineRecyclerViewAdapter<CustomDateTimeInterval>
 {
-    constructor(context: Context?, appearance: TimelineViewAppearance?) : super(context, appearance)
+    constructor(context: Context?, timelineView: TimelineView?) : super(context, timelineView)
 
     override fun onBindViewHolder(holder : TimelineRecyclerViewHolder, position : Int)
     {
         val cellView=holder.getCellView()
         cellView.setDateTimeInterval(selectedDateTimeInterval)
         cellView.setIsSelected(true)
+
+        timelineView.timelineRecyclerViewCellTransformer?.transform(
+            cellView = cellView, dateTimeInterval = selectedDateTimeInterval)
     }
 
     override fun getItemCount() = 1

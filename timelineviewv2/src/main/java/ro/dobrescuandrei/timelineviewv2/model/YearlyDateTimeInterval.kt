@@ -1,10 +1,9 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
-import android.content.Context
 import android.content.res.Resources
 import org.joda.time.DateTime
 import org.joda.time.Years
-import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
+import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.YearlyDateIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
@@ -46,6 +45,6 @@ class YearlyDateTimeInterval
     override fun toString(resources : Resources) =
         fromDateTime.year.toString()
 
-    override fun toRecyclerViewAdapter(context : Context, appearance : TimelineViewAppearance) =
-        YearlyDateIntervalAdapter(context, appearance)
+    override fun toRecyclerViewAdapter(timelineView : TimelineView) =
+        YearlyDateIntervalAdapter(context = timelineView.context, timelineView = timelineView)
 }

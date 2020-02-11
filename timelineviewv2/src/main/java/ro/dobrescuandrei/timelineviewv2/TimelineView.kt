@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.timeline_view.view.*
 import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.dialog.ChangeDateTimeIntervalTypeDialog
-import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
 
@@ -66,21 +65,11 @@ class TimelineView : TimelineViewApi
 
     override fun setDateTimeInterval(dateTimeInterval : DateTimeInterval<*>)
     {
-        if (dateTimeInterval::class.java !in dateTimeIntervalTypeChangeFlow.toList()||
-           (dateTimeInterval is CustomDateTimeInterval&&isCustomDateTimeIntervalSupported))
-            throw RuntimeException("Invalid interval type!")
-
-        if (this.dateTimeInterval!=dateTimeInterval)
-        {
-            dateTimeIntervalTypeChangeFlow.seekToNode(dateTimeInterval::class.java)
-            updateUiFromIntervalTypeChangeFlow()
-        }
-
         super.setDateTimeInterval(dateTimeInterval)
 
         recyclerView.adapter?.dispose()
 
-        recyclerView.adapter=dateTimeInterval.toRecyclerViewAdapter(context, appearance)
+        recyclerView.adapter=dateTimeInterval.toRecyclerViewAdapter(timelineView = this)
         recyclerView.adapter?.selectedDateTimeInterval=dateTimeInterval
 
         recyclerView.adapter?.setOnSelectedDateTimeIntervalChangedListener { dateTimeInterval ->
@@ -115,7 +104,7 @@ class TimelineView : TimelineViewApi
         }
     }
 
-    private fun updateUiFromIntervalTypeChangeFlow()
+    protected override fun updateUiFromIntervalTypeChangeFlow()
     {
         val flow=dateTimeIntervalTypeChangeFlow
         if (flow.hasPreviousNode()&&flow.hasNextNode())

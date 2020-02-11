@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import ro.dobrescuandrei.timelineviewv2.OnDateTimeIntervalChangedListener;
+import ro.dobrescuandrei.timelineviewv2.TimelineView;
 import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance;
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder;
@@ -14,17 +15,17 @@ import ro.dobrescuandrei.timelineviewv2.utils.ScreenSize;
 public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends DateTimeInterval> extends RecyclerView.Adapter<TimelineRecyclerViewHolder>
 {
     public Context context;
-    private final TimelineViewAppearance appearance;
+    public TimelineView timelineView;
 
     protected DATE_TIME_INTERVAL referenceDateTimeInterval;
     private DATE_TIME_INTERVAL selectedDateTimeInterval;
 
     protected @Nullable OnDateTimeIntervalChangedListener onSelectedDateTimeIntervalChangedListener;
 
-    public BaseTimelineRecyclerViewAdapter(Context context, TimelineViewAppearance appearance)
+    public BaseTimelineRecyclerViewAdapter(Context context, TimelineView timelineView)
     {
         this.context=context;
-        this.appearance=appearance;
+        this.timelineView=timelineView;
     }
 
     public void setOnSelectedDateTimeIntervalChangedListener(OnDateTimeIntervalChangedListener listener)
@@ -52,7 +53,7 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
     @Override
     public TimelineRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        TimelineRecyclerViewHolder viewHolder=new TimelineRecyclerViewHolder(context, appearance);
+        TimelineRecyclerViewHolder viewHolder=new TimelineRecyclerViewHolder(context, timelineView.getAppearance());
 
         int widthInPixels=getCellWidthInPixels();
         if (widthInPixels==ViewGroup.LayoutParams.MATCH_PARENT)
@@ -67,6 +68,7 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
     public void dispose()
     {
         this.context=null;
+        this.timelineView=null;
         this.onSelectedDateTimeIntervalChangedListener=null;
     }
 }

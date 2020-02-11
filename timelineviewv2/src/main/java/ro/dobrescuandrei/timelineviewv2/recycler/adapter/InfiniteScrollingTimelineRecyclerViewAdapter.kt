@@ -1,7 +1,8 @@
 package ro.dobrescuandrei.timelineviewv2.recycler.adapter
 
 import android.content.Context
-import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
+import ro.dobrescuandrei.timelineviewv2.InvalidDateTimeIntervalTypeException
+import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
@@ -10,7 +11,7 @@ import ro.dobrescuandrei.timelineviewv2.utils.getParentRecyclerView
 
 abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecyclerViewAdapter<DateTimeInterval<*>>
 {
-    constructor(context: Context?, appearance: TimelineViewAppearance?) : super(context, appearance)
+    constructor(context: Context?, timelineView: TimelineView?) : super(context, timelineView)
 
     override fun onBindViewHolder(holder : TimelineRecyclerViewHolder, position : Int)
     {
@@ -22,14 +23,21 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
             cellView.setIsSelected(dateTimeInterval==selectedDateTimeInterval)
 
             cellView.setOnClickListener { cellView ->
-                this.selectedDateTimeInterval=dateTimeInterval
-                this.onSelectedDateTimeIntervalChangedListener?.invoke(dateTimeInterval)
+                try
+                {
+                    this.onSelectedDateTimeIntervalChangedListener?.invoke(dateTimeInterval)
+                    this.selectedDateTimeInterval=dateTimeInterval
 
-                (cellView.getParentRecyclerView() as? TimelineRecyclerView)
-                    ?.scrollMiddleCellToMiddleOfTheScreen()
+                    (cellView.getParentRecyclerView() as? TimelineRecyclerView)
+                        ?.scrollMiddleCellToMiddleOfTheScreen()
 
-                notifyDataSetChanged()
+                    notifyDataSetChanged()
+                }
+                catch (ex : InvalidDateTimeIntervalTypeException) {}
             }
+
+            timelineView.timelineRecyclerViewCellTransformer?.transform(
+                cellView = cellView, dateTimeInterval = dateTimeInterval)
         }
     }
 

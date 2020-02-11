@@ -1,7 +1,6 @@
 package ro.dobrescuandrei.timelineviewv2.recycler
 
 import android.content.Context
-import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
@@ -17,6 +16,12 @@ class TimelineRecyclerViewCell
     val appearance : TimelineViewAppearance
 ): BaseCustomView(context)
 {
+    interface Transformer
+    {
+        fun transform(cellView : TimelineRecyclerViewCell,
+                      dateTimeInterval : DateTimeInterval<*>)
+    }
+
     private var _isSelected = false
 
     override fun getLayoutId() = R.layout.timeline_recycler_view_cell

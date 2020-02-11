@@ -1,10 +1,9 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Resources
 import org.joda.time.DateTime
-import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
+import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.CustomDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.*
@@ -44,6 +43,6 @@ class CustomDateTimeInterval : DateTimeInterval<CustomDateTimeInterval>
         return "$startDateStr - $endDateStr"
     }
 
-    override fun toRecyclerViewAdapter(context : Context, appearance : TimelineViewAppearance) =
-        CustomDateTimeIntervalAdapter(context, appearance)
+    override fun toRecyclerViewAdapter(timelineView : TimelineView) =
+        CustomDateTimeIntervalAdapter(context = timelineView.context, timelineView = timelineView)
 }

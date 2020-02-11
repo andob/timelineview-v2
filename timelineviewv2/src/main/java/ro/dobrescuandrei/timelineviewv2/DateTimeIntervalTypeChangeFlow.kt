@@ -21,17 +21,17 @@ class DateTimeIntervalTypeChangeFlow
 
     fun toList() = items
 
-    internal fun getFirstNode() : Class<DateTimeInterval<*>>
+    fun getFirstNode() : Class<DateTimeInterval<*>>
     {
         selectedPosition=0
         return items[selectedPosition]
     }
 
-    internal fun hasNextNode() =
+    fun hasNextNode() =
         selectedPosition>=0&&selectedPosition<items.size
         &&selectedPosition+1<items.size
 
-    internal fun nextNode() : Class<DateTimeInterval<*>>?
+    fun nextNode() : Class<DateTimeInterval<*>>?
     {
         if (hasNextNode())
         {
@@ -42,11 +42,11 @@ class DateTimeIntervalTypeChangeFlow
         return null
     }
 
-    internal fun hasPreviousNode() =
+    fun hasPreviousNode() =
         selectedPosition>=0&&selectedPosition<items.size
         &&selectedPosition-1>=0
 
-    internal fun previousNode() : Class<DateTimeInterval<*>>?
+    fun previousNode() : Class<DateTimeInterval<*>>?
     {
         if (hasPreviousNode())
         {
@@ -57,7 +57,7 @@ class DateTimeIntervalTypeChangeFlow
         return null
     }
 
-    internal fun seekToNode(node : Class<out DateTimeInterval<*>>)
+    fun seekToNode(node : Class<out DateTimeInterval<*>>)
     {
         selectedPosition=items.indexOf(node)
     }

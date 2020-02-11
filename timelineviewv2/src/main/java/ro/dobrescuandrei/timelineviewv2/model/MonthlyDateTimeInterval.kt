@@ -1,11 +1,10 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Resources
 import org.joda.time.DateTime
 import org.joda.time.Months
-import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
+import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.MonthlyDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
@@ -15,7 +14,7 @@ import java.text.SimpleDateFormat
 
 class MonthlyDateTimeInterval
 (
-    val referenceDateTime : DateTime
+    referenceDateTime : DateTime
 ) : DateTimeInterval<MonthlyDateTimeInterval>
 (
     fromDateTime = referenceDateTime
@@ -59,6 +58,6 @@ class MonthlyDateTimeInterval
         return dateFormatter.formatJodaDateTime(fromDateTime)
     }
 
-    override fun toRecyclerViewAdapter(context : Context, appearance : TimelineViewAppearance) =
-        MonthlyDateTimeIntervalAdapter(context, appearance)
+    override fun toRecyclerViewAdapter(timelineView : TimelineView) =
+        MonthlyDateTimeIntervalAdapter(context = timelineView.context, timelineView = timelineView)
 }

@@ -1,11 +1,10 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Resources
 import org.joda.time.DateTime
 import org.joda.time.Months
-import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
+import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.WeeklyDateIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
@@ -15,7 +14,7 @@ import java.text.SimpleDateFormat
 
 class WeeklyDateTimeInterval
 (
-    val referenceDateTime : DateTime
+    referenceDateTime : DateTime
 ) : DateTimeInterval<WeeklyDateTimeInterval>
 (
     fromDateTime = referenceDateTime
@@ -68,6 +67,6 @@ class WeeklyDateTimeInterval
         return "$startDateStr - $endDateStr"
     }
 
-    override fun toRecyclerViewAdapter(context : Context, appearance : TimelineViewAppearance) =
-        WeeklyDateIntervalAdapter(context, appearance)
+    override fun toRecyclerViewAdapter(timelineView : TimelineView) =
+        WeeklyDateIntervalAdapter(context = timelineView.context, timelineView = timelineView)
 }
