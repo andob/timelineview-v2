@@ -4,12 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
-import org.joda.time.DateTime
-import ro.dobrescuandrei.timelineviewv2.DateTimeIntervalTypeChangeFlow
-import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
-import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
-import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewCell
 
 class MainActivity : AppCompatActivity()
 {
