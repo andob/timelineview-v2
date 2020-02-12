@@ -26,8 +26,10 @@ abstract class DateTimeInterval
     abstract fun toString(resources : Resources) : String
 
     override fun equals(other : Any?) =
-        (other as? DateTimeInterval)?.fromDateTime==fromDateTime&&
-        (other as? DateTimeInterval)?.toDateTime==toDateTime
+        other!=null&&other is DateTimeInterval&&
+        other::class.java==this::class.java&&
+        other.fromDateTime==this.fromDateTime&&
+        other.toDateTime==this.toDateTime
 
     override fun hashCode() = fromDateTime.millis.toInt()
 }

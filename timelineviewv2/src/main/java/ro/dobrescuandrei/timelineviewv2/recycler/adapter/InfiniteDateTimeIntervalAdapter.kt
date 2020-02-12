@@ -15,7 +15,7 @@ class InfiniteDateTimeIntervalAdapter : BaseTimelineRecyclerViewAdapter<Infinite
     {
         val cellView=holder.getCellView()
         cellView.setDateTimeInterval(selectedDateTimeInterval)
-        cellView.setIsSelected(true)
+        cellView.setIsSelected(false)
 
         timelineView.timelineRecyclerViewCellTransformer?.transform(
             cellView = cellView, dateTimeInterval = selectedDateTimeInterval)

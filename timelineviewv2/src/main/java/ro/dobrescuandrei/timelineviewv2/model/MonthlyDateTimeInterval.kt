@@ -34,13 +34,13 @@ class MonthlyDateTimeInterval
     }
 
     override fun getPreviousDateTimeInterval() =
-        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.minusYears(1))
+        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.minusMonths(1))
 
     override fun getNextDateTimeInterval() =
-        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(1))
+        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.plusMonths(1))
 
     override fun getShiftedDateTimeInterval(amount : Int) =
-        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(amount))
+        MonthlyDateTimeInterval(referenceDateTime = fromDateTime.plusMonths(amount))
 
     override fun minus(another : DateTimeInterval) =
         Months.monthsBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).months

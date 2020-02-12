@@ -7,6 +7,9 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import org.joda.time.DateTime;
+
+import java.util.Objects;
+
 import ro.dobrescuandrei.timelineviewv2.base.BaseCustomView;
 import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval;
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
@@ -66,16 +69,19 @@ public abstract class TimelineViewApi extends BaseCustomView
         if (dateTimeInterval instanceof CustomDateTimeInterval&&!isCustomDateTimeIntervalSupported)
             throw new InvalidDateTimeIntervalTypeException("Cannot use CustomDateTimeInterval!");
 
-        if (this.dateTimeInterval!=null&&!this.dateTimeInterval.getClass().equals(dateTimeInterval.getClass()))
+        if (!Objects.equals(this.dateTimeInterval, dateTimeInterval))
         {
-            dateTimeIntervalTypeChangeFlow.seekToNode(dateTimeInterval.getClass());
-            updateUiFromIntervalTypeChangeFlow();
+            if (this.dateTimeInterval!=null&&!this.dateTimeInterval.getClass().equals(dateTimeInterval.getClass()))
+            {
+                dateTimeIntervalTypeChangeFlow.seekToNode(dateTimeInterval.getClass());
+                updateUiFromIntervalTypeChangeFlow();
+            }
+
+            this.dateTimeInterval=dateTimeInterval;
+
+            if (this.onDateTimeIntervalChangedListener!=null)
+                this.onDateTimeIntervalChangedListener.invoke(this.dateTimeInterval);
         }
-
-        this.dateTimeInterval=dateTimeInterval;
-
-        if (this.onDateTimeIntervalChangedListener!=null)
-            this.onDateTimeIntervalChangedListener.invoke(this.dateTimeInterval);
     }
 
     public @NonNull DateTimeIntervalTypeChangeFlow getDateTimeIntervalTypeChangeFlow()

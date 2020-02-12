@@ -5,9 +5,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.Objects;
 import ro.dobrescuandrei.timelineviewv2.OnDateTimeIntervalChangedListener;
 import ro.dobrescuandrei.timelineviewv2.TimelineView;
-import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance;
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder;
 import ro.dobrescuandrei.timelineviewv2.utils.ScreenSize;
@@ -40,13 +40,16 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
 
     public void setSelectedDateTimeInterval(@NonNull DATE_TIME_INTERVAL dateTimeInterval)
     {
-        this.selectedDateTimeInterval=dateTimeInterval;
+        if (!Objects.equals(this.selectedDateTimeInterval, dateTimeInterval))
+        {
+            this.selectedDateTimeInterval=dateTimeInterval;
 
-        if (this.onSelectedDateTimeIntervalChangedListener!=null)
-            this.onSelectedDateTimeIntervalChangedListener.invoke(this.selectedDateTimeInterval);
+            if (this.onSelectedDateTimeIntervalChangedListener!=null)
+                this.onSelectedDateTimeIntervalChangedListener.invoke(this.selectedDateTimeInterval);
 
-        if (this.referenceDateTimeInterval==null)
-            this.referenceDateTimeInterval=dateTimeInterval;
+            if (this.referenceDateTimeInterval==null)
+                this.referenceDateTimeInterval=dateTimeInterval;
+        }
     }
 
     @NonNull

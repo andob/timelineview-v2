@@ -75,7 +75,7 @@ class TimelineView : TimelineViewApi
         recyclerView.adapter?.selectedDateTimeInterval=dateTimeInterval
 
         recyclerView.adapter?.setOnSelectedDateTimeIntervalChangedListener { dateTimeInterval ->
-            super.setDateTimeInterval(dateTimeInterval)
+            setDateTimeInterval(dateTimeInterval)
         }
     }
 
