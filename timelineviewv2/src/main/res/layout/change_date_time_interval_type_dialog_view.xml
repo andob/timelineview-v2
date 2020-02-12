@@ -9,57 +9,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:id="@+id/dailyRadioButton"
+            android:id="@+id/tv___dailyRadioButton"
             android:text="@string/daily"/>
 
     <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:id="@+id/weeklyRadioButton"
+            android:id="@+id/tv___weeklyRadioButton"
             android:text="@string/weekly"/>
 
     <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:id="@+id/monthlyRadioButton"
+            android:id="@+id/tv___monthlyRadioButton"
             android:text="@string/monthly"/>
 
     <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:id="@+id/yearlyRadioButton"
+            android:id="@+id/tv___yearlyRadioButton"
             android:text="@string/yearly"/>
 
     <RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:id="@+id/allTimeRadioButton"
+            android:id="@+id/tv___allTimeRadioButton"
             android:text="@string/all_time"/>
 
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:id="@+id/customIntervalButtonContainer">
+            android:id="@+id/tv___customIntervalButtonContainer">
 
         <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/customIntervalRadioButton"
+                android:id="@+id/tv___customIntervalRadioButton"
                 android:text="@string/custom_interval"/>
 
         <View
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/customIntervalRadioButton"
-                android:layout_alignRight="@+id/customIntervalRadioButton"
-                android:layout_alignTop="@+id/customIntervalRadioButton"
-                android:layout_alignBottom="@+id/customIntervalRadioButton"
-                android:id="@+id/customIntervalButtonOverlayView"/>
+                android:layout_alignLeft="@+id/tv___customIntervalRadioButton"
+                android:layout_alignRight="@+id/tv___customIntervalRadioButton"
+                android:layout_alignTop="@+id/tv___customIntervalRadioButton"
+                android:layout_alignBottom="@+id/tv___customIntervalRadioButton"
+                android:id="@+id/tv___customIntervalButtonOverlayView"/>
 
     </RelativeLayout>
 

@@ -9,14 +9,14 @@
     <ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recyclerView"/>
+            android:id="@+id/tv___recyclerView"/>
 
     <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="left"
             android:background="@drawable/fading_right_gradient_background"
-            android:id="@+id/leftButtonsContainer"
+            android:id="@+id/tv___leftButtonsContainer"
             android:orientation="horizontal">
 
         <ImageView
@@ -26,7 +26,7 @@
                 android:paddingBottom="10dp"
                 android:textColor="#ffffff"
                 android:src="@drawable/ic_arrow_down_white_18dp"
-                android:id="@+id/decrementDateIntervalTypeButton"/>
+                android:id="@+id/tv___decrementDateIntervalTypeButton"/>
 
         <ImageView
                 android:layout_width="40dp"
@@ -36,7 +36,7 @@
                 android:textColor="#ffffff"
                 android:visibility="gone"
                 android:src="@drawable/ic_calendar_range_outline_white_18dp"
-                android:id="@+id/changeDateIntervalTypeLeftButton"/>
+                android:id="@+id/tv___changeDateIntervalTypeLeftButton"/>
 
     </LinearLayout>
 
@@ -45,7 +45,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:background="@drawable/fading_left_gradient_background"
-            android:id="@+id/rightButtonsContainer"
+            android:id="@+id/tv___rightButtonsContainer"
             android:orientation="horizontal">
 
         <ImageView
@@ -55,7 +55,7 @@
                 android:paddingBottom="10dp"
                 android:textColor="#ffffff"
                 android:src="@drawable/ic_arrow_up_white_18dp"
-                android:id="@+id/incrementDateIntervalTypeButton"/>
+                android:id="@+id/tv___incrementDateIntervalTypeButton"/>
 
         <ImageView
                 android:layout_width="40dp"
@@ -65,7 +65,7 @@
                 android:textColor="#ffffff"
                 android:visibility="gone"
                 android:src="@drawable/ic_calendar_range_outline_white_18dp"
-                android:id="@+id/changeDateIntervalTypeRightButton"/>
+                android:id="@+id/tv___changeDateIntervalTypeRightButton"/>
 
     </LinearLayout>
 

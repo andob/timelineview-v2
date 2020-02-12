@@ -3,7 +3,8 @@ package ro.dobrescuandrei.timelineviewv2.sample
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.TextView
+import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 
 class MainActivity : AppCompatActivity()
@@ -13,6 +14,9 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val timelineView=findViewById<TimelineView>(R.id.timelineView)!!
+        val timeIntervalLabel=findViewById<TextView>(R.id.timeIntervalLabel)!!
 
 //        timelineView.dateTimeIntervalTypeChangeFlow=DateTimeIntervalTypeChangeFlow.build {
 //            from(DailyDateTimeInterval::class.java)

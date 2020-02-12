@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
 import android.view.View
-import kotlinx.android.synthetic.main.timeline_view.view.*
+import android.widget.ImageView
+import android.widget.LinearLayout
 import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.dialog.ChangeDateTimeIntervalTypeDialog
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
+import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
 
 class TimelineView : TimelineViewApi
 {
@@ -158,4 +160,12 @@ class TimelineView : TimelineViewApi
 
         super.onDetachedFromWindow()
     }
+
+    private val recyclerView get() = findViewById<TimelineRecyclerView>(R.id.tv___recyclerView)!!
+    private val leftButtonsContainer get() = findViewById<LinearLayout>(R.id.tv___leftButtonsContainer)!!
+    private val decrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.tv___decrementDateIntervalTypeButton)!!
+    private val changeDateIntervalTypeLeftButton get() = findViewById<ImageView>(R.id.tv___changeDateIntervalTypeLeftButton)!!
+    private val rightButtonsContainer get() = findViewById<LinearLayout>(R.id.tv___rightButtonsContainer)!!
+    private val incrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.tv___incrementDateIntervalTypeButton)!!
+    private val changeDateIntervalTypeRightButton get() = findViewById<ImageView>(R.id.tv___changeDateIntervalTypeRightButton)!!
 }

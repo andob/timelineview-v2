@@ -4,13 +4,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/cell"
+        android:id="@+id/tv___cell"
         android:background="@color/default_unselected_cell_background_color">
 
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/itemsContainer">
+            android:id="@+id/tv___itemsContainer">
 
         <TextView
                 android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 tools:text="TODAY"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:id="@+id/intervalDescriptionLabel"/>
+                android:id="@+id/tv___intervalDescriptionLabel"/>
 
         <FrameLayout
                 android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             <View
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:id="@+id/selectedIndicatorView"
+                    android:id="@+id/tv___selectedIndicatorView"
                     android:visibility="gone"
                     android:background="@color/default_selected_cell_indicator_color"/>
 

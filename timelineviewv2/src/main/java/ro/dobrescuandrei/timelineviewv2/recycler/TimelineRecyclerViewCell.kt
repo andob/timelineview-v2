@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
-import kotlinx.android.synthetic.main.timeline_recycler_view_cell.view.*
+import android.widget.TextView
 import ro.dobrescuandrei.timelineviewv2.R
 import ro.dobrescuandrei.timelineviewv2.TimelineViewAppearance
 import ro.dobrescuandrei.timelineviewv2.base.BaseCustomView
@@ -65,4 +65,9 @@ class TimelineRecyclerViewCell
         itemsContainer.layoutParams=FrameLayout.LayoutParams(width,
             FrameLayout.LayoutParams.MATCH_PARENT)
     }
+
+    private val cell get() = findViewById<FrameLayout>(R.id.tv___cell)!!
+    private val itemsContainer get() = findViewById<FrameLayout>(R.id.tv___itemsContainer)!!
+    private val intervalDescriptionLabel get() = findViewById<TextView>(R.id.tv___intervalDescriptionLabel)!!
+    private val selectedIndicatorView get() = findViewById<View>(R.id.tv___selectedIndicatorView)!!
 }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.timeline_view.view.*
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.InfiniteScrollingTimelineRecyclerViewAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.ScreenSize
@@ -13,7 +12,7 @@ class TimelineRecyclerView : RecyclerView
 {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     {
-        recyclerView.layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     override fun setAdapter(adapter : Adapter<*>?)

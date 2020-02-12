@@ -3,8 +3,9 @@ package ro.dobrescuandrei.timelineviewv2.dialog
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.change_date_time_interval_type_dialog_view.view.*
 import ro.dobrescuandrei.timelineviewv2.R
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.base.BaseCustomView
@@ -82,4 +83,13 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
             }
         }
     }
+
+    private val dailyRadioButton get() = findViewById<RadioButton>(R.id.tv___dailyRadioButton)!!
+    private val weeklyRadioButton get() = findViewById<RadioButton>(R.id.tv___weeklyRadioButton)!!
+    private val monthlyRadioButton get() = findViewById<RadioButton>(R.id.tv___monthlyRadioButton)!!
+    private val yearlyRadioButton get() = findViewById<RadioButton>(R.id.tv___yearlyRadioButton)!!
+    private val allTimeRadioButton get() = findViewById<RadioButton>(R.id.tv___allTimeRadioButton)!!
+    private val customIntervalButtonContainer get() = findViewById<RelativeLayout>(R.id.tv___customIntervalButtonContainer)!!
+    private val customIntervalRadioButton get() = findViewById<RadioButton>(R.id.tv___customIntervalRadioButton)!!
+    private val customIntervalButtonOverlayView get() = findViewById<View>(R.id.tv___customIntervalButtonOverlayView)!!
 }
