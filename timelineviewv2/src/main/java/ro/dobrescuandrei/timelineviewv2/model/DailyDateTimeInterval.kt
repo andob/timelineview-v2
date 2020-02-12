@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 class DailyDateTimeInterval
 (
     referenceDateTime : DateTime
-) : DateTimeInterval<DailyDateTimeInterval>
+) : DateTimeInterval
 (
     fromDateTime = referenceDateTime.atBeginningOfDay(),
     toDateTime = referenceDateTime.atEndOfDay()
@@ -46,7 +46,7 @@ class DailyDateTimeInterval
     override fun getShiftedDateTimeInterval(amount : Int) =
         DailyDateTimeInterval(referenceDateTime = fromDateTime.plusDays(amount))
 
-    override fun minus(another : DateTimeInterval<*>) =
+    override fun minus(another : DateTimeInterval) =
         Days.daysBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).days
 
     @SuppressLint("SimpleDateFormat")

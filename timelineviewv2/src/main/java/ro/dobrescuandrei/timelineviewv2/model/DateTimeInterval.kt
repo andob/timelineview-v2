@@ -4,18 +4,19 @@ import android.content.res.Resources
 import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
+import java.io.Serializable
 
-abstract class DateTimeInterval<SELF>
+abstract class DateTimeInterval
 (
     val fromDateTime : DateTime,
     val toDateTime : DateTime
-)
+) : Serializable
 {
-    abstract fun getPreviousDateTimeInterval() : SELF?
-    abstract fun getNextDateTimeInterval() : SELF?
-    abstract fun getShiftedDateTimeInterval(amount : Int) : SELF?
+    abstract fun getPreviousDateTimeInterval() : DateTimeInterval?
+    abstract fun getNextDateTimeInterval() : DateTimeInterval?
+    abstract fun getShiftedDateTimeInterval(amount : Int) : DateTimeInterval?
 
-    abstract operator fun minus(another : DateTimeInterval<*>) : Int
+    abstract operator fun minus(another : DateTimeInterval) : Int
 
     fun contains(dateTime : DateTime) = dateTime in fromDateTime..toDateTime
 
@@ -25,8 +26,8 @@ abstract class DateTimeInterval<SELF>
     abstract fun toString(resources : Resources) : String
 
     override fun equals(other : Any?) =
-        (other as? DateTimeInterval<*>)?.fromDateTime==fromDateTime&&
-        (other as? DateTimeInterval<*>)?.toDateTime==toDateTime
+        (other as? DateTimeInterval)?.fromDateTime==fromDateTime&&
+        (other as? DateTimeInterval)?.toDateTime==toDateTime
 
     override fun hashCode() = fromDateTime.millis.toInt()
 }

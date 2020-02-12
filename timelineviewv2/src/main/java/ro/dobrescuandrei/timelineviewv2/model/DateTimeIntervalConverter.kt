@@ -8,7 +8,7 @@ class DateTimeIntervalConverter
 {
     private val conversionHistory = ConversionHistory(maxSize = 10)
 
-    fun <FROM : DateTimeInterval<*>, TO : DateTimeInterval<*>> convert(from : FROM, to : Class<TO>) : TO
+    fun <FROM : DateTimeInterval, TO : DateTimeInterval> convert(from : FROM, to : Class<TO>) : TO
     {
         val inputInterval=from
         val inputType=from::class.java
@@ -86,10 +86,10 @@ class DateTimeIntervalConverter
 
         class Item
         (
-            val inputInterval : DateTimeInterval<*>,
-            val inputType : Class<out DateTimeInterval<*>>,
-            val outputInterval : DateTimeInterval<*>,
-            val outputType : Class<out DateTimeInterval<*>>
+            val inputInterval : DateTimeInterval,
+            val inputType : Class<out DateTimeInterval>,
+            val outputInterval : DateTimeInterval,
+            val outputType : Class<out DateTimeInterval>
         )
     }
 }

@@ -61,7 +61,6 @@ public abstract class TimelineViewApi extends BaseCustomView
 
     public void setDateTimeInterval(@NonNull DateTimeInterval dateTimeInterval)
     {
-        DateTime todayAndNow=new DateTime(TimelineViewDefaults.INSTANCE.getTimezone());
         if (!(dateTimeInterval instanceof CustomDateTimeInterval)&&!dateTimeIntervalTypeChangeFlow.toList().contains(dateTimeInterval.getClass()))
             throw new InvalidDateTimeIntervalTypeException("Cannot use "+dateTimeInterval.getClass().getSimpleName());
         if (dateTimeInterval instanceof CustomDateTimeInterval&&!isCustomDateTimeIntervalSupported)
@@ -69,7 +68,7 @@ public abstract class TimelineViewApi extends BaseCustomView
 
         if (this.dateTimeInterval!=null&&!this.dateTimeInterval.getClass().equals(dateTimeInterval.getClass()))
         {
-            dateTimeIntervalTypeChangeFlow.seekToNode((Class<? extends DateTimeInterval<?>>)dateTimeInterval.getClass());
+            dateTimeIntervalTypeChangeFlow.seekToNode(dateTimeInterval.getClass());
             updateUiFromIntervalTypeChangeFlow();
         }
 

@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 class WeeklyDateTimeInterval
 (
     referenceDateTime : DateTime
-) : DateTimeInterval<WeeklyDateTimeInterval>
+) : DateTimeInterval
 (
     fromDateTime = referenceDateTime
         .dayOfWeek().withMinimumValue()
@@ -42,7 +42,7 @@ class WeeklyDateTimeInterval
     override fun getShiftedDateTimeInterval(amount : Int) =
         WeeklyDateTimeInterval(referenceDateTime = fromDateTime.plusWeeks(amount))
 
-    override fun minus(another : DateTimeInterval<*>) =
+    override fun minus(another : DateTimeInterval) =
         Months.monthsBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).months
 
     @SuppressLint("SimpleDateFormat")

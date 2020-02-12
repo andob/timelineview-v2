@@ -20,12 +20,12 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
     fun setup(timelineView : TimelineView, dialog : AlertDialog)
     {
         val radioButtonsToIntervalTypes=mapOf(
-            dailyRadioButton to DailyDateTimeInterval::class.java as Class<DateTimeInterval<*>>,
-            weeklyRadioButton to WeeklyDateTimeInterval::class.java as Class<DateTimeInterval<*>>,
-            monthlyRadioButton to MonthlyDateTimeInterval::class.java as Class<DateTimeInterval<*>>,
-            yearlyRadioButton to YearlyDateTimeInterval::class.java as Class<DateTimeInterval<*>>,
-            allTimeRadioButton to InfiniteDateTimeInterval::class.java as Class<DateTimeInterval<*>>,
-            customIntervalRadioButton to CustomDateTimeInterval::class.java as Class<DateTimeInterval<*>>)
+            dailyRadioButton to DailyDateTimeInterval::class.java as Class<DateTimeInterval>,
+            weeklyRadioButton to WeeklyDateTimeInterval::class.java as Class<DateTimeInterval>,
+            monthlyRadioButton to MonthlyDateTimeInterval::class.java as Class<DateTimeInterval>,
+            yearlyRadioButton to YearlyDateTimeInterval::class.java as Class<DateTimeInterval>,
+            allTimeRadioButton to InfiniteDateTimeInterval::class.java as Class<DateTimeInterval>,
+            customIntervalRadioButton to CustomDateTimeInterval::class.java as Class<DateTimeInterval>)
 
         if (timelineView.isCustomDateTimeIntervalSupported)
             customIntervalButtonContainer.visibility=View.VISIBLE

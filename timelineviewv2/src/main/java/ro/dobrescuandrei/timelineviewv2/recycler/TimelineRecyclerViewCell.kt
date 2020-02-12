@@ -19,14 +19,14 @@ class TimelineRecyclerViewCell
     interface Transformer
     {
         fun transform(cellView : TimelineRecyclerViewCell,
-                      dateTimeInterval : DateTimeInterval<*>)
+                      dateTimeInterval : DateTimeInterval)
     }
 
     private var _isSelected = false
 
     override fun getLayoutId() = R.layout.timeline_recycler_view_cell
 
-    fun setDateTimeInterval(dateTimeInterval : DateTimeInterval<*>)
+    fun setDateTimeInterval(dateTimeInterval : DateTimeInterval)
     {
         intervalDescriptionLabel.text=dateTimeInterval.toString(resources = context.resources)
     }

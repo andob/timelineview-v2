@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 class MonthlyDateTimeInterval
 (
     referenceDateTime : DateTime
-) : DateTimeInterval<MonthlyDateTimeInterval>
+) : DateTimeInterval
 (
     fromDateTime = referenceDateTime
         .dayOfMonth().withMinimumValue()
@@ -42,7 +42,7 @@ class MonthlyDateTimeInterval
     override fun getShiftedDateTimeInterval(amount : Int) =
         MonthlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(amount))
 
-    override fun minus(another : DateTimeInterval<*>) =
+    override fun minus(another : DateTimeInterval) =
         Months.monthsBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).months
 
     @SuppressLint("SimpleDateFormat")

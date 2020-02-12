@@ -9,7 +9,7 @@ import ro.dobrescuandrei.timelineviewv2.recycler.adapter.CustomDateTimeIntervalA
 import ro.dobrescuandrei.timelineviewv2.utils.*
 import java.text.SimpleDateFormat
 
-class CustomDateTimeInterval : DateTimeInterval<CustomDateTimeInterval>
+class CustomDateTimeInterval : DateTimeInterval
 {
     constructor(fromDateTime : DateTime, toDateTime : DateTime) : super(
         fromDateTime = min(fromDateTime, toDateTime).atBeginningOfDay(),
@@ -19,7 +19,7 @@ class CustomDateTimeInterval : DateTimeInterval<CustomDateTimeInterval>
     override fun getNextDateTimeInterval() : CustomDateTimeInterval? = null
     override fun getShiftedDateTimeInterval(amount : Int) : CustomDateTimeInterval? = null
 
-    override fun minus(another : DateTimeInterval<*>) = 0
+    override fun minus(another : DateTimeInterval) = 0
 
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String

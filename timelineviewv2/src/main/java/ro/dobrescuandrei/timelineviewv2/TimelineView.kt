@@ -63,7 +63,7 @@ class TimelineView : TimelineViewApi
         recyclerView.adapter?.setOnSelectedDateTimeIntervalChangedListener(listener)
     }
 
-    override fun setDateTimeInterval(dateTimeInterval : DateTimeInterval<*>)
+    override fun setDateTimeInterval(dateTimeInterval : DateTimeInterval)
     {
         super.setDateTimeInterval(dateTimeInterval)
 
@@ -85,7 +85,7 @@ class TimelineView : TimelineViewApi
 
         dateTimeInterval=flow.getFirstNode().constructors.find { constructor ->
             DateTime::class.java in constructor.parameterTypes
-        }!!.newInstance(todayAndNow) as DateTimeInterval<*>
+        }!!.newInstance(todayAndNow) as DateTimeInterval
 
         updateUiFromIntervalTypeChangeFlow()
 

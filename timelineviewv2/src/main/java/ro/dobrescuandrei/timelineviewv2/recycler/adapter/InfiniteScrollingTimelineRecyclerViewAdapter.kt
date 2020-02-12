@@ -9,14 +9,14 @@ import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder
 import ro.dobrescuandrei.timelineviewv2.utils.getParentRecyclerView
 
-abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecyclerViewAdapter<DateTimeInterval<*>>
+abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecyclerViewAdapter<DateTimeInterval>
 {
     constructor(context: Context?, timelineView: TimelineView?) : super(context, timelineView)
 
     override fun onBindViewHolder(holder : TimelineRecyclerViewHolder, position : Int)
     {
         (position-itemCount/2+(referenceDateTimeInterval-selectedDateTimeInterval)).let { position ->
-            val dateTimeInterval=referenceDateTimeInterval.getShiftedDateTimeInterval(position) as DateTimeInterval<*>
+            val dateTimeInterval=referenceDateTimeInterval.getShiftedDateTimeInterval(position) as DateTimeInterval
 
             val cellView=holder.getCellView()
             cellView.setDateTimeInterval(dateTimeInterval)

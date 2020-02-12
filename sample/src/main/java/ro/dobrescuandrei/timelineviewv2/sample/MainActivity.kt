@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity()
 //        timelineView.isCustomDateTimeIntervalSupported=false
 //
 //        timelineView.timelineRecyclerViewCellTransformer=object : TimelineRecyclerViewCell.Transformer {
-//            override fun transform(cellView : TimelineRecyclerViewCell, dateTimeInterval : DateTimeInterval<*>) {
+//            override fun transform(cellView : TimelineRecyclerViewCell, dateTimeInterval : DateTimeInterval) {
 //                val todayAndNow=DateTime(TimelineViewDefaults.timezone)
 //                if (dateTimeInterval.fromDateTime.isAfter(todayAndNow))
 //                    cellView.setOnClickListener(null)

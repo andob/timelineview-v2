@@ -12,7 +12,7 @@ import ro.dobrescuandrei.timelineviewv2.utils.atEndOfDay
 class YearlyDateTimeInterval
 (
     referenceDateTime : DateTime
-) : DateTimeInterval<YearlyDateTimeInterval>
+) : DateTimeInterval
 (
     fromDateTime = referenceDateTime
         .dayOfYear().withMinimumValue()
@@ -39,7 +39,7 @@ class YearlyDateTimeInterval
     override fun getShiftedDateTimeInterval(amount : Int) =
         YearlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(amount))
 
-    override fun minus(another : DateTimeInterval<*>) =
+    override fun minus(another : DateTimeInterval) =
         Years.yearsBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).years
 
     override fun toString(resources : Resources) =
