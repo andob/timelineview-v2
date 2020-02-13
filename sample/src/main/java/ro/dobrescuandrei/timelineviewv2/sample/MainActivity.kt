@@ -34,10 +34,9 @@ class MainActivity : AppCompatActivity()
 //            }
 //        }
 
+        timelineView.dateTimeInterval=DailyDateTimeInterval.today()
         timelineView.setOnDateTimeIntervalChangedListener { dateTimeInterval ->
             timeIntervalLabel.text=dateTimeInterval.toString(resources = resources)
         }
-
-        timelineView.dateTimeInterval=DailyDateTimeInterval.today()
     }
 }

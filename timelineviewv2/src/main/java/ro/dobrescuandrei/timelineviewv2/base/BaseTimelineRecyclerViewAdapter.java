@@ -3,10 +3,7 @@ package ro.dobrescuandrei.timelineviewv2.base;
 import android.content.Context;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-import java.util.Objects;
-import ro.dobrescuandrei.timelineviewv2.OnDateTimeIntervalChangedListener;
 import ro.dobrescuandrei.timelineviewv2.TimelineView;
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder;
@@ -17,39 +14,13 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
     public Context context;
     public TimelineView timelineView;
 
-    protected DATE_TIME_INTERVAL referenceDateTimeInterval;
-    private DATE_TIME_INTERVAL selectedDateTimeInterval;
-
-    protected @Nullable OnDateTimeIntervalChangedListener onSelectedDateTimeIntervalChangedListener;
+    protected final DATE_TIME_INTERVAL referenceDateTimeInterval;
 
     public BaseTimelineRecyclerViewAdapter(Context context, TimelineView timelineView)
     {
         this.context=context;
         this.timelineView=timelineView;
-    }
-
-    public void setOnSelectedDateTimeIntervalChangedListener(OnDateTimeIntervalChangedListener listener)
-    {
-        this.onSelectedDateTimeIntervalChangedListener=listener;
-    }
-
-    public @NonNull DATE_TIME_INTERVAL getSelectedDateTimeInterval()
-    {
-        return this.selectedDateTimeInterval;
-    }
-
-    public void setSelectedDateTimeInterval(@NonNull DATE_TIME_INTERVAL dateTimeInterval)
-    {
-        if (!Objects.equals(this.selectedDateTimeInterval, dateTimeInterval))
-        {
-            this.selectedDateTimeInterval=dateTimeInterval;
-
-            if (this.onSelectedDateTimeIntervalChangedListener!=null)
-                this.onSelectedDateTimeIntervalChangedListener.invoke(this.selectedDateTimeInterval);
-
-            if (this.referenceDateTimeInterval==null)
-                this.referenceDateTimeInterval=dateTimeInterval;
-        }
+        this.referenceDateTimeInterval=(DATE_TIME_INTERVAL)timelineView.getDateTimeInterval();
     }
 
     @NonNull
@@ -72,6 +43,5 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
     {
         this.context=null;
         this.timelineView=null;
-        this.onSelectedDateTimeIntervalChangedListener=null;
     }
 }

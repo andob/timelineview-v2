@@ -3,7 +3,6 @@ package ro.dobrescuandrei.timelineviewv2.model
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import org.joda.time.DateTime
-import org.joda.time.Days
 import ro.dobrescuandrei.timelineviewv2.R
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
@@ -45,9 +44,6 @@ class DailyDateTimeInterval
 
     override fun getShiftedDateTimeInterval(amount : Int) =
         DailyDateTimeInterval(referenceDateTime = fromDateTime.plusDays(amount))
-
-    override fun minus(another : DateTimeInterval) =
-        Days.daysBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).days
 
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String

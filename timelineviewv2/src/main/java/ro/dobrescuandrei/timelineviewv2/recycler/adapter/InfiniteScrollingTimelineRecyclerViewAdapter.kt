@@ -5,9 +5,7 @@ import ro.dobrescuandrei.timelineviewv2.InvalidDateTimeIntervalTypeException
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
-import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder
-import ro.dobrescuandrei.timelineviewv2.utils.getParentRecyclerView
 
 abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecyclerViewAdapter<DateTimeInterval>
 {
@@ -15,24 +13,15 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
 
     override fun onBindViewHolder(holder : TimelineRecyclerViewHolder, position : Int)
     {
-        (position-itemCount/2+(referenceDateTimeInterval-selectedDateTimeInterval)).let { position ->
+        (position-itemCount/2).let { position ->
             val dateTimeInterval=referenceDateTimeInterval.getShiftedDateTimeInterval(position) as DateTimeInterval
 
             val cellView=holder.getCellView()
             cellView.setDateTimeInterval(dateTimeInterval)
-            cellView.setIsSelected(dateTimeInterval==selectedDateTimeInterval)
+            cellView.setIsSelected(position==0)
 
             cellView.setOnClickListener { cellView ->
-                try
-                {
-                    this.onSelectedDateTimeIntervalChangedListener?.invoke(dateTimeInterval)
-                    this.selectedDateTimeInterval=dateTimeInterval
-
-                    (cellView.getParentRecyclerView() as? TimelineRecyclerView)
-                        ?.scrollMiddleCellToMiddleOfTheScreen()
-
-                    notifyDataSetChanged()
-                }
+                try { this.timelineView.dateTimeInterval=dateTimeInterval }
                 catch (ex : InvalidDateTimeIntervalTypeException) {}
             }
 

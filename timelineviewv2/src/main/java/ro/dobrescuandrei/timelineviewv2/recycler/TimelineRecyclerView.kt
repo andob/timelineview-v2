@@ -32,7 +32,7 @@ class TimelineRecyclerView : RecyclerView
         return adapter as BaseTimelineRecyclerViewAdapter<*>
     }
 
-    fun scrollMiddleCellToMiddleOfTheScreen()
+    internal fun scrollMiddleCellToMiddleOfTheScreen()
     {
         if (adapter!=null&&adapter is InfiniteScrollingTimelineRecyclerViewAdapter)
             (layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(

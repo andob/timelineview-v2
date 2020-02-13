@@ -16,8 +16,6 @@ abstract class DateTimeInterval
     abstract fun getNextDateTimeInterval() : DateTimeInterval?
     abstract fun getShiftedDateTimeInterval(amount : Int) : DateTimeInterval?
 
-    abstract operator fun minus(another : DateTimeInterval) : Int
-
     fun contains(dateTime : DateTime) = dateTime in fromDateTime..toDateTime
 
     abstract fun toRecyclerViewAdapter(timelineView : TimelineView) : BaseTimelineRecyclerViewAdapter<*>

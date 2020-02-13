@@ -2,7 +2,6 @@ package ro.dobrescuandrei.timelineviewv2.model
 
 import android.content.res.Resources
 import org.joda.time.DateTime
-import org.joda.time.Years
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.YearlyDateIntervalAdapter
@@ -38,9 +37,6 @@ class YearlyDateTimeInterval
 
     override fun getShiftedDateTimeInterval(amount : Int) =
         YearlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(amount))
-
-    override fun minus(another : DateTimeInterval) =
-        Years.yearsBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).years
 
     override fun toString(resources : Resources) =
         fromDateTime.year.toString()

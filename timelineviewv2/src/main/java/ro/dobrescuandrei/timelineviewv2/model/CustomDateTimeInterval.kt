@@ -19,8 +19,6 @@ class CustomDateTimeInterval : DateTimeInterval
     override fun getNextDateTimeInterval() : CustomDateTimeInterval? = null
     override fun getShiftedDateTimeInterval(amount : Int) : CustomDateTimeInterval? = null
 
-    override fun minus(another : DateTimeInterval) = 0
-
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String
     {

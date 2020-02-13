@@ -17,8 +17,6 @@ class InfiniteDateTimeInterval : DateTimeInterval
     override fun getNextDateTimeInterval() : InfiniteDateTimeInterval? = null
     override fun getShiftedDateTimeInterval(amount : Int) : InfiniteDateTimeInterval? = null
 
-    override fun minus(another : DateTimeInterval) = 0
-
     override fun toString(resources : Resources) =
         resources.getString(R.string.all_time)
 

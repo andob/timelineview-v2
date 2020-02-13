@@ -58,13 +58,6 @@ class TimelineView : TimelineViewApi
         recyclerView.scrollMiddleCellToMiddleOfTheScreen()
     }
 
-    override fun setOnDateTimeIntervalChangedListener(listener : OnDateTimeIntervalChangedListener?)
-    {
-        super.setOnDateTimeIntervalChangedListener(listener)
-
-        recyclerView.adapter?.setOnSelectedDateTimeIntervalChangedListener(listener)
-    }
-
     override fun setDateTimeInterval(dateTimeInterval : DateTimeInterval)
     {
         super.setDateTimeInterval(dateTimeInterval)
@@ -72,11 +65,6 @@ class TimelineView : TimelineViewApi
         recyclerView.adapter?.dispose()
 
         recyclerView.adapter=dateTimeInterval.toRecyclerViewAdapter(timelineView = this)
-        recyclerView.adapter?.selectedDateTimeInterval=dateTimeInterval
-
-        recyclerView.adapter?.setOnSelectedDateTimeIntervalChangedListener { dateTimeInterval ->
-            setDateTimeInterval(dateTimeInterval)
-        }
     }
 
     override fun setDateTimeIntervalTypeChangeFlow(flow : DateTimeIntervalTypeChangeFlow)

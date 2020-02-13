@@ -3,7 +3,6 @@ package ro.dobrescuandrei.timelineviewv2.model
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import org.joda.time.DateTime
-import org.joda.time.Months
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.WeeklyDateIntervalAdapter
@@ -41,9 +40,6 @@ class WeeklyDateTimeInterval
 
     override fun getShiftedDateTimeInterval(amount : Int) =
         WeeklyDateTimeInterval(referenceDateTime = fromDateTime.plusWeeks(amount))
-
-    override fun minus(another : DateTimeInterval) =
-        Months.monthsBetween(fromDateTime.toLocalDate(), another.fromDateTime.toLocalDate()).months
 
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String

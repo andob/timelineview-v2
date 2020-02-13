@@ -14,11 +14,11 @@ class InfiniteDateTimeIntervalAdapter : BaseTimelineRecyclerViewAdapter<Infinite
     override fun onBindViewHolder(holder : TimelineRecyclerViewHolder, position : Int)
     {
         val cellView=holder.getCellView()
-        cellView.setDateTimeInterval(selectedDateTimeInterval)
+        cellView.setDateTimeInterval(referenceDateTimeInterval)
         cellView.setIsSelected(false)
 
         timelineView.timelineRecyclerViewCellTransformer?.transform(
-            cellView = cellView, dateTimeInterval = selectedDateTimeInterval)
+            cellView = cellView, dateTimeInterval = referenceDateTimeInterval)
     }
 
     override fun getItemCount() = 1
