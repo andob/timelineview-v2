@@ -22,4 +22,6 @@ class InfiniteDateTimeInterval : DateTimeInterval
 
     override fun toRecyclerViewAdapter(timelineView : TimelineView) =
         InfiniteDateTimeIntervalAdapter(context = timelineView.context, timelineView = timelineView)
+
+    override fun clone() = InfiniteDateTimeInterval()
 }

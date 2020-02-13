@@ -70,4 +70,6 @@ class DailyDateTimeInterval
 
     override fun toRecyclerViewAdapter(timelineView : TimelineView) =
         DailyDateTimeIntervalAdapter(context = timelineView.context, timelineView = timelineView)
+
+    override fun clone() = DailyDateTimeInterval(referenceDateTime = fromDateTime)
 }

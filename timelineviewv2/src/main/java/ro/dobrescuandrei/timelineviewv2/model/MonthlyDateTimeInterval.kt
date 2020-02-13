@@ -56,4 +56,6 @@ class MonthlyDateTimeInterval
 
     override fun toRecyclerViewAdapter(timelineView : TimelineView) =
         MonthlyDateTimeIntervalAdapter(context = timelineView.context, timelineView = timelineView)
+
+    override fun clone() = MonthlyDateTimeInterval(referenceDateTime = fromDateTime)
 }

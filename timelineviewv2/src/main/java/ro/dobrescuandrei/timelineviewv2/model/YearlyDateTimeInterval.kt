@@ -43,4 +43,6 @@ class YearlyDateTimeInterval
 
     override fun toRecyclerViewAdapter(timelineView : TimelineView) =
         YearlyDateIntervalAdapter(context = timelineView.context, timelineView = timelineView)
+
+    override fun clone() = YearlyDateTimeInterval(referenceDateTime = fromDateTime)
 }

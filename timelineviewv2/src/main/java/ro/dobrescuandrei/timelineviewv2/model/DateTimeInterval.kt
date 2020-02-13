@@ -30,4 +30,6 @@ abstract class DateTimeInterval
         other.toDateTime==this.toDateTime
 
     override fun hashCode() = fromDateTime.millis.toInt()
+
+    abstract fun clone() : DateTimeInterval
 }

@@ -43,4 +43,6 @@ class CustomDateTimeInterval : DateTimeInterval
 
     override fun toRecyclerViewAdapter(timelineView : TimelineView) =
         CustomDateTimeIntervalAdapter(context = timelineView.context, timelineView = timelineView)
+
+    override fun clone() = CustomDateTimeInterval(fromDateTime, toDateTime)
 }

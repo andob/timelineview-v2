@@ -65,4 +65,6 @@ class WeeklyDateTimeInterval
 
     override fun toRecyclerViewAdapter(timelineView : TimelineView) =
         WeeklyDateIntervalAdapter(context = timelineView.context, timelineView = timelineView)
+
+    override fun clone() = WeeklyDateTimeInterval(referenceDateTime = fromDateTime)
 }

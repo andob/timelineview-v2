@@ -13,7 +13,7 @@ import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
 
-class TimelineView : TimelineViewApi
+open class TimelineView : TimelineViewApi
 {
     internal val dateTimeIntervalConverter = DateTimeIntervalConverter()
 
