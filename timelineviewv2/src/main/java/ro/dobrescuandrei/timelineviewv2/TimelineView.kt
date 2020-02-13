@@ -24,7 +24,7 @@ class TimelineView : TimelineViewApi
 
     init
     {
-        this.dateTimeIntervalTypeChangeFlow=TimelineViewDefaults.dateTimeIntervalTypeChangeFlow
+        this.dateTimeIntervalTypeChangeFlow=TimelineViewDefaults.dateTimeIntervalTypeChangeFlowFactory.invoke()
 
         changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
         changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
