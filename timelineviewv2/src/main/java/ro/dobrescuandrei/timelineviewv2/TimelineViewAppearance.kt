@@ -6,21 +6,21 @@ import androidx.core.content.ContextCompat
 
 class TimelineViewAppearance
 {
-    val selectedCellTextColor : Int
-    val selectedCellTextSizeInPx : Int
-    val selectedCellBackgroundColor : Int
-    val selectedCellIndicatorColor : Int
-    val selectedCellIndicatorWidthInPx : Int
+    var selectedCellTextColor : Int
+    var selectedCellTextSizeInPx : Int
+    var selectedCellBackgroundColor : Int
+    var selectedCellIndicatorColor : Int
+    var selectedCellIndicatorWidthInPx : Int
 
-    val unselectedCellTextColor : Int
-    val unselectedCellTextSizeInPx : Int
-    val unselectedCellBackgroundColor : Int
+    var unselectedCellTextColor : Int
+    var unselectedCellTextSizeInPx : Int
+    var unselectedCellBackgroundColor : Int
 
-    val upIconResourceId : Int
-    val downIconResourceId : Int
-    val calendarIconResourceId : Int
-    val leftButtonsContainerBackgroundResourceId : Int
-    val rightButtonsContainerBackgroundResourceId : Int
+    var upIconResourceId : Int
+    var downIconResourceId : Int
+    var calendarIconResourceId : Int
+    var leftButtonsContainerBackgroundResourceId : Int
+    var rightButtonsContainerBackgroundResourceId : Int
 
     constructor(context : Context)
     {

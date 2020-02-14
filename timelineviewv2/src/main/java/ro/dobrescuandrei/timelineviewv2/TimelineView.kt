@@ -19,6 +19,7 @@ open class TimelineView : TimelineViewApi
 
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context?, appearance: TimelineViewAppearance) : super(context, appearance)
 
     override fun getLayoutId() = R.layout.timeline_view
 
