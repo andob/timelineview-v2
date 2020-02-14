@@ -9,7 +9,7 @@ import ro.dobrescuandrei.timelineviewv2.recycler.adapter.InfiniteDateTimeInterva
 
 class InfiniteDateTimeInterval : DateTimeInterval
 (
-    fromDateTime = DateTime(0, TimelineViewDefaults.timezone),            //01.01.1970 00:00:00.000
+    fromDateTime = DateTime(1, TimelineViewDefaults.timezone),            //01.01.1970 00:00:00.001
     toDateTime = DateTime(64060588800000L, TimelineViewDefaults.timezone) //01.01.4000 00:00:00.000
 )
 {
