@@ -2,7 +2,7 @@
 
 ### DateTime interval picker view for Android
 
-<img src="https://raw.githubusercontent.com/andob/timelineview-v2/master/LICENSE"/>
+<img src="https://raw.githubusercontent.com/andob/timelineview-v2/master/DEMO.gif"/>
 
 With this library, app users can pick DateTime intervals. Under the hood, it uses JodaTime library in order to calculate the intervals.
 
@@ -25,7 +25,7 @@ dependencies {
 
 In your application class:
 
-```
+```kotlin
 class App : Application()
 {
     override fun onCreate()
@@ -39,7 +39,7 @@ class App : Application()
 }
 ```
 
-The activity layout:
+The activity:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -58,8 +58,6 @@ The activity layout:
 
 </LinearLayout>
 ```
-
-The activity:
 
 ```kotlin
 class MainActivity : AppCompatActivity()
@@ -80,7 +78,7 @@ class MainActivity : AppCompatActivity()
 
 ### TimelineView API
 
-1. The ``dateTimeInterval`` property
+**1. The ``dateTimeInterval`` property**
 
 Use this property to get or set the selected DateTime interval. Each time this property is set, the UI updates and the DateTime interval changed event is triggered. Examples:
 
@@ -102,7 +100,8 @@ timelineView.dateTimeInterval = MonthlyDateTimeInterval.aroundToday()
 timelineView.dateTimeInterval = MonthlyDateTimeInterval.aroundToday().getNextDateTimeInterval()
 
 //set selected interval = january 2019 = [01.01.2019 00:00:00 -> 31.01.2019 23:59:59]
-timelineView.dateTimeInterval = MonthlyDateTimeInterval(referenceDateTime = DateTime(2019, 1, 25, 8, 45))
+timelineView.dateTimeInterval = MonthlyDateTimeInterval(
+    referenceDateTime = DateTime(2019, 1, 25, 8, 45))
         
 //set selected interval = current year = [01.01.2020 00:00:00 -> 31.12.2020 23:59:59]
 timelineView.dateTimeInterval = YearlyDateTimeInterval.aroundToday()
@@ -120,17 +119,17 @@ val startDateTime = timelineView.dateTimeInterval.fromDateTime //Joda DateTime
 val endtDateTime = timelineView.dateTimeInterval.toDateTime //Joda DateTime
 ```
 
-2. Subscribing to date time interval change events.
+**2. Subscribing to date time interval change events.**
 
 This event is triggered each time the user selects an interval from the UI and each time the ``dateTimeInterval`` property is set programatically.
 
 ```kotlin
 timelineView.setOnDateTimeIntervalChangedListener { dateTimeInterval ->
-    //todo presenter.loadData(startDateTime, endDateTime)
+    //todo presenter.loadData(dateTimeInterval)
 }
 ```
 
-3. Disabling interval types
+**3. Disabling interval types**
 
 By default, the user can choose between Daily, Weekly, Monthly, Yearly, All time and Custom interval options. To disable some of them:
 
@@ -147,9 +146,10 @@ timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.bui
         .to(YearlyDateTimeInterval::class.java)
 }
 
-//with DateTimeIntervalTypeChangeFlow you can specify what happens when the user press down/up buttons
-//for instance, in the above example, if a day is selected, by pressing up, the selected interval will become the current month
-//in the below example, if a day is selected, by pressing up, the selected interval will become the current year
+//with DateTimeIntervalTypeChangeFlow you can specify what happens when the user press down/up 
+//buttons. For instance, in the above example, if a day is selected, by pressing up, the 
+//selected interval will become the current month. In the below example, if a day is selected, 
+//by pressing up, the selected interval will become the current year
 timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.build {
     from(DailyDateTimeInterval::class.java)
         .to(YearlyDateTimeInterval::class.java)
@@ -162,11 +162,11 @@ timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.bui
 }
 ```
 
-4. Customising the horizontal scrolling RecyclerView cells
+**4. Customising the horizontal scrolling RecyclerView cells**
 
 For instance, if we want to disable clicking on intervals from the future:
 
-```
+```kotlin
 timelineView.timelineRecyclerViewCellTransformer = object : TimelineRecyclerViewCell.Transformer {
     override fun transform(cellView : TimelineRecyclerViewCell, dateTimeInterval : DateTimeInterval) {
         if (dateTimeInterval.fromDateTime.isAfterNow)
@@ -175,7 +175,24 @@ timelineView.timelineRecyclerViewCellTransformer = object : TimelineRecyclerView
 }
 ```
 
-5. Customising the appearance
+**5. TimelineViewDefaults**
+
+Singleton class used to keep default TimelineView settings:
+
+```kotlin
+//by default, all TimelineViews should use this TimeZone
+TimelineViewDefaults.timezone = DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Bucharest"))
+
+//by default, all TimelineViews should support only Daily and Monthly intervals
+TimelineViewDefaults.dateTimeIntervalTypeChangeFlowFactory = {
+    DateTimeIntervalTypeChangeFlow.build { 
+        from(DailyDateTimeInterval::class.java)
+            .to(MonthlyDateTimeInterval::class.java)
+    }
+}
+```
+
+**6. Customising the appearance**
 
 You can customise the look and feel of the TimelineView with XML:
 
