@@ -119,6 +119,16 @@ val startDateTime = timelineView.dateTimeInterval.fromDateTime //Joda DateTime
 val endtDateTime = timelineView.dateTimeInterval.toDateTime //Joda DateTime
 ```
 
+Note that the base class of ``DailyDateTimeInterval``, ``WeeklyDateTimeInterval``, ``MonthlyDateTimeInterval``, ``YearlyDateTimeInterval``, ``CustomDateTimeInterval``, ``InfiniteDateTimeInterval`` is ``DateTimeInterval``, a class with the following structure:
+
+```kotlin
+abstract class DateTimeInterval
+(
+    val fromDateTime : DateTime,
+    val toDateTime : DateTime
+) : Serializable
+```
+
 **2. Subscribing to date time interval change events.**
 
 This event is triggered each time the user selects an interval from the UI and each time the ``dateTimeInterval`` property is set programatically.
