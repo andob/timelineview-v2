@@ -64,6 +64,18 @@ public abstract class TimelineViewApi extends BaseCustomView
 
     public void setDateTimeInterval(@NonNull DateTimeInterval dateTimeInterval)
     {
+        boolean shouldInvokeOnDateTimeIntervalChangedListener=true;
+        setDateTimeInterval(dateTimeInterval, shouldInvokeOnDateTimeIntervalChangedListener);
+    }
+
+    public void setDateTimeIntervalWithoutInvokingOnDateTimeIntervalChangedListener(@NonNull DateTimeInterval dateTimeInterval)
+    {
+        boolean shouldInvokeOnDateTimeIntervalChangedListener=false;
+        setDateTimeInterval(dateTimeInterval, shouldInvokeOnDateTimeIntervalChangedListener);
+    }
+
+    private void setDateTimeInterval(@NonNull DateTimeInterval dateTimeInterval, boolean shouldInvokeOnDateTimeIntervalChangedListener)
+    {
         if (!(dateTimeInterval instanceof CustomDateTimeInterval)&&!dateTimeIntervalTypeChangeFlow.toList().contains(dateTimeInterval.getClass()))
             throw new InvalidDateTimeIntervalTypeException("Cannot use "+dateTimeInterval.getClass().getSimpleName());
         if (dateTimeInterval instanceof CustomDateTimeInterval&&!isCustomDateTimeIntervalSupported)
@@ -79,8 +91,9 @@ public abstract class TimelineViewApi extends BaseCustomView
 
             this.dateTimeInterval=dateTimeInterval;
 
-            if (this.onDateTimeIntervalChangedListener!=null)
-                this.onDateTimeIntervalChangedListener.invoke(this.dateTimeInterval);
+            if (shouldInvokeOnDateTimeIntervalChangedListener)
+                if (this.onDateTimeIntervalChangedListener!=null)
+                    this.onDateTimeIntervalChangedListener.invoke(this.dateTimeInterval);
         }
     }
 

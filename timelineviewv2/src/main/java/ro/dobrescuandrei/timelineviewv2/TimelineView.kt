@@ -36,6 +36,7 @@ open class TimelineView : TimelineViewApi
         changeDateIntervalTypeRightButton.setImageResource(appearance.calendarIconResourceId)
         leftButtonsContainer.setBackgroundResource(appearance.leftButtonsContainerBackgroundResourceId)
         rightButtonsContainer.setBackgroundResource(appearance.rightButtonsContainerBackgroundResourceId)
+        rootContainer.setBackgroundColor(appearance.unselectedCellBackgroundColor)
     }
 
     override fun onWindowFocusChanged(windowHasFocus : Boolean)
@@ -150,6 +151,7 @@ open class TimelineView : TimelineViewApi
         super.onDetachedFromWindow()
     }
 
+    private val rootContainer get() = findViewById<View>(R.id.tv___rootContainer)!!
     private val recyclerView get() = findViewById<TimelineRecyclerView>(R.id.tv___recyclerView)!!
     private val leftButtonsContainer get() = findViewById<LinearLayout>(R.id.tv___leftButtonsContainer)!!
     private val decrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.tv___decrementDateIntervalTypeButton)!!
