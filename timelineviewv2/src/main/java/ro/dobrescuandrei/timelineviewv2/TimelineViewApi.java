@@ -86,7 +86,7 @@ public abstract class TimelineViewApi extends BaseCustomView
 
             this.dateTimeInterval=dateTimeInterval;
 
-            if (!this.onDateTimeIntervalChangedEventsLock.isLocked)
+            if (this.onDateTimeIntervalChangedEventsLock.isEventInvokingEnabled())
                 if (this.onDateTimeIntervalChangedListener!=null)
                     this.onDateTimeIntervalChangedListener.invoke(this.dateTimeInterval);
         }
