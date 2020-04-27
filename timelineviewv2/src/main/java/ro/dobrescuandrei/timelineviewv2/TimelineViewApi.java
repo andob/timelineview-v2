@@ -19,6 +19,8 @@ public abstract class TimelineViewApi extends BaseCustomView
 {
     protected @Nullable OnDateTimeIntervalChangedListener onDateTimeIntervalChangedListener;
 
+    private OnDateTimeIntervalChangedEventsLock onDateTimeIntervalChangedEventsLock = new OnDateTimeIntervalChangedEventsLock();
+
     private DateTimeInterval dateTimeInterval;
 
     private DateTimeIntervalTypeChangeFlow dateTimeIntervalTypeChangeFlow;
@@ -52,6 +54,11 @@ public abstract class TimelineViewApi extends BaseCustomView
         attributes.recycle();
     }
 
+    public OnDateTimeIntervalChangedEventsLock getOnDateTimeIntervalChangedEventsLock()
+    {
+        return onDateTimeIntervalChangedEventsLock;
+    }
+
     public void setOnDateTimeIntervalChangedListener(OnDateTimeIntervalChangedListener listener)
     {
         this.onDateTimeIntervalChangedListener=listener;
@@ -63,18 +70,6 @@ public abstract class TimelineViewApi extends BaseCustomView
     }
 
     public void setDateTimeInterval(@NonNull DateTimeInterval dateTimeInterval)
-    {
-        boolean shouldInvokeOnDateTimeIntervalChangedListener=true;
-        setDateTimeInterval(dateTimeInterval, shouldInvokeOnDateTimeIntervalChangedListener);
-    }
-
-    public void setDateTimeIntervalWithoutInvokingOnDateTimeIntervalChangedListener(@NonNull DateTimeInterval dateTimeInterval)
-    {
-        boolean shouldInvokeOnDateTimeIntervalChangedListener=false;
-        setDateTimeInterval(dateTimeInterval, shouldInvokeOnDateTimeIntervalChangedListener);
-    }
-
-    private void setDateTimeInterval(@NonNull DateTimeInterval dateTimeInterval, boolean shouldInvokeOnDateTimeIntervalChangedListener)
     {
         if (!(dateTimeInterval instanceof CustomDateTimeInterval)&&!dateTimeIntervalTypeChangeFlow.toList().contains(dateTimeInterval.getClass()))
             throw new InvalidDateTimeIntervalTypeException("Cannot use "+dateTimeInterval.getClass().getSimpleName());
@@ -91,7 +86,7 @@ public abstract class TimelineViewApi extends BaseCustomView
 
             this.dateTimeInterval=dateTimeInterval;
 
-            if (shouldInvokeOnDateTimeIntervalChangedListener)
+            if (!this.onDateTimeIntervalChangedEventsLock.isLocked)
                 if (this.onDateTimeIntervalChangedListener!=null)
                     this.onDateTimeIntervalChangedListener.invoke(this.dateTimeInterval);
         }
