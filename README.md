@@ -12,14 +12,14 @@ Import it via:
 
 ```
 repositories {
-    maven { url "https://jitpack.io" }
+    maven { url "http://maven.andob.info/reporitory/open_source" }
 }
 ```
 
 ```
 dependencies {
     implementation 'net.danlew:android.joda:2.10.3'
-    implementation 'com.github.andob:timelineview-v2:2.1.1'
+    implementation 'ro.andob.timelineview:timelineview-v2:2.1.3'
 }
 ```
 

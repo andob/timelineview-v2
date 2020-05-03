@@ -1,9 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
-
-group='com.github.jitpack'
-version '1.0'
+apply plugin: 'digital.wup.android-maven-publish'
 
 android {
     compileSdkVersion 29
@@ -35,4 +32,25 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'net.danlew:android.joda:2.10.3'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+}
+
+publishing {
+    publications {
+        repositories.maven {
+            url 'http://maven.andob.info/repository/open_source/'
+            credentials {
+                username "$System.env.MAVEN_PUBLISH_USERNAME"
+                password "$System.env.MAVEN_PUBLISH_PASSWORD"
+            }
+        }
+
+        android.libraryVariants.all { variant ->
+            "maven${variant.name.capitalize()}Aar"(MavenPublication) {
+                from components.findByName("android${variant.name.capitalize()}")
+                groupId 'ro.andob.timelineview'
+                artifactId 'timelineview-v2'
+                version '2.1.3'
+            }
+        }
+    }
 }
