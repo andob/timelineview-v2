@@ -49,7 +49,7 @@ publishing {
                 from components.findByName("android${variant.name.capitalize()}")
                 groupId 'ro.andob.timelineview'
                 artifactId 'timelineview-v2'
-                version '2.1.3'
+                version '2.1.4'
             }
         }
     }

@@ -50,15 +50,12 @@ class DailyDateTimeInterval
     {
         val now=DateTime.now(TimelineViewDefaults.timezone)!!
 
-        if (fromDateTime.year==now.year&&fromDateTime.monthOfYear==now.monthOfYear)
-        {
-            if (fromDateTime.dayOfMonth==now.dayOfMonth-1)
-                return resources.getString(R.string.yesterday)
-            if (fromDateTime.dayOfMonth==now.dayOfMonth)
-                return resources.getString(R.string.today)
-            if (fromDateTime.dayOfMonth==now.dayOfMonth+1)
-                return resources.getString(R.string.tomorrow)
-        }
+        if (fromDateTime.toLocalDate()==now.minusDays(1).toLocalDate())
+            return resources.getString(R.string.yesterday)
+        if (fromDateTime.toLocalDate()==now.toLocalDate())
+            return resources.getString(R.string.today)
+        if (fromDateTime.toLocalDate()==now.plusDays(1).toLocalDate())
+            return resources.getString(R.string.tomorrow)
 
         val dateFormatter=
             if (fromDateTime.year!=now.year)

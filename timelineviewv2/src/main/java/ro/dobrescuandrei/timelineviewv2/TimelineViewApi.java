@@ -6,10 +6,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import org.joda.time.DateTime;
-
 import java.util.Objects;
-
 import ro.dobrescuandrei.timelineviewv2.base.BaseCustomView;
 import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval;
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
