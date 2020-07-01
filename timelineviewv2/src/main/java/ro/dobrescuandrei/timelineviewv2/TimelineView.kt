@@ -128,7 +128,7 @@ open class TimelineView : TimelineViewApi
             changeDateIntervalTypeRightButton.visibility=View.GONE
         }
 
-        if (flow.toList().size<=1&&!isCustomDateTimeIntervalSupported)
+        if (!isDateTimeIntervalTypeChangerDialogSupported)
         {
             changeDateIntervalTypeLeftButton.visibility=View.GONE
             changeDateIntervalTypeRightButton.visibility=View.GONE

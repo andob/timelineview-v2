@@ -28,10 +28,6 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
             allTimeRadioButton to InfiniteDateTimeInterval::class.java as Class<DateTimeInterval>,
             customIntervalRadioButton to CustomDateTimeInterval::class.java as Class<DateTimeInterval>)
 
-        if (timelineView.isCustomDateTimeIntervalSupported)
-            customIntervalButtonContainer.visibility=View.VISIBLE
-        else customIntervalButtonContainer.visibility=View.GONE
-
         val supportedIntervalTypes=timelineView.dateTimeIntervalTypeChangeFlow.toList()
 
         for ((radioButton, intervalType) in radioButtonsToIntervalTypes)
@@ -57,7 +53,13 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
                     dialog.dismiss()
                 }
             }
+        }
 
+        if (!timelineView.isCustomDateTimeIntervalSupported)
+            customIntervalButtonContainer.visibility=View.GONE
+        else
+        {
+            customIntervalButtonContainer.visibility=View.VISIBLE
             customIntervalButtonOverlayView.setOnClickListener {
                 dialog.dismiss()
 
@@ -67,14 +69,14 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
                         to = DailyDateTimeInterval::class.java)
 
                 JodaDatePickerDialog.show(
-                    context = radioButton.context,
-                    title = radioButton.context.getString(R.string.choose_interval_start_date),
+                    context = timelineView.context,
+                    title = timelineView.context.getString(R.string.choose_interval_start_date),
                     initialSelectedDateTime = referenceDailyDateTimeInterval.fromDateTime,
                     onDateTimeSelected = { fromDateTime ->
 
                         JodaDatePickerDialog.show(
-                            context = radioButton.context,
-                            title = radioButton.context.getString(R.string.choose_interval_end_date),
+                            context = timelineView.context,
+                            title = timelineView.context.getString(R.string.choose_interval_end_date),
                             initialSelectedDateTime = fromDateTime,
                             onDateTimeSelected = { toDateTime ->
                                 timelineView.dateTimeInterval=CustomDateTimeInterval(fromDateTime, toDateTime)

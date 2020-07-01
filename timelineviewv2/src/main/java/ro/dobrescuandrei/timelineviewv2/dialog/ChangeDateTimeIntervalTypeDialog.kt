@@ -9,15 +9,18 @@ object ChangeDateTimeIntervalTypeDialog
     @JvmStatic
     fun show(timelineView : TimelineView)
     {
-        val context=timelineView.context!!
+        if (timelineView.isCustomDateTimeIntervalSupported)
+        {
+            val context=timelineView.context!!
 
-        val dialogView=ChangeDateTimeIntervalTypeDialogView(context)
-        
-        val dialog=AlertDialog.Builder(context)
-            .setTitle(context.getString(R.string.change_interval_type))
-            .setView(dialogView)
-            .show()!!
+            val dialogView=ChangeDateTimeIntervalTypeDialogView(context)
 
-        dialogView.setup(timelineView = timelineView, dialog = dialog)
+            val dialog=AlertDialog.Builder(context)
+                .setTitle(context.getString(R.string.change_interval_type))
+                .setView(dialogView)
+                .show()!!
+
+            dialogView.setup(timelineView = timelineView, dialog = dialog)
+        }
     }
 }

@@ -23,6 +23,7 @@ public abstract class TimelineViewApi extends BaseCustomView
     private DateTimeIntervalTypeChangeFlow dateTimeIntervalTypeChangeFlow;
 
     protected boolean isCustomDateTimeIntervalSupported = true;
+    protected boolean isDateTimeIntervalTypeChangerDialogSupported = true;
 
     private final @NonNull TimelineViewAppearance appearance;
 
@@ -48,6 +49,7 @@ public abstract class TimelineViewApi extends BaseCustomView
         TypedArray attributes=context.obtainStyledAttributes(attributeSet, R.styleable.TimelineView);
         this.appearance=new TimelineViewAppearance(context, attributes);
         this.isCustomDateTimeIntervalSupported=attributes.getBoolean(R.styleable.TimelineView_tv_is_custom_date_time_interval_supported, true);
+        this.isDateTimeIntervalTypeChangerDialogSupported=attributes.getBoolean(R.styleable.TimelineView_tv_is_date_time_interval_type_changer_dialog_supported, true);
         attributes.recycle();
     }
 
@@ -107,6 +109,16 @@ public abstract class TimelineViewApi extends BaseCustomView
     public void setCustomDateTimeIntervalSupported(boolean isSupported)
     {
         isCustomDateTimeIntervalSupported=isSupported;
+    }
+
+    public boolean isDateTimeIntervalTypeChangerDialogSupported()
+    {
+        return isDateTimeIntervalTypeChangerDialogSupported;
+    }
+
+    public void setDateTimeIntervalTypeChangerDialogSupported(boolean isSupported)
+    {
+        isDateTimeIntervalTypeChangerDialogSupported = isSupported;
     }
 
     public @NonNull TimelineViewAppearance getAppearance()

@@ -24,7 +24,8 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
             cellView.setOnClickListener { cellView ->
                 if (cellView.isSelected)
                 {
-                    ChangeDateTimeIntervalTypeDialog.show(timelineView = timelineView)
+                    if (timelineView.isDateTimeIntervalTypeChangerDialogSupported)
+                        ChangeDateTimeIntervalTypeDialog.show(timelineView = timelineView)
                 }
                 else
                 {
