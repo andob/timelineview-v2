@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.ViewGroup
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
+import ro.dobrescuandrei.timelineviewv2.dialog.ChangeDateTimeIntervalTypeDialog
 import ro.dobrescuandrei.timelineviewv2.model.InfiniteDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder
 
@@ -16,6 +17,10 @@ class InfiniteDateTimeIntervalAdapter : BaseTimelineRecyclerViewAdapter<Infinite
         val cellView=holder.getCellView()
         cellView.setDateTimeInterval(referenceDateTimeInterval)
         cellView.setIsSelected(false)
+
+        cellView.setOnClickListener { cellView ->
+            ChangeDateTimeIntervalTypeDialog.show(timelineView = timelineView)
+        }
 
         timelineView.timelineRecyclerViewCellTransformer?.transform(
             cellView = cellView, dateTimeInterval = referenceDateTimeInterval)

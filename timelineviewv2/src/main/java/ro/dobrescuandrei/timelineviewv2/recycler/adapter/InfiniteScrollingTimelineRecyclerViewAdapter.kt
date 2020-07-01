@@ -4,6 +4,7 @@ import android.content.Context
 import ro.dobrescuandrei.timelineviewv2.InvalidDateTimeIntervalTypeException
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
+import ro.dobrescuandrei.timelineviewv2.dialog.ChangeDateTimeIntervalTypeDialog
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder
 
@@ -21,8 +22,15 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
             cellView.setIsSelected(position==0)
 
             cellView.setOnClickListener { cellView ->
-                try { this.timelineView.dateTimeInterval=dateTimeInterval }
-                catch (ex : InvalidDateTimeIntervalTypeException) {}
+                if (cellView.isSelected)
+                {
+                    ChangeDateTimeIntervalTypeDialog.show(timelineView = timelineView)
+                }
+                else
+                {
+                    try { this.timelineView.dateTimeInterval=dateTimeInterval }
+                    catch (ex : InvalidDateTimeIntervalTypeException) {}
+                }
             }
 
             timelineView.timelineRecyclerViewCellTransformer?.transform(
