@@ -19,7 +19,7 @@ repositories {
 ```
 dependencies {
     implementation 'net.danlew:android.joda:2.10.3'
-    implementation 'ro.andob.timelineview:timelineview-v2:2.1.7'
+    implementation 'ro.andob.timelineview:timelineview-v2:2.1.8'
 }
 ```
 
@@ -218,9 +218,9 @@ You can customise the look and feel of the TimelineView with XML:
     app:tv_unselected_cell_text_color="#00ff00"
     app:tv_unselected_cell_text_size="16sp"
     app:tv_unselected_cell_background_color="#aaaaaa"
-    app:tv_up_icon="@drawable/ic_arrow_up_white_18dp"
-    app:tv_down_icon="@drawable/ic_arrow_down_white_18dp"
-    app:tv_calendar_icon="@drawable/ic_calendar_range_outline_white_18dp"
+    app:tv_up_icon="@drawable/ic_arrow_up_white_24dp"
+    app:tv_down_icon="@drawable/ic_arrow_down_white_24dp"
+    app:tv_calendar_icon="@drawable/ic_calendar_range_outline_white_24dp"
     app:tv_left_buttons_container_background="@drawable/fading_right_gradient_background"
     app:tv_right_buttons_container_background="@drawable/fading_left_gradient_background"
     android:id="@+id/timelineView"/>

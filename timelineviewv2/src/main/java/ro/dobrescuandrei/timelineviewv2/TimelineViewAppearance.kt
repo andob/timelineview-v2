@@ -34,9 +34,9 @@ class TimelineViewAppearance
         unselectedCellTextSizeInPx=context.resources.getDimensionPixelSize(R.dimen.default_unselected_cell_text_size)
         unselectedCellBackgroundColor=ContextCompat.getColor(context, R.color.default_unselected_cell_background_color)
 
-        upIconResourceId=R.drawable.ic_arrow_up_white_18dp
-        downIconResourceId=R.drawable.ic_arrow_down_white_18dp
-        calendarIconResourceId=R.drawable.ic_calendar_range_outline_white_18dp
+        upIconResourceId=R.drawable.ic_arrow_up_white_24dp
+        downIconResourceId=R.drawable.ic_arrow_down_white_24dp
+        calendarIconResourceId=R.drawable.ic_calendar_range_outline_white_24dp
         leftButtonsContainerBackgroundResourceId=R.drawable.fading_right_gradient_background
         rightButtonsContainerBackgroundResourceId=R.drawable.fading_left_gradient_background
     }
@@ -68,13 +68,13 @@ class TimelineViewAppearance
             ContextCompat.getColor(context, R.color.default_unselected_cell_background_color))
 
         upIconResourceId=attributes.getResourceId(R.styleable.TimelineView_tv_up_icon,
-            R.drawable.ic_arrow_up_white_18dp)
+            R.drawable.ic_arrow_up_white_24dp)
 
         downIconResourceId=attributes.getResourceId(R.styleable.TimelineView_tv_down_icon,
-            R.drawable.ic_arrow_down_white_18dp)
+            R.drawable.ic_arrow_down_white_24dp)
 
         calendarIconResourceId=attributes.getResourceId(R.styleable.TimelineView_tv_calendar_icon,
-            R.drawable.ic_calendar_range_outline_white_18dp)
+            R.drawable.ic_calendar_range_outline_white_24dp)
 
         leftButtonsContainerBackgroundResourceId=attributes.getResourceId(R.styleable.TimelineView_tv_left_buttons_container_background,
             R.drawable.fading_right_gradient_background)
