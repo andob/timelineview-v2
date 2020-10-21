@@ -10,7 +10,7 @@ class TimelineViewAppearance
     var selectedCellTextSizeInPx : Int
     var selectedCellBackgroundColor : Int
     var selectedCellIndicatorColor : Int
-    var selectedCellIndicatorWidthInPx : Int
+    var selectedCellIndicatorHeightInPx : Int
 
     var unselectedCellTextColor : Int
     var unselectedCellTextSizeInPx : Int
@@ -28,7 +28,7 @@ class TimelineViewAppearance
         selectedCellTextSizeInPx=context.resources.getDimensionPixelSize(R.dimen.default_selected_cell_text_size)
         selectedCellBackgroundColor=ContextCompat.getColor(context, R.color.default_selected_cell_background_color)
         selectedCellIndicatorColor=ContextCompat.getColor(context, R.color.default_selected_cell_indicator_color)
-        selectedCellIndicatorWidthInPx=context.resources.getDimensionPixelSize(R.dimen.default_selected_cell_indicator_width)
+        selectedCellIndicatorHeightInPx=context.resources.getDimensionPixelSize(R.dimen.default_selected_cell_indicator_height)
 
         unselectedCellTextColor=ContextCompat.getColor(context, R.color.default_unselected_cell_text_color)
         unselectedCellTextSizeInPx=context.resources.getDimensionPixelSize(R.dimen.default_unselected_cell_text_size)
@@ -55,8 +55,8 @@ class TimelineViewAppearance
         selectedCellIndicatorColor=attributes.getColor(R.styleable.TimelineView_tv_selected_cell_indicator_color,
             ContextCompat.getColor(context, R.color.default_selected_cell_indicator_color))
 
-        selectedCellIndicatorWidthInPx=attributes.getDimensionPixelSize(R.styleable.TimelineView_tv_selected_cell_indicator_width,
-            context.resources.getDimensionPixelSize(R.dimen.default_selected_cell_indicator_width))
+        selectedCellIndicatorHeightInPx=attributes.getDimensionPixelSize(R.styleable.TimelineView_tv_selected_cell_indicator_width,
+            context.resources.getDimensionPixelSize(R.dimen.default_selected_cell_indicator_height))
 
         unselectedCellTextColor=attributes.getColor(R.styleable.TimelineView_tv_unselected_cell_text_color,
             ContextCompat.getColor(context, R.color.default_unselected_cell_text_color))

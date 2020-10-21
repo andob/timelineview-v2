@@ -48,7 +48,7 @@ class TimelineRecyclerViewCell
             selectedIndicatorView.setBackgroundColor(appearance.selectedCellIndicatorColor)
             selectedIndicatorView.layoutParams=FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
-                appearance.selectedCellIndicatorWidthInPx)
+                appearance.selectedCellIndicatorHeightInPx)
             selectedIndicatorView.visibility=View.VISIBLE
         }
         else
