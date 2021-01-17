@@ -20,6 +20,22 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
 
     fun setup(timelineView : TimelineView, dialog : AlertDialog)
     {
+        setupRadioButtons(timelineView, dialog)
+
+        if (timelineView.isCustomDateTimeIntervalSupported)
+        {
+            customIntervalButtonContainer.visibility=View.VISIBLE
+            setupCustomIntervalButton(timelineView, dialog)
+        }
+        else
+        {
+            customIntervalButtonContainer.visibility=View.GONE
+            customIntervalButtonOverlayView.setOnClickListener(null)
+        }
+    }
+
+    private fun setupRadioButtons(timelineView : TimelineView, dialog : AlertDialog)
+    {
         val radioButtonsToIntervalTypes=mapOf(
             dailyRadioButton to DailyDateTimeInterval::class.java as Class<DateTimeInterval>,
             weeklyRadioButton to WeeklyDateTimeInterval::class.java as Class<DateTimeInterval>,
@@ -33,7 +49,7 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
         for ((radioButton, intervalType) in radioButtonsToIntervalTypes)
         {
             if (supportedIntervalTypes.find { it==intervalType }!=null
-               ||intervalType==CustomDateTimeInterval::class.java)
+                ||intervalType==CustomDateTimeInterval::class.java)
                 radioButton.visibility=View.VISIBLE
             else radioButton.visibility=View.GONE
 
@@ -54,35 +70,32 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
                 }
             }
         }
+    }
 
-        if (!timelineView.isCustomDateTimeIntervalSupported)
-            customIntervalButtonContainer.visibility=View.GONE
-        else
-        {
-            customIntervalButtonContainer.visibility=View.VISIBLE
-            customIntervalButtonOverlayView.setOnClickListener {
-                dialog.dismiss()
+    private fun setupCustomIntervalButton(timelineView : TimelineView, dialog : AlertDialog)
+    {
+        customIntervalButtonOverlayView.setOnClickListener {
+            dialog.dismiss()
 
-                val referenceDailyDateTimeInterval=
-                    timelineView.dateTimeIntervalConverter.convert(
-                        from = timelineView.dateTimeInterval,
-                        to = DailyDateTimeInterval::class.java)
+            val referenceDailyDateTimeInterval=
+                timelineView.dateTimeIntervalConverter.convert(
+                    from = timelineView.dateTimeInterval,
+                    to = DailyDateTimeInterval::class.java)
 
-                JodaDatePickerDialog.show(
-                    context = timelineView.context,
-                    title = timelineView.context.getString(R.string.choose_interval_start_date),
-                    initialSelectedDateTime = referenceDailyDateTimeInterval.fromDateTime,
-                    onDateTimeSelected = { fromDateTime ->
+            JodaDatePickerDialog.show(
+                context = timelineView.context,
+                title = timelineView.context.getString(R.string.choose_interval_start_date),
+                initialSelectedDateTime = referenceDailyDateTimeInterval.fromDateTime,
+                onDateTimeSelected = { fromDateTime ->
 
-                        JodaDatePickerDialog.show(
-                            context = timelineView.context,
-                            title = timelineView.context.getString(R.string.choose_interval_end_date),
-                            initialSelectedDateTime = fromDateTime,
-                            onDateTimeSelected = { toDateTime ->
-                                timelineView.dateTimeInterval=CustomDateTimeInterval(fromDateTime, toDateTime)
-                            })
-                    })
-            }
+                    JodaDatePickerDialog.show(
+                        context = timelineView.context,
+                        title = timelineView.context.getString(R.string.choose_interval_end_date),
+                        initialSelectedDateTime = fromDateTime,
+                        onDateTimeSelected = { toDateTime ->
+                            timelineView.dateTimeInterval=CustomDateTimeInterval(fromDateTime, toDateTime)
+                        })
+                })
         }
     }
 
