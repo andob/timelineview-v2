@@ -9,14 +9,13 @@ import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
 import ro.dobrescuandrei.timelineviewv2.model.WeeklyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
-import java.text.SimpleDateFormat
 
 class WeeklyDateTimeIntervalTest
 {
     private val dateTimeInterval : DateTimeInterval = WeeklyDateTimeInterval(
         referenceDateTime = DateTime(2006, 1, 20, 0, 0, 0, 0))
 
-    private val dateTimeFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()

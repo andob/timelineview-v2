@@ -6,12 +6,11 @@ import org.junit.Before
 import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.model.*
 import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
-import java.text.SimpleDateFormat
 
 class DateTimeIntervalConverterTests
 {
     private val converter = DateTimeIntervalConverter()
-    private val dateTimeFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()

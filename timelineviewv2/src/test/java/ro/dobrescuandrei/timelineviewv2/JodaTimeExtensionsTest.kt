@@ -5,11 +5,10 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.utils.*
-import java.text.SimpleDateFormat
 
 class JodaTimeExtensionsTest
 {
-    private val dateTimeFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()

@@ -8,14 +8,13 @@ import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.YearlyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
-import java.text.SimpleDateFormat
 
 class YearlyDateTimeIntervalTest
 {
     private val dateTimeInterval : DateTimeInterval = YearlyDateTimeInterval(
         referenceDateTime = DateTime(2021, 1, 12, 0, 0, 0, 0))
 
-    private val dateTimeFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()

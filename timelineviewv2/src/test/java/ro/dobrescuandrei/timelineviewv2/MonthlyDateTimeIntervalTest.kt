@@ -8,14 +8,13 @@ import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.MonthlyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
-import java.text.SimpleDateFormat
 
 class MonthlyDateTimeIntervalTest
 {
     private val dateTimeInterval : DateTimeInterval = MonthlyDateTimeInterval(
         referenceDateTime = DateTime(2006, 1, 20, 0, 0, 0, 0))
 
-    private val dateTimeFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()
@@ -65,7 +64,7 @@ class MonthlyDateTimeIntervalTest
         assertEquals("01.$month.$year 00:00:00.000", dateTimeFormatter.formatJodaDateTime(interval.fromDateTime))
         assertEquals("$maxDayFromMonth.$month.$year 23:59:59.999", dateTimeFormatter.formatJodaDateTime(interval.toDateTime))
 
-        val humanReadableMonth=SimpleDateFormat("MMM").formatJodaDateTime(DailyDateTimeInterval.today().fromDateTime)
+        val humanReadableMonth=newSimpleDateFormat("MMM").formatJodaDateTime(DailyDateTimeInterval.today().fromDateTime)
         assertEquals(humanReadableMonth, interval.toString(mockResources))
     }
 

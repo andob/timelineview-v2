@@ -7,7 +7,6 @@ import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
-import java.text.SimpleDateFormat
 
 class CustomDateTimeIntervalTest
 {
@@ -15,7 +14,7 @@ class CustomDateTimeIntervalTest
         fromDateTime = DateTime(2021, 1, 12, 0, 0, 0, 0),
         toDateTime = DateTime(2021, 1, 26, 0, 0, 0, 0))
 
-    private val dateTimeFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()

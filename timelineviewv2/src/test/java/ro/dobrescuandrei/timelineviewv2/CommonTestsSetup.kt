@@ -4,6 +4,7 @@ import android.content.res.Resources
 import org.joda.time.DateTimeZone
 import org.mockito.Mockito
 import ro.dobrescuandrei.timelineviewv2.model.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 private var areUnitTestsInitialized = false
@@ -14,6 +15,13 @@ val Int.hoursInMills get() = (this*60).minutesInMills
 val Int.daysInMills get() = (this*24).hoursInMills
 
 lateinit var mockResources : Resources
+
+fun newSimpleDateFormat(pattern : String) : SimpleDateFormat
+{
+    val simpleDateFormat=SimpleDateFormat(pattern)
+    simpleDateFormat.timeZone=TimelineViewDefaults.timezone.toTimeZone()
+    return simpleDateFormat
+}
 
 fun setupUnitTests()
 {

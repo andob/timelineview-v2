@@ -7,14 +7,13 @@ import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
-import java.text.SimpleDateFormat
 
 class DailyDateTimeIntervalTests
 {
     private val dateTimeInterval : DateTimeInterval = DailyDateTimeInterval(
         referenceDateTime = DateTime(2006, 1, 20, 0, 0, 0, 0))
 
-    private val dateTimeFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()
@@ -79,8 +78,8 @@ class DailyDateTimeIntervalTests
         assertEquals("Tomorrow", tomorrow.toString(mockResources))
         assertEquals("Yesterday", yesterday.toString(mockResources))
 
-        assertEquals(SimpleDateFormat("dd MMM").formatJodaDateTime(dayAfterTomorrow.fromDateTime), dayAfterTomorrow.toString(mockResources))
-        assertEquals(SimpleDateFormat("dd MMM").formatJodaDateTime(dayBeforeYesterday.fromDateTime), dayBeforeYesterday.toString(mockResources))
+        assertEquals(newSimpleDateFormat("dd MMM").formatJodaDateTime(dayAfterTomorrow.fromDateTime), dayAfterTomorrow.toString(mockResources))
+        assertEquals(newSimpleDateFormat("dd MMM").formatJodaDateTime(dayBeforeYesterday.fromDateTime), dayBeforeYesterday.toString(mockResources))
 
         assert(today.isToday)
         assert(!tomorrow.isToday)
