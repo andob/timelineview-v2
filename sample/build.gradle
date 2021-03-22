@@ -10,9 +10,9 @@ android {
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [
-                configChanges: "mcc|mnc|locale|touchscreen|keyboard|keyboardHidden" +
-                        "|navigation|screenLayout|fontScale|uiMode|orientation" +
-                        "|density|screenSize|smallestScreenSize"
+            configChanges: "mcc|mnc|locale|touchscreen|keyboard|keyboardHidden" +
+                "|navigation|screenLayout|fontScale|uiMode|orientation" +
+                "|density|screenSize|smallestScreenSize"
         ]
     }
     buildTypes {

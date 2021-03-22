@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="all_time">През цялото време</string>
+    <string name="yesterday">Вчера</string>
+    <string name="today">Днес</string>
+    <string name="tomorrow">Утре</string>
+    <string name="change_interval_type">Промяна на типа интервал…</string>
+    <string name="daily">Ежедневно</string>
+    <string name="weekly">Седмично</string>
+    <string name="monthly">Месечно</string>
+    <string name="yearly">Годишно</string>
+    <string name="custom_interval">Потребителски интервал</string>
+    <string name="choose_interval_start_date">Изберете начална дата на интервала</string>
+    <string name="choose_interval_end_date">Изберете крайна дата на интервала</string>
+</resources>
