@@ -40,7 +40,7 @@ class WeeklyDateTimeIntervalTest
         val nextNextWeek=dateTimeInterval.getShiftedDateTimeInterval(2)!!
         assertEquals("30.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(nextNextWeek.fromDateTime))
         assertEquals("05.02.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(nextNextWeek.toDateTime))
-        assertEquals("30 - 05 Feb 2006", nextNextWeek.toString(mockResources))
+        assertEquals("30 Jan - 05 Feb 2006", nextNextWeek.toString(mockResources))
 
         val previousWeek=dateTimeInterval.getPreviousDateTimeInterval()!!
         assertEquals("09.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(previousWeek.fromDateTime))
@@ -56,19 +56,20 @@ class WeeklyDateTimeIntervalTest
     @Test
     fun testIntervalAroundToday()
     {
+        fun Int.withLeadingZero() = if(this<10) "0$this" else "$this"
+
         val year=DailyDateTimeInterval.today().fromDateTime.year
-        val month=DailyDateTimeInterval.today().fromDateTime.monthOfYear
-            .let { month -> if (month<10) "0$month" else month.toString() }
+        val month=DailyDateTimeInterval.today().fromDateTime.monthOfYear.withLeadingZero()
 
         val minDayFromWeek=DateTimeIntervalConverter().convert(
             from = DailyDateTimeInterval.today(),
             to = WeeklyDateTimeInterval::class.java
-        ).fromDateTime.dayOfMonth
+        ).fromDateTime.dayOfMonth.withLeadingZero()
 
         val maxDayFromWeek=DateTimeIntervalConverter().convert(
             from = DailyDateTimeInterval.today(),
             to = WeeklyDateTimeInterval::class.java
-        ).toDateTime.dayOfMonth
+        ).toDateTime.dayOfMonth.withLeadingZero()
 
         val interval=WeeklyDateTimeInterval.aroundToday()
         assertEquals("$minDayFromWeek.$month.$year 00:00:00.000", dateTimeFormatter.formatJodaDateTime(interval.fromDateTime))

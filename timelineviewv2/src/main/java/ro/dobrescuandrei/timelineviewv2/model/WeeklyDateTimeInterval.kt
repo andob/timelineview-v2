@@ -47,7 +47,7 @@ class WeeklyDateTimeInterval
         val now=DateTime.now(TimelineViewDefaults.timezone)!!
 
         val startDateTimeFormatter=
-            if (fromDateTime.monthOfYear!=now.monthOfYear)
+            if (fromDateTime.monthOfYear!=toDateTime.monthOfYear)
                 SimpleDateFormat("dd MMM")
             else SimpleDateFormat("dd")
         startDateTimeFormatter.timeZone=TimelineViewDefaults.timezone.toTimeZone()!!
