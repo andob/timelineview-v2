@@ -3,11 +3,11 @@ package ro.dobrescuandrei.timelineviewv2.model
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.CustomDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.*
-import java.text.SimpleDateFormat
 
 class CustomDateTimeInterval : DateTimeInterval
 {
@@ -26,17 +26,15 @@ class CustomDateTimeInterval : DateTimeInterval
 
         val startDateTimeFormatter=
             if (fromDateTime.year!=now.year)
-                SimpleDateFormat("dd MMM yyyy")
-            else SimpleDateFormat("dd MMM")
-        startDateTimeFormatter.timeZone=TimelineViewDefaults.timezone.toTimeZone()!!
-        val startDateStr=startDateTimeFormatter.formatJodaDateTime(fromDateTime)
+                DateTimeFormat.forPattern("dd MMM yyyy")!!
+            else DateTimeFormat.forPattern("dd MMM")!!
+        val startDateStr=startDateTimeFormatter.print(fromDateTime)
 
         val endDateTimeFormatter=
             if (toDateTime.year!=now.year)
-                SimpleDateFormat("dd MMM yyyy")
-            else SimpleDateFormat("dd MMM")
-        startDateTimeFormatter.timeZone=TimelineViewDefaults.timezone.toTimeZone()!!
-        val endDateStr=endDateTimeFormatter.formatJodaDateTime(toDateTime)
+                DateTimeFormat.forPattern("dd MMM yyyy")!!
+            else DateTimeFormat.forPattern("dd MMM")!!
+        val endDateStr=endDateTimeFormatter.print(toDateTime)
 
         return "$startDateStr - $endDateStr"
     }

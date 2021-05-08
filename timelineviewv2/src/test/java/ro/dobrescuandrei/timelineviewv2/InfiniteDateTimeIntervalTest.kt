@@ -1,16 +1,16 @@
 package ro.dobrescuandrei.timelineviewv2
 
+import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.InfiniteDateTimeInterval
-import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
 
 class InfiniteDateTimeIntervalTest
 {
     private val dateTimeInterval : DateTimeInterval = InfiniteDateTimeInterval()
-    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()
@@ -18,8 +18,8 @@ class InfiniteDateTimeIntervalTest
     @Test
     fun testIntervalRange()
     {
-        assertEquals("01.01.1970 02:00:00.001", dateTimeFormatter.formatJodaDateTime(dateTimeInterval.fromDateTime))
-        assertEquals("01.01.4000 02:00:00.000", dateTimeFormatter.formatJodaDateTime(dateTimeInterval.toDateTime))
+        assertEquals("01.01.1970 02:00:00.001", dateTimeFormatter.print(dateTimeInterval.fromDateTime))
+        assertEquals("01.01.4000 02:00:00.000", dateTimeFormatter.print(dateTimeInterval.toDateTime))
     }
 
     @Test

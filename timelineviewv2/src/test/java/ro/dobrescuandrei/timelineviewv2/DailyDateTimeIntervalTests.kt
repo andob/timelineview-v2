@@ -1,19 +1,19 @@
 package ro.dobrescuandrei.timelineviewv2
 
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
-import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
 
 class DailyDateTimeIntervalTests
 {
     private val dateTimeInterval : DateTimeInterval = DailyDateTimeInterval(
         referenceDateTime = DateTime(2006, 1, 20, 0, 0, 0, 0))
 
-    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()
@@ -21,8 +21,8 @@ class DailyDateTimeIntervalTests
     @Test
     fun testIntervalRange()
     {
-        assertEquals("20.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(dateTimeInterval.fromDateTime))
-        assertEquals("20.01.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(dateTimeInterval.toDateTime))
+        assertEquals("20.01.2006 00:00:00.000", dateTimeFormatter.print(dateTimeInterval.fromDateTime))
+        assertEquals("20.01.2006 23:59:59.999", dateTimeFormatter.print(dateTimeInterval.toDateTime))
     }
 
     @Test
@@ -31,23 +31,23 @@ class DailyDateTimeIntervalTests
         assertEquals("20 Jan 2006", dateTimeInterval.toString(mockResources))
 
         val nextDay=dateTimeInterval.getNextDateTimeInterval()!!
-        assertEquals("21.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(nextDay.fromDateTime))
-        assertEquals("21.01.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(nextDay.toDateTime))
+        assertEquals("21.01.2006 00:00:00.000", dateTimeFormatter.print(nextDay.fromDateTime))
+        assertEquals("21.01.2006 23:59:59.999", dateTimeFormatter.print(nextDay.toDateTime))
         assertEquals("21 Jan 2006", nextDay.toString(mockResources))
 
         val nextNextDay=dateTimeInterval.getShiftedDateTimeInterval(2)!!
-        assertEquals("22.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(nextNextDay.fromDateTime))
-        assertEquals("22.01.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(nextNextDay.toDateTime))
+        assertEquals("22.01.2006 00:00:00.000", dateTimeFormatter.print(nextNextDay.fromDateTime))
+        assertEquals("22.01.2006 23:59:59.999", dateTimeFormatter.print(nextNextDay.toDateTime))
         assertEquals("22 Jan 2006", nextNextDay.toString(mockResources))
 
         val prevDay=dateTimeInterval.getPreviousDateTimeInterval()!!
-        assertEquals("19.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(prevDay.fromDateTime))
-        assertEquals("19.01.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(prevDay.toDateTime))
+        assertEquals("19.01.2006 00:00:00.000", dateTimeFormatter.print(prevDay.fromDateTime))
+        assertEquals("19.01.2006 23:59:59.999", dateTimeFormatter.print(prevDay.toDateTime))
         assertEquals("19 Jan 2006", prevDay.toString(mockResources))
 
         val prevPrevDay=dateTimeInterval.getShiftedDateTimeInterval(-2)!!
-        assertEquals("18.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(prevPrevDay.fromDateTime))
-        assertEquals("18.01.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(prevPrevDay.toDateTime))
+        assertEquals("18.01.2006 00:00:00.000", dateTimeFormatter.print(prevPrevDay.fromDateTime))
+        assertEquals("18.01.2006 23:59:59.999", dateTimeFormatter.print(prevPrevDay.toDateTime))
         assertEquals("18 Jan 2006", prevPrevDay.toString(mockResources))
     }
 
@@ -61,8 +61,8 @@ class DailyDateTimeIntervalTests
             .let { day -> if (day<10) "0$day" else day.toString() }
 
         val today=DailyDateTimeInterval.today()
-        assertEquals("$dayOfMonth.$month.$year 00:00:00.000", dateTimeFormatter.formatJodaDateTime(today.fromDateTime))
-        assertEquals("$dayOfMonth.$month.$year 23:59:59.999", dateTimeFormatter.formatJodaDateTime(today.toDateTime))
+        assertEquals("$dayOfMonth.$month.$year 00:00:00.000", dateTimeFormatter.print(today.fromDateTime))
+        assertEquals("$dayOfMonth.$month.$year 23:59:59.999", dateTimeFormatter.print(today.toDateTime))
     }
 
     @Test
@@ -78,8 +78,8 @@ class DailyDateTimeIntervalTests
         assertEquals("Tomorrow", tomorrow.toString(mockResources))
         assertEquals("Yesterday", yesterday.toString(mockResources))
 
-        assertEquals(newSimpleDateFormat("dd MMM").formatJodaDateTime(dayAfterTomorrow.fromDateTime), dayAfterTomorrow.toString(mockResources))
-        assertEquals(newSimpleDateFormat("dd MMM").formatJodaDateTime(dayBeforeYesterday.fromDateTime), dayBeforeYesterday.toString(mockResources))
+        assertEquals(DateTimeFormat.forPattern("dd MMM").print(dayAfterTomorrow.fromDateTime), dayAfterTomorrow.toString(mockResources))
+        assertEquals(DateTimeFormat.forPattern("dd MMM").print(dayBeforeYesterday.fromDateTime), dayBeforeYesterday.toString(mockResources))
 
         assert(today.isToday)
         assert(!tomorrow.isToday)
@@ -119,14 +119,14 @@ class DailyDateTimeIntervalTests
 
         iterateUseCases { dayBeforeDstChangeDay, dstChangeDay, dayAfterDstChangeDay ->
 
-            assertEquals("28.03.2021 00:00:00.000", dateTimeFormatter.formatJodaDateTime(dstChangeDay.fromDateTime))
-            assertEquals("28.03.2021 23:59:59.999", dateTimeFormatter.formatJodaDateTime(dstChangeDay.toDateTime))
+            assertEquals("28.03.2021 00:00:00.000", dateTimeFormatter.print(dstChangeDay.fromDateTime))
+            assertEquals("28.03.2021 23:59:59.999", dateTimeFormatter.print(dstChangeDay.toDateTime))
 
-            assertEquals("29.03.2021 00:00:00.000", dateTimeFormatter.formatJodaDateTime(dayAfterDstChangeDay.fromDateTime))
-            assertEquals("29.03.2021 23:59:59.999", dateTimeFormatter.formatJodaDateTime(dayAfterDstChangeDay.toDateTime))
+            assertEquals("29.03.2021 00:00:00.000", dateTimeFormatter.print(dayAfterDstChangeDay.fromDateTime))
+            assertEquals("29.03.2021 23:59:59.999", dateTimeFormatter.print(dayAfterDstChangeDay.toDateTime))
 
-            assertEquals("27.03.2021 00:00:00.000", dateTimeFormatter.formatJodaDateTime(dayBeforeDstChangeDay.fromDateTime))
-            assertEquals("27.03.2021 23:59:59.999", dateTimeFormatter.formatJodaDateTime(dayBeforeDstChangeDay.toDateTime))
+            assertEquals("27.03.2021 00:00:00.000", dateTimeFormatter.print(dayBeforeDstChangeDay.fromDateTime))
+            assertEquals("27.03.2021 23:59:59.999", dateTimeFormatter.print(dayBeforeDstChangeDay.toDateTime))
 
             //summer is coming, thus the sunlight will take more daytime, time will decrease with one hour
             assertEquals(24.hoursInMills.toLong(), dayBeforeDstChangeDay.toDateTime.millis-dayBeforeDstChangeDay.fromDateTime.millis+1)
@@ -166,14 +166,14 @@ class DailyDateTimeIntervalTests
 
         iterateUseCases { dayBeforeDstChangeDay, dstChangeDay, dayAfterDstChangeDay ->
 
-            assertEquals("31.10.2021 00:00:00.000", dateTimeFormatter.formatJodaDateTime(dstChangeDay.fromDateTime))
-            assertEquals("31.10.2021 23:59:59.999", dateTimeFormatter.formatJodaDateTime(dstChangeDay.toDateTime))
+            assertEquals("31.10.2021 00:00:00.000", dateTimeFormatter.print(dstChangeDay.fromDateTime))
+            assertEquals("31.10.2021 23:59:59.999", dateTimeFormatter.print(dstChangeDay.toDateTime))
 
-            assertEquals("01.11.2021 00:00:00.000", dateTimeFormatter.formatJodaDateTime(dayAfterDstChangeDay.fromDateTime))
-            assertEquals("01.11.2021 23:59:59.999", dateTimeFormatter.formatJodaDateTime(dayAfterDstChangeDay.toDateTime))
+            assertEquals("01.11.2021 00:00:00.000", dateTimeFormatter.print(dayAfterDstChangeDay.fromDateTime))
+            assertEquals("01.11.2021 23:59:59.999", dateTimeFormatter.print(dayAfterDstChangeDay.toDateTime))
 
-            assertEquals("30.10.2021 00:00:00.000", dateTimeFormatter.formatJodaDateTime(dayBeforeDstChangeDay.fromDateTime))
-            assertEquals("30.10.2021 23:59:59.999", dateTimeFormatter.formatJodaDateTime(dayBeforeDstChangeDay.toDateTime))
+            assertEquals("30.10.2021 00:00:00.000", dateTimeFormatter.print(dayBeforeDstChangeDay.fromDateTime))
+            assertEquals("30.10.2021 23:59:59.999", dateTimeFormatter.print(dayBeforeDstChangeDay.toDateTime))
 
             //winter is coming, thus the sunlight will take less daytime, time will increase with one hour
             assertEquals(24.hoursInMills.toLong(), dayBeforeDstChangeDay.toDateTime.millis-dayBeforeDstChangeDay.fromDateTime.millis+1)

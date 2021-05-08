@@ -1,6 +1,7 @@
 package ro.dobrescuandrei.timelineviewv2
 
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -8,7 +9,7 @@ import ro.dobrescuandrei.timelineviewv2.utils.*
 
 class JodaTimeExtensionsTest
 {
-    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()
@@ -17,16 +18,16 @@ class JodaTimeExtensionsTest
     fun testDateTimeAtBeginningOfDay()
     {
         val dateTime=DateTime(2021, 1, 17, 16, 19, 0, 0)
-        assertEquals("17.01.2021 16:19:00.000", dateTimeFormatter.formatJodaDateTime(dateTime))
-        assertEquals("17.01.2021 00:00:00.000", dateTimeFormatter.formatJodaDateTime(dateTime.atBeginningOfDay()))
+        assertEquals("17.01.2021 16:19:00.000", dateTimeFormatter.print(dateTime))
+        assertEquals("17.01.2021 00:00:00.000", dateTimeFormatter.print(dateTime.atBeginningOfDay()))
     }
 
     @Test
     fun testDateTimeAtEndOfDay()
     {
         val dateTime=DateTime(2021, 1, 17, 16, 21, 0, 0)
-        assertEquals("17.01.2021 16:21:00.000", dateTimeFormatter.formatJodaDateTime(dateTime))
-        assertEquals("17.01.2021 23:59:59.999", dateTimeFormatter.formatJodaDateTime(dateTime.atEndOfDay()))
+        assertEquals("17.01.2021 16:21:00.000", dateTimeFormatter.print(dateTime))
+        assertEquals("17.01.2021 23:59:59.999", dateTimeFormatter.print(dateTime.atEndOfDay()))
     }
 
     @Test

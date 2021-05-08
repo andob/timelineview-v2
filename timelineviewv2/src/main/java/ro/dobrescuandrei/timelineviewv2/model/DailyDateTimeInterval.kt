@@ -3,14 +3,13 @@ package ro.dobrescuandrei.timelineviewv2.model
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import ro.dobrescuandrei.timelineviewv2.R
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.DailyDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
 import ro.dobrescuandrei.timelineviewv2.utils.atEndOfDay
-import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
-import java.text.SimpleDateFormat
 
 class DailyDateTimeInterval
 (
@@ -59,10 +58,9 @@ class DailyDateTimeInterval
 
         val dateFormatter=
             if (fromDateTime.year!=now.year)
-                SimpleDateFormat("dd MMM yyyy")
-            else SimpleDateFormat("dd MMM")
-        dateFormatter.timeZone=TimelineViewDefaults.timezone.toTimeZone()!!
-        return dateFormatter.formatJodaDateTime(fromDateTime)
+                DateTimeFormat.forPattern("dd MMM yyyy")!!
+            else DateTimeFormat.forPattern("dd MMM")!!
+        return dateFormatter.print(fromDateTime)
     }
 
     override fun toRecyclerViewAdapter(timelineView : TimelineView) =

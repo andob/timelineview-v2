@@ -1,16 +1,16 @@
 package ro.dobrescuandrei.timelineviewv2
 
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.model.*
-import ro.dobrescuandrei.timelineviewv2.utils.formatJodaDateTime
 
 class DateTimeIntervalConverterTests
 {
     private val converter = DateTimeIntervalConverter()
-    private val dateTimeFormatter = newSimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()
@@ -24,25 +24,25 @@ class DateTimeIntervalConverterTests
         val month=converter.convert(from = day, to = MonthlyDateTimeInterval::class.java)
         val year=converter.convert(from = day, to = YearlyDateTimeInterval::class.java)
 
-        assertEquals("16.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(week.fromDateTime))
-        assertEquals("22.01.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(week.toDateTime))
+        assertEquals("16.01.2006 00:00:00.000", dateTimeFormatter.print(week.fromDateTime))
+        assertEquals("22.01.2006 23:59:59.999", dateTimeFormatter.print(week.toDateTime))
 
         listOf(day, week).map { originalDateTimeInterval ->
             val month=converter.convert(from = originalDateTimeInterval, to = MonthlyDateTimeInterval::class.java)
-            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(month.fromDateTime))
-            assertEquals("31.01.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(month.toDateTime))
+            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.print(month.fromDateTime))
+            assertEquals("31.01.2006 23:59:59.999", dateTimeFormatter.print(month.toDateTime))
         }
 
         listOf(day, week, month).map { originalDateTimeInterval ->
             val year=converter.convert(from = day, to = YearlyDateTimeInterval::class.java)
-            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(year.fromDateTime))
-            assertEquals("31.12.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(year.toDateTime))
+            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.print(year.fromDateTime))
+            assertEquals("31.12.2006 23:59:59.999", dateTimeFormatter.print(year.toDateTime))
         }
 
         listOf(day, week, month, year).map { originalDateTimeInterval ->
             val infiniteInterval=converter.convert(from = day, to = YearlyDateTimeInterval::class.java)
-            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.formatJodaDateTime(infiniteInterval.fromDateTime))
-            assertEquals("31.12.2006 23:59:59.999", dateTimeFormatter.formatJodaDateTime(infiniteInterval.toDateTime))
+            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.print(infiniteInterval.fromDateTime))
+            assertEquals("31.12.2006 23:59:59.999", dateTimeFormatter.print(infiniteInterval.toDateTime))
         }
     }
 
