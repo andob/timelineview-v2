@@ -16,6 +16,8 @@ repositories {
 }
 ```
 
+
+
 ```
 dependencies {
     implementation 'net.danlew:android.joda:2.10.3'
@@ -34,7 +36,7 @@ class App : Application()
 
         JodaTimeAndroid.init(this)
 
-        TimelineViewDefaults.timezone=DateTimeZone.forTimeZone(TimeZone.getDefault())
+        TimelineViewDefaults.timezone = DateTimeZone.forTimeZone(TimeZone.getDefault())
     }
 }
 ```
@@ -226,7 +228,7 @@ You can customise the look and feel of the TimelineView with XML:
     android:id="@+id/timelineView"/>
 ```
 
-### Why v2?
+### Why is it named "v2"?
 
 This is a remake of a in-house library I started in 2017, used across some apps. The V1 library hasn't aged well, since its specifications and features changed a lot over the time. The V2 library is a clean room remake, keeping all V1's features, but with a cleaner architecture.
 
