@@ -3,6 +3,7 @@ package ro.dobrescuandrei.timelineviewv2.model
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import ro.dobrescuandrei.timelineviewv2.R
 import ro.dobrescuandrei.timelineviewv2.TimelineView
@@ -33,6 +34,10 @@ class DailyDateTimeInterval
         @JvmStatic
         fun today() = DailyDateTimeInterval(
             referenceDateTime = DateTime.now(TimelineViewDefaults.timezone))
+
+        @JvmStatic
+        fun around(date : LocalDate) = DailyDateTimeInterval(
+            referenceDateTime = date.toDateTimeAtCurrentTime(TimelineViewDefaults.timezone))
     }
 
     override fun getPreviousDateTimeInterval() =
