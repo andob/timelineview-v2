@@ -9,14 +9,12 @@ class DateTimeIntervalTypeChangeFlow
     private val items = LinkedList<Class<DateTimeInterval>>()
     private var selectedPosition = 0
 
-    private constructor() : super()
-
-    private constructor(builder : Builder) : super()
+    constructor(intervalTypes : List<Class<DateTimeInterval>>) : super()
     {
-        if (builder.results.isEmpty())
+        if (intervalTypes.isEmpty())
             throw RuntimeException("Invalid DateTimeIntervalTypeChange.Flow!!!")
 
-        items.addAll(builder.results)
+        items.addAll(intervalTypes)
     }
 
     fun toList() = items
@@ -69,13 +67,16 @@ class DateTimeIntervalTypeChangeFlow
         {
             val builder=Builder()
             builderBlock.invoke(builder)
-            return DateTimeIntervalTypeChangeFlow(builder)
+            return builder.build()
         }
+
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     class Builder
     {
-        val results=mutableListOf<Class<DateTimeInterval>>()
+        private val results=mutableListOf<Class<DateTimeInterval>>()
 
         fun <FROM : DateTimeInterval> from(type : Class<FROM>) = addType(type)
         fun <FROM : DateTimeInterval> to(type : Class<FROM>) = addType(type)
@@ -88,5 +89,7 @@ class DateTimeIntervalTypeChangeFlow
             results.add(type as Class<DateTimeInterval>)
             return this
         }
+
+        fun build() = DateTimeIntervalTypeChangeFlow(results)
     }
 }

@@ -7,8 +7,8 @@ object TimelineViewDefaults
 {
     var timezone : DateTimeZone = DateTimeZone.UTC
 
-    var dateTimeIntervalTypeChangeFlowFactory = factory@ {
-        return@factory DateTimeIntervalTypeChangeFlow.build {
+    var dateTimeIntervalTypeChangeFlowFactory = {
+        DateTimeIntervalTypeChangeFlow.build {
             from(DailyDateTimeInterval::class.java)
                 .to(WeeklyDateTimeInterval::class.java)
                 .to(MonthlyDateTimeInterval::class.java)
