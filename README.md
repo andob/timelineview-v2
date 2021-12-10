@@ -16,32 +16,14 @@ repositories {
 }
 ```
 
-
-
 ```
 dependencies {
-    implementation 'net.danlew:android.joda:2.10.6'
-    implementation 'ro.andob.timelineview:timelineview-v2:2.2.4'
+    implementation 'net.danlew:android.joda:2.10.12.2'
+    implementation 'ro.andob.timelineview:timelineview-v2:2.2.5'
 }
 ```
 
-In your application class:
-
-```kotlin
-class App : Application()
-{
-    override fun onCreate()
-    {
-        super.onCreate()
-
-        JodaTimeAndroid.init(this)
-
-        TimelineViewDefaults.timezone = DateTimeZone.forTimeZone(TimeZone.getDefault())
-    }
-}
-```
-
-The activity:
+Use it:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -235,7 +217,7 @@ This is a remake of a in-house library I started in 2017, used across some apps.
 ### License
 
 ```
-Copyright 2020 Andrei Dobrescu
+Copyright 2020 - 2021 Andrei Dobrescu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
