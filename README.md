@@ -18,8 +18,8 @@ repositories {
 
 ```
 dependencies {
-    implementation 'net.danlew:android.joda:2.10.12.2'
-    implementation 'ro.andob.timelineview:timelineview-v2:2.2.5'
+    implementation 'net.danlew:android.joda:2.10.14'
+    implementation 'ro.andob.timelineview:timelineview-v2:2.2.6'
 }
 ```
 

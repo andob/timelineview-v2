@@ -11,8 +11,8 @@ import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 class CustomDateTimeIntervalTest
 {
     private val dateTimeInterval : DateTimeInterval = CustomDateTimeInterval(
-        fromDateTime = DateTime(2021, 1, 12, 0, 0, 0, 0),
-        toDateTime = DateTime(2021, 1, 26, 0, 0, 0, 0))
+        fromDateTime = DateTime(2022, 1, 12, 0, 0, 0, 0),
+        toDateTime = DateTime(2022, 1, 26, 0, 0, 0, 0))
 
     private val dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss.SSS")!!
 
@@ -22,8 +22,8 @@ class CustomDateTimeIntervalTest
     @Test
     fun testIntervalRange()
     {
-        assertEquals("12.01.2021 00:00:00.000", dateTimeFormatter.print(dateTimeInterval.fromDateTime))
-        assertEquals("26.01.2021 23:59:59.999", dateTimeFormatter.print(dateTimeInterval.toDateTime))
+        assertEquals("12.01.2022 00:00:00.000", dateTimeFormatter.print(dateTimeInterval.fromDateTime))
+        assertEquals("26.01.2022 23:59:59.999", dateTimeFormatter.print(dateTimeInterval.toDateTime))
     }
 
     @Test
@@ -44,8 +44,8 @@ class CustomDateTimeIntervalTest
     fun testInvertedIntervalEqualsOriginalInterval()
     {
         val invertedDateTimeInterval=CustomDateTimeInterval(
-            fromDateTime = DateTime(2021, 1, 26, 0, 0, 0, 0),
-            toDateTime = DateTime(2021, 1, 12, 0, 0, 0, 0))
+            fromDateTime = DateTime(2022, 1, 26, 0, 0, 0, 0),
+            toDateTime = DateTime(2022, 1, 12, 0, 0, 0, 0))
 
         assertEquals(dateTimeInterval.fromDateTime, invertedDateTimeInterval.fromDateTime)
         assertEquals(dateTimeInterval.toDateTime, invertedDateTimeInterval.toDateTime)
