@@ -58,21 +58,20 @@ class WeeklyDateTimeIntervalTest
     {
         fun Int.withLeadingZero() = if(this<10) "0$this" else "$this"
 
-        val year=DailyDateTimeInterval.today().fromDateTime.year
-        val month=DailyDateTimeInterval.today().fromDateTime.monthOfYear.withLeadingZero()
+        fun DateTime.formatted() = "${dayOfMonth.withLeadingZero()}.${monthOfYear.withLeadingZero()}.$year"
 
-        val minDayFromWeek=DateTimeIntervalConverter().convert(
+        val formattedMinDay=DateTimeIntervalConverter().convert(
             from = DailyDateTimeInterval.today(),
             to = WeeklyDateTimeInterval::class.java
-        ).fromDateTime.dayOfMonth.withLeadingZero()
+        ).fromDateTime.formatted()
 
-        val maxDayFromWeek=DateTimeIntervalConverter().convert(
+        val formattedMaxDay=DateTimeIntervalConverter().convert(
             from = DailyDateTimeInterval.today(),
             to = WeeklyDateTimeInterval::class.java
-        ).toDateTime.dayOfMonth.withLeadingZero()
+        ).toDateTime.formatted()
 
         val interval=WeeklyDateTimeInterval.aroundToday()
-        assertEquals("$minDayFromWeek.$month.$year 00:00:00.000", dateTimeFormatter.print(interval.fromDateTime))
-        assertEquals("$maxDayFromWeek.$month.$year 23:59:59.999", dateTimeFormatter.print(interval.toDateTime))
+        assertEquals("$formattedMinDay 00:00:00.000", dateTimeFormatter.print(interval.fromDateTime))
+        assertEquals("$formattedMaxDay 23:59:59.999", dateTimeFormatter.print(interval.toDateTime))
     }
 }
