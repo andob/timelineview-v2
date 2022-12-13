@@ -10,20 +10,29 @@ import ro.dobrescuandrei.timelineviewv2.utils.ScreenSize
 
 class TimelineRecyclerView : RecyclerView
 {
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context : Context) : super(context)
+    constructor(context : Context, attrs : AttributeSet) : super(context, attrs)
+
+    init
     {
-        layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        if (!isInEditMode)
+        {
+            layoutManager=LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        }
     }
 
     override fun setAdapter(adapter : Adapter<*>?)
     {
-        if (adapter!=null&&adapter !is BaseTimelineRecyclerViewAdapter<*>)
-            throw RuntimeException("Please use BaseTimelineRecyclerViewAdapter!!!")
+        if (!isInEditMode)
+        {
+            if (adapter!=null&&adapter !is BaseTimelineRecyclerViewAdapter<*>)
+                throw RuntimeException("Please use BaseTimelineRecyclerViewAdapter!!!")
 
-        super.setAdapter(adapter)
+            super.setAdapter(adapter)
 
-        if (adapter is InfiniteScrollingTimelineRecyclerViewAdapter)
-            scrollMiddleCellToMiddleOfTheScreen()
+            if (adapter is InfiniteScrollingTimelineRecyclerViewAdapter)
+                scrollMiddleCellToMiddleOfTheScreen()
+        }
     }
 
     override fun getAdapter() : BaseTimelineRecyclerViewAdapter<*>?

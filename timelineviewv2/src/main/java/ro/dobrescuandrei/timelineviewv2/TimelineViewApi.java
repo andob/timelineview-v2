@@ -46,11 +46,15 @@ public abstract class TimelineViewApi extends BaseCustomView
     {
         super(context, attributeSet);
 
-        TypedArray attributes=context.obtainStyledAttributes(attributeSet, R.styleable.TimelineView);
-        this.appearance=new TimelineViewAppearance(context, attributes);
-        this.isCustomDateTimeIntervalSupported=attributes.getBoolean(R.styleable.TimelineView_tv_is_custom_date_time_interval_supported, true);
-        this.isDateTimeIntervalTypeChangerDialogSupported=attributes.getBoolean(R.styleable.TimelineView_tv_is_date_time_interval_type_changer_dialog_supported, true);
-        attributes.recycle();
+        if (!isInEditMode())
+        {
+            TypedArray attributes=context.obtainStyledAttributes(attributeSet, R.styleable.TimelineView);
+            this.appearance=new TimelineViewAppearance(context, attributes);
+            this.isCustomDateTimeIntervalSupported=attributes.getBoolean(R.styleable.TimelineView_tv_is_custom_date_time_interval_supported, true);
+            this.isDateTimeIntervalTypeChangerDialogSupported=attributes.getBoolean(R.styleable.TimelineView_tv_is_date_time_interval_type_changer_dialog_supported, true);
+            attributes.recycle();
+        }
+        else this.appearance=new TimelineViewAppearance(context);
     }
 
     public OnDateTimeIntervalChangedEventsLock getOnDateTimeIntervalChangedEventsLock()

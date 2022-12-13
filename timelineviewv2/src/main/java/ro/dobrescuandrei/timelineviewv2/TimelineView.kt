@@ -25,18 +25,21 @@ open class TimelineView : TimelineViewApi
 
     init
     {
-        this.dateTimeIntervalTypeChangeFlow=TimelineViewDefaults.dateTimeIntervalTypeChangeFlowFactory.invoke()
+        if (!isInEditMode)
+        {
+            this.dateTimeIntervalTypeChangeFlow=TimelineViewDefaults.dateTimeIntervalTypeChangeFlowFactory.invoke()
 
-        changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
-        changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+            changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+            changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
 
-        decrementDateIntervalTypeButton.setImageResource(appearance.downIconResourceId)
-        incrementDateIntervalTypeButton.setImageResource(appearance.upIconResourceId)
-        changeDateIntervalTypeLeftButton.setImageResource(appearance.calendarIconResourceId)
-        changeDateIntervalTypeRightButton.setImageResource(appearance.calendarIconResourceId)
-        leftButtonsContainer.setBackgroundResource(appearance.leftButtonsContainerBackgroundResourceId)
-        rightButtonsContainer.setBackgroundResource(appearance.rightButtonsContainerBackgroundResourceId)
-        rootContainer.setBackgroundColor(appearance.unselectedCellBackgroundColor)
+            decrementDateIntervalTypeButton.setImageResource(appearance.downIconResourceId)
+            incrementDateIntervalTypeButton.setImageResource(appearance.upIconResourceId)
+            changeDateIntervalTypeLeftButton.setImageResource(appearance.calendarIconResourceId)
+            changeDateIntervalTypeRightButton.setImageResource(appearance.calendarIconResourceId)
+            leftButtonsContainer.setBackgroundResource(appearance.leftButtonsContainerBackgroundResourceId)
+            rightButtonsContainer.setBackgroundResource(appearance.rightButtonsContainerBackgroundResourceId)
+            rootContainer.setBackgroundColor(appearance.unselectedCellBackgroundColor)
+        }
     }
 
     override fun onWindowFocusChanged(windowHasFocus : Boolean)

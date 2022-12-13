@@ -9,6 +9,7 @@ import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval;
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewHolder;
 import ro.dobrescuandrei.timelineviewv2.utils.ScreenSize;
 
+@SuppressWarnings("unchecked")
 public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends DateTimeInterval> extends RecyclerView.Adapter<TimelineRecyclerViewHolder>
 {
     public Context context;

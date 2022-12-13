@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RadioGroup
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <RadioButton
+        android:id="@+id/tv___dailyRadioButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:layout_marginBottom="8dp"
+        android:text="@string/daily"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/tv___dailyRadioButton"
-            android:text="@string/daily"/>
+        android:id="@+id/tv___weeklyRadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/weekly"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/tv___weeklyRadioButton"
-            android:text="@string/weekly"/>
+        android:id="@+id/tv___monthlyRadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/monthly"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/tv___monthlyRadioButton"
-            android:text="@string/monthly"/>
+        android:id="@+id/tv___yearlyRadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/yearly"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/tv___yearlyRadioButton"
-            android:text="@string/yearly"/>
-
-    <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/tv___allTimeRadioButton"
-            android:text="@string/all_time"/>
+        android:id="@+id/tv___allTimeRadioButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/all_time"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/tv___customIntervalButtonContainer">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/tv___customIntervalButtonContainer">
 
         <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv___customIntervalRadioButton"
-                android:text="@string/custom_interval"/>
+            android:id="@+id/tv___customIntervalRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_interval"
+            tools:ignore="TouchTargetSizeCheck" />
 
         <View
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tv___customIntervalRadioButton"
-                android:layout_alignRight="@+id/tv___customIntervalRadioButton"
-                android:layout_alignTop="@+id/tv___customIntervalRadioButton"
-                android:layout_alignBottom="@+id/tv___customIntervalRadioButton"
-                android:id="@+id/tv___customIntervalButtonOverlayView"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv___customIntervalRadioButton"
+            android:layout_alignRight="@+id/tv___customIntervalRadioButton"
+            android:layout_alignTop="@+id/tv___customIntervalRadioButton"
+            android:layout_alignBottom="@+id/tv___customIntervalRadioButton"
+            android:id="@+id/tv___customIntervalButtonOverlayView"/>
 
     </RelativeLayout>
 
