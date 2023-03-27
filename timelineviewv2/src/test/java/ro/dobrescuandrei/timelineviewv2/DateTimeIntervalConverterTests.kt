@@ -1,16 +1,16 @@
 package ro.dobrescuandrei.timelineviewv2
 
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.model.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class DateTimeIntervalConverterTests
 {
     private val converter = DateTimeIntervalConverter()
-    private val dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss.SSS")
+    private val dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS")
 
     @Before
     fun setup() = setupUnitTests()
@@ -19,30 +19,30 @@ class DateTimeIntervalConverterTests
     @Suppress("NAME_SHADOWING")
     fun testUpwardConversions()
     {
-        val day=DailyDateTimeInterval(DateTime(2006, 1, 18, 0, 0, 0, 0))
+        val day=DailyDateTimeInterval(LocalDateTime.of(2006, 1, 18, 0, 0, 0, 0))
         val week=converter.convert(from = day, to = WeeklyDateTimeInterval::class.java)
         val month=converter.convert(from = day, to = MonthlyDateTimeInterval::class.java)
         val year=converter.convert(from = day, to = YearlyDateTimeInterval::class.java)
 
-        assertEquals("16.01.2006 00:00:00.000", dateTimeFormatter.print(week.fromDateTime))
-        assertEquals("22.01.2006 23:59:59.999", dateTimeFormatter.print(week.toDateTime))
+        assertEquals("16.01.2006 00:00:00.000", dateTimeFormatter.format(week.fromDateTime))
+        assertEquals("22.01.2006 23:59:59.999", dateTimeFormatter.format(week.toDateTime))
 
         listOf(day, week).map { originalDateTimeInterval ->
             val month=converter.convert(from = originalDateTimeInterval, to = MonthlyDateTimeInterval::class.java)
-            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.print(month.fromDateTime))
-            assertEquals("31.01.2006 23:59:59.999", dateTimeFormatter.print(month.toDateTime))
+            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.format(month.fromDateTime))
+            assertEquals("31.01.2006 23:59:59.999", dateTimeFormatter.format(month.toDateTime))
         }
 
-        listOf(day, week, month).map { originalDateTimeInterval ->
+        listOf(day, week, month).map {
             val year=converter.convert(from = day, to = YearlyDateTimeInterval::class.java)
-            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.print(year.fromDateTime))
-            assertEquals("31.12.2006 23:59:59.999", dateTimeFormatter.print(year.toDateTime))
+            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.format(year.fromDateTime))
+            assertEquals("31.12.2006 23:59:59.999", dateTimeFormatter.format(year.toDateTime))
         }
 
-        listOf(day, week, month, year).map { originalDateTimeInterval ->
+        listOf(day, week, month, year).map {
             val infiniteInterval=converter.convert(from = day, to = YearlyDateTimeInterval::class.java)
-            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.print(infiniteInterval.fromDateTime))
-            assertEquals("31.12.2006 23:59:59.999", dateTimeFormatter.print(infiniteInterval.toDateTime))
+            assertEquals("01.01.2006 00:00:00.000", dateTimeFormatter.format(infiniteInterval.fromDateTime))
+            assertEquals("31.12.2006 23:59:59.999", dateTimeFormatter.format(infiniteInterval.toDateTime))
         }
     }
 
@@ -88,7 +88,7 @@ class DateTimeIntervalConverterTests
         }
 
         println("coming towards a day from the past").let {
-            val dateTimeFromPast=DateTime(2006, 1, 1, 0, 0, 0, 0)
+            val dateTimeFromPast=LocalDateTime.of(2006, 1, 1, 0, 0, 0, 0)
 
             val year=YearlyDateTimeInterval(dateTimeFromPast)
             val month=converter.convert(from = year, to = MonthlyDateTimeInterval::class.java)
@@ -122,7 +122,7 @@ class DateTimeIntervalConverterTests
         }
 
         println("coming towards a day from the past").let {
-            val dateTimeFromPast=DateTime(2006, 1, 1, 0, 0, 0, 0)
+            val dateTimeFromPast=LocalDateTime.of(2006, 1, 1, 0, 0, 0, 0)
 
             val month=MonthlyDateTimeInterval(dateTimeFromPast)
             val week=converter.convert(from = month, to = WeeklyDateTimeInterval::class.java)
@@ -148,7 +148,7 @@ class DateTimeIntervalConverterTests
         }
 
         println("coming towards a day from the past").let {
-            val dateTimeFromPast=DateTime(2006, 1, 1, 0, 0, 0, 0)
+            val dateTimeFromPast=LocalDateTime.of(2006, 1, 1, 0, 0, 0, 0)
 
             val week=WeeklyDateTimeInterval(dateTimeFromPast)
             val day=converter.convert(from = week, to = DailyDateTimeInterval::class.java)

@@ -16,12 +16,6 @@ class TimelineRecyclerViewCell
     val appearance : TimelineViewAppearance
 ): BaseCustomView(context)
 {
-    interface Transformer
-    {
-        fun transform(cellView : TimelineRecyclerViewCell,
-                      dateTimeInterval : DateTimeInterval)
-    }
-
     private var _isSelected = false
 
     override fun getLayoutId() = R.layout.timeline_recycler_view_cell
@@ -66,8 +60,8 @@ class TimelineRecyclerViewCell
             FrameLayout.LayoutParams.MATCH_PARENT)
     }
 
-    private val cell get() = findViewById<FrameLayout>(R.id.tv___cell)!!
-    private val itemsContainer get() = findViewById<FrameLayout>(R.id.tv___itemsContainer)!!
-    private val intervalDescriptionLabel get() = findViewById<TextView>(R.id.tv___intervalDescriptionLabel)!!
-    private val selectedIndicatorView get() = findViewById<View>(R.id.tv___selectedIndicatorView)!!
+    private val cell get() = findViewById<FrameLayout>(R.id.cell)!!
+    private val itemsContainer get() = findViewById<FrameLayout>(R.id.itemsContainer)!!
+    private val intervalDescriptionLabel get() = findViewById<TextView>(R.id.intervalDescriptionLabel)!!
+    private val selectedIndicatorView get() = findViewById<View>(R.id.selectedIndicatorView)!!
 }

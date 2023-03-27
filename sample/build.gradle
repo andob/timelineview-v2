@@ -5,7 +5,7 @@ android {
     compileSdkVersion 33
     defaultConfig {
         applicationId "ro.dobrescuandrei.timelineviewv2.sample"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 33
         manifestPlaceholders = [
             configChanges: "mcc|mnc|locale|touchscreen|keyboard|keyboardHidden" +
@@ -24,11 +24,9 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
 
     implementation 'com.squareup.leakcanary:leakcanary-android:2.7'
-
-    implementation 'net.danlew:android.joda:2.10.14'
 
     implementation project(":timelineviewv2")
 }

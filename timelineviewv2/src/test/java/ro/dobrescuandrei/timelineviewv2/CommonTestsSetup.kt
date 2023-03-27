@@ -1,17 +1,14 @@
 package ro.dobrescuandrei.timelineviewv2
 
 import android.content.res.Resources
-import org.joda.time.DateTimeZone
 import org.mockito.Mockito
 import ro.dobrescuandrei.timelineviewv2.model.*
-import java.util.*
+import java.time.ZoneId
 
 private var areUnitTestsInitialized = false
 
-val Int.secondsInMills get() = this*1000
-val Int.minutesInMills get() = (this*60).secondsInMills
-val Int.hoursInMills get() = (this*60).minutesInMills
-val Int.daysInMills get() = (this*24).hoursInMills
+val Int.minutesInSeconds get() = this*60
+val Int.hoursInSeconds get() = (this*60).minutesInSeconds
 
 lateinit var mockResources : Resources
 
@@ -20,17 +17,7 @@ fun setupUnitTests()
     if (areUnitTestsInitialized)
         return
 
-    TimelineViewDefaults.timezone=DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Bucharest"))
-
-    TimelineViewDefaults.dateTimeIntervalTypeChangeFlowFactory=factory@ {
-        return@factory DateTimeIntervalTypeChangeFlow.build {
-            from(DailyDateTimeInterval::class.java)
-                .to(WeeklyDateTimeInterval::class.java)
-                .to(MonthlyDateTimeInterval::class.java)
-                .to(YearlyDateTimeInterval::class.java)
-                .to(InfiniteDateTimeInterval::class.java)
-        }
-    }
+    DateTimeInterval.defaultTimezone=ZoneId.of("Europe/Bucharest")
 
     mockResources=Mockito.mock(Resources::class.java)
     Mockito.`when`(mockResources.getString(R.string.all_time)).thenReturn("All time")

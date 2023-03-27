@@ -1,22 +1,35 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
 import android.content.res.Resources
-import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.TimelineView
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
 import java.io.Serializable
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 
 abstract class DateTimeInterval
 (
-    val fromDateTime : DateTime,
-    val toDateTime : DateTime
+    val fromDateTime : ZonedDateTime,
+    val toDateTime : ZonedDateTime,
 ) : Serializable
 {
+    constructor(fromDateTime : LocalDateTime, toDateTime : LocalDateTime) : this(
+        fromDateTime = fromDateTime.atZone(defaultTimezone),
+        toDateTime = toDateTime.atZone(defaultTimezone))
+
+    companion object
+    {
+        @JvmStatic
+        var defaultTimezone : ZoneId = ZoneOffset.UTC!!
+    }
+
     abstract fun getPreviousDateTimeInterval() : DateTimeInterval?
     abstract fun getNextDateTimeInterval() : DateTimeInterval?
-    abstract fun getShiftedDateTimeInterval(amount : Int) : DateTimeInterval?
+    abstract fun getShiftedDateTimeInterval(amount : Long) : DateTimeInterval?
 
-    fun contains(dateTime : DateTime) = dateTime in fromDateTime..toDateTime
+    fun contains(dateTime : ZonedDateTime) = dateTime in fromDateTime..toDateTime
 
     abstract fun toRecyclerViewAdapter(timelineView : TimelineView) : BaseTimelineRecyclerViewAdapter<*>
 
@@ -29,7 +42,7 @@ abstract class DateTimeInterval
         other.fromDateTime==this.fromDateTime&&
         other.toDateTime==this.toDateTime
 
-    override fun hashCode() = fromDateTime.millis.toInt()
+    override fun hashCode() = fromDateTime.toInstant()!!.toEpochMilli().toInt()
 
     abstract fun clone() : DateTimeInterval
 }

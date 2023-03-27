@@ -2,36 +2,36 @@ package ro.dobrescuandrei.timelineviewv2
 
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import org.joda.time.DateTime
-import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
+import ro.dobrescuandrei.timelineviewv2.base.BaseCustomView
 import ro.dobrescuandrei.timelineviewv2.dialog.ChangeDateTimeIntervalTypeDialog
+import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
+import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeIntervalConverter
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
+import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewCell
+import java.time.ZonedDateTime
 
-open class TimelineView : TimelineViewApi
+open class TimelineView : BaseCustomView
 {
-    internal val dateTimeIntervalConverter = DateTimeIntervalConverter()
+    val appearance : TimelineViewAppearance
 
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context?, appearance: TimelineViewAppearance) : super(context, appearance)
+    var onDateTimeIntervalChangedListener : OnDateTimeIntervalChangedListener? = null
 
-    override fun getLayoutId() = R.layout.timeline_view
+    var timelineRecyclerViewCellTransformer : ((TimelineRecyclerViewCell, DateTimeInterval) -> Unit)? = null ; private set
 
-    init
+    constructor(context : Context, attributeSet : AttributeSet) : super(context, attributeSet)
     {
         if (!isInEditMode)
         {
-            this.dateTimeIntervalTypeChangeFlow=TimelineViewDefaults.dateTimeIntervalTypeChangeFlowFactory.invoke()
+            val attributes=context.obtainStyledAttributes(attributeSet, R.styleable.TimelineView)
 
-            changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
-            changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
-
+            this.appearance=TimelineViewAppearance(context, attributes)
             decrementDateIntervalTypeButton.setImageResource(appearance.downIconResourceId)
             incrementDateIntervalTypeButton.setImageResource(appearance.upIconResourceId)
             changeDateIntervalTypeLeftButton.setImageResource(appearance.calendarIconResourceId)
@@ -39,8 +39,31 @@ open class TimelineView : TimelineViewApi
             leftButtonsContainer.setBackgroundResource(appearance.leftButtonsContainerBackgroundResourceId)
             rightButtonsContainer.setBackgroundResource(appearance.rightButtonsContainerBackgroundResourceId)
             rootContainer.setBackgroundColor(appearance.unselectedCellBackgroundColor)
+
+            this.dateTimeIntervalTypeChangeFlow=this.appearance.createDateTimeIntervalTypeChangeFlow()
+
+            changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+            changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+
+            val shouldDisablePast=attributes.hasValue(R.styleable.TimelineView_disable_clicking_on_past_intervals)
+            val shouldDisableFuture=attributes.hasValue(R.styleable.TimelineView_disable_clicking_on_future_intervals)
+            if (shouldDisablePast||shouldDisableFuture)
+            {
+                timelineRecyclerViewCellTransformer={ cellView, dateTimeInterval ->
+                    val now=ZonedDateTime.now(DateTimeInterval.defaultTimezone)
+                    if (shouldDisablePast&&dateTimeInterval.fromDateTime.isBefore(now))
+                        cellView.setOnClickListener(null)
+                    else if (shouldDisableFuture&&dateTimeInterval.toDateTime.isAfter(now))
+                        cellView.setOnClickListener(null)
+                }
+            }
+
+            attributes.recycle()
         }
+        else this.appearance=TimelineViewAppearance(context)
     }
+
+    override fun getLayoutId() = R.layout.timeline_view
 
     override fun onWindowFocusChanged(windowHasFocus : Boolean)
     {
@@ -50,7 +73,7 @@ open class TimelineView : TimelineViewApi
         {
             //on activity resumed, refresh if the day has passed in the meantime...
             if (dateTimeInterval is DailyDateTimeInterval&&(dateTimeInterval as DailyDateTimeInterval).isToday&&
-                DateTime.now(TimelineViewDefaults.timezone).toLocalDate()!=dateTimeInterval.fromDateTime.toLocalDate())
+                ZonedDateTime.now(DateTimeInterval.defaultTimezone).toLocalDate()!=dateTimeInterval.fromDateTime.toLocalDate())
                 dateTimeInterval=DailyDateTimeInterval.today()
         }
     }
@@ -63,44 +86,77 @@ open class TimelineView : TimelineViewApi
         recyclerView.scrollMiddleCellToMiddleOfTheScreen()
     }
 
-    override fun setDateTimeInterval(dateTimeInterval : DateTimeInterval)
+    var firstTimeDateTimeIntervalSetterWasCalled = true
+    var dateTimeInterval : DateTimeInterval = DailyDateTimeInterval.today()
+    set(dateTimeInterval)
     {
-        super.setDateTimeInterval(dateTimeInterval)
+        if (!Looper.getMainLooper().isCurrentThread)
+            throw RuntimeException("This method must be called on UI thread!")
 
-        recyclerView.adapter?.dispose()
+        if (dateTimeInterval !is CustomDateTimeInterval&&!dateTimeIntervalTypeChangeFlow.toList().contains(dateTimeInterval::class.java))
+            throw RuntimeException("Cannot use ${dateTimeInterval::class.java.simpleName}")
 
-        recyclerView.adapter=dateTimeInterval.toRecyclerViewAdapter(timelineView = this)
+        if (dateTimeInterval is CustomDateTimeInterval&&!appearance.isCustomDateTimeIntervalSupported)
+            throw InvalidDateTimeIntervalTypeException("Cannot use CustomDateTimeInterval!")
+
+        if (field!=dateTimeInterval||firstTimeDateTimeIntervalSetterWasCalled)
+        {
+            if (field::class.java!=dateTimeInterval::class.java)
+            {
+                dateTimeIntervalTypeChangeFlow.seekToNode(dateTimeInterval::class.java)
+                updateUiFromIntervalTypeChangeFlow()
+            }
+
+            field=dateTimeInterval
+            this.onDateTimeIntervalChangedListener?.invoke(dateTimeInterval)
+
+            recyclerView.adapter?.dispose()
+
+            recyclerView.adapter=dateTimeInterval.toRecyclerViewAdapter(timelineView = this)
+
+            firstTimeDateTimeIntervalSetterWasCalled=false
+        }
     }
 
-    override fun setDateTimeIntervalTypeChangeFlow(flow : DateTimeIntervalTypeChangeFlow)
+    fun setOnDateTimeIntervalChangedListener(listener : (DateTimeInterval) -> Unit)
     {
-        super.setDateTimeIntervalTypeChangeFlow(flow)
+        this.onDateTimeIntervalChangedListener=OnDateTimeIntervalChangedListener { listener(it) }
+    }
 
-        val todayAndNow=DateTime(TimelineViewDefaults.timezone)
+    var dateTimeIntervalTypeChangeFlow : DateTimeIntervalTypeChangeFlow =
+        DateTimeIntervalTypeChangeFlow.build { from(DailyDateTimeInterval::class.java) }
+    set(flow)
+    {
+        field=flow
 
-        dateTimeInterval=flow.getFirstNode().constructors.find { constructor ->
-            DateTime::class.java in constructor.parameterTypes
+        val todayAndNow=ZonedDateTime.now(DateTimeInterval.defaultTimezone)
+
+        this.dateTimeInterval=flow.getFirstNode().constructors.find { constructor ->
+            ZonedDateTime::class.java in constructor.parameterTypes
         }!!.newInstance(todayAndNow) as DateTimeInterval
 
         updateUiFromIntervalTypeChangeFlow()
 
         decrementDateIntervalTypeButton.setOnClickListener {
             flow.previousNode()?.let { type ->
-                dateTimeInterval=dateTimeIntervalConverter.convert(from = dateTimeInterval, to = type)
+                this.dateTimeInterval=DateTimeIntervalConverter().convert(from = dateTimeInterval, to = type)
                 updateUiFromIntervalTypeChangeFlow()
             }
         }
 
         incrementDateIntervalTypeButton.setOnClickListener {
             flow.nextNode()?.let { type ->
-                dateTimeInterval=dateTimeIntervalConverter.convert(from = dateTimeInterval, to = type)
+                this.dateTimeInterval=DateTimeIntervalConverter().convert(from = dateTimeInterval, to = type)
                 updateUiFromIntervalTypeChangeFlow()
             }
         }
     }
 
-    protected override fun updateUiFromIntervalTypeChangeFlow()
+    private fun updateUiFromIntervalTypeChangeFlow()
     {
+        if (!Looper.getMainLooper().isCurrentThread)
+            throw RuntimeException("This method must be called on UI thread!")
+
         val flow=dateTimeIntervalTypeChangeFlow
         if (flow.hasPreviousNode()&&flow.hasNextNode())
         {
@@ -131,22 +187,16 @@ open class TimelineView : TimelineViewApi
             changeDateIntervalTypeRightButton.visibility=View.GONE
         }
 
-        if (!isDateTimeIntervalTypeChangerDialogSupported)
+        if (!appearance.isDateTimeIntervalTypeChangerDialogSupported)
         {
             changeDateIntervalTypeLeftButton.visibility=View.GONE
             changeDateIntervalTypeRightButton.visibility=View.GONE
         }
     }
 
-    override fun setCustomDateTimeIntervalSupported(isSupported : Boolean)
-    {
-        super.setCustomDateTimeIntervalSupported(isSupported)
-        updateUiFromIntervalTypeChangeFlow()
-    }
-
     override fun onDetachedFromWindow()
     {
-        setOnDateTimeIntervalChangedListener(null)
+        onDateTimeIntervalChangedListener=null
 
         recyclerView.adapter?.dispose()
         recyclerView.adapter=null
@@ -154,12 +204,23 @@ open class TimelineView : TimelineViewApi
         super.onDetachedFromWindow()
     }
 
-    private val rootContainer get() = findViewById<View>(R.id.tv___rootContainer)!!
-    private val recyclerView get() = findViewById<TimelineRecyclerView>(R.id.tv___recyclerView)!!
-    private val leftButtonsContainer get() = findViewById<LinearLayout>(R.id.tv___leftButtonsContainer)!!
-    private val decrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.tv___decrementDateIntervalTypeButton)!!
-    private val changeDateIntervalTypeLeftButton get() = findViewById<ImageView>(R.id.tv___changeDateIntervalTypeLeftButton)!!
-    private val rightButtonsContainer get() = findViewById<LinearLayout>(R.id.tv___rightButtonsContainer)!!
-    private val incrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.tv___incrementDateIntervalTypeButton)!!
-    private val changeDateIntervalTypeRightButton get() = findViewById<ImageView>(R.id.tv___changeDateIntervalTypeRightButton)!!
+    fun preventFiringIntervalChangedEvents(toRun : Runnable)
+    {
+        if (!Looper.getMainLooper().isCurrentThread)
+            throw RuntimeException("This method must be called on UI thread!")
+
+        val aux=onDateTimeIntervalChangedListener
+        onDateTimeIntervalChangedListener=null
+        toRun.run()
+        onDateTimeIntervalChangedListener=aux
+    }
+
+    private val rootContainer get() = findViewById<View>(R.id.rootContainer)!!
+    private val recyclerView get() = findViewById<TimelineRecyclerView>(R.id.recyclerView)!!
+    private val leftButtonsContainer get() = findViewById<LinearLayout>(R.id.leftButtonsContainer)!!
+    private val decrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.decrementDateIntervalTypeButton)!!
+    private val changeDateIntervalTypeLeftButton get() = findViewById<ImageView>(R.id.changeDateIntervalTypeLeftButton)!!
+    private val rightButtonsContainer get() = findViewById<LinearLayout>(R.id.rightButtonsContainer)!!
+    private val incrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.incrementDateIntervalTypeButton)!!
+    private val changeDateIntervalTypeRightButton get() = findViewById<ImageView>(R.id.changeDateIntervalTypeRightButton)!!
 }

@@ -19,12 +19,11 @@ class InfiniteDateTimeIntervalAdapter : BaseTimelineRecyclerViewAdapter<Infinite
         cellView.setIsSelected(false)
 
         cellView.setOnClickListener { cellView ->
-            if (timelineView.isDateTimeIntervalTypeChangerDialogSupported)
+            if (timelineView.appearance.isDateTimeIntervalTypeChangerDialogSupported)
                 ChangeDateTimeIntervalTypeDialog.show(timelineView = timelineView)
         }
 
-        timelineView.timelineRecyclerViewCellTransformer?.transform(
-            cellView = cellView, dateTimeInterval = referenceDateTimeInterval)
+        timelineView.timelineRecyclerViewCellTransformer?.invoke(cellView, referenceDateTimeInterval)
     }
 
     override fun getItemCount() = 1

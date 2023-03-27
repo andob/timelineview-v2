@@ -1,7 +1,6 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
-import org.joda.time.DateTime
-import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
+import java.time.ZonedDateTime
 
 class DateTimeIntervalConverter
 {
@@ -22,7 +21,7 @@ class DateTimeIntervalConverter
 
             else ->
             {
-                val todayAndNow=DateTime.now(TimelineViewDefaults.timezone)!!
+                val todayAndNow=ZonedDateTime.now(DateTimeInterval.defaultTimezone)!!
 
                 val referenceDateTime=
                     if (outputType.isLowerOrderTypeOf(inputType)
@@ -31,7 +30,7 @@ class DateTimeIntervalConverter
                     else inputInterval.fromDateTime
 
                 outputType.constructors.find { constructor ->
-                    DateTime::class.java in constructor.parameterTypes
+                    ZonedDateTime::class.java in constructor.parameterTypes
                 }!!.newInstance(referenceDateTime)
             }
         } as TO

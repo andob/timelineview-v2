@@ -2,39 +2,43 @@ package ro.dobrescuandrei.timelineviewv2.model
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import ro.dobrescuandrei.timelineviewv2.TimelineView
-import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.CustomDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.*
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class CustomDateTimeInterval : DateTimeInterval
 {
-    constructor(fromDateTime : DateTime, toDateTime : DateTime) : super(
+    constructor(fromDateTime : ZonedDateTime, toDateTime : ZonedDateTime) : super(
         fromDateTime = min(fromDateTime, toDateTime).atBeginningOfDay(),
         toDateTime = max(fromDateTime, toDateTime).atEndOfDay())
 
+    constructor(fromDateTime : LocalDateTime, toDateTime : LocalDateTime) : this(
+        fromDateTime = fromDateTime.atZone(defaultTimezone),
+        toDateTime = toDateTime.atZone(defaultTimezone))
+
     override fun getPreviousDateTimeInterval() : CustomDateTimeInterval? = null
     override fun getNextDateTimeInterval() : CustomDateTimeInterval? = null
-    override fun getShiftedDateTimeInterval(amount : Int) : CustomDateTimeInterval? = null
+    override fun getShiftedDateTimeInterval(amount : Long) : CustomDateTimeInterval? = null
 
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String
     {
-        val now=DateTime.now(TimelineViewDefaults.timezone)!!
+        val now=ZonedDateTime.now(defaultTimezone)!!
 
         val startDateTimeFormatter=
             if (fromDateTime.year!=now.year)
-                DateTimeFormat.forPattern("dd MMM yyyy")!!
-            else DateTimeFormat.forPattern("dd MMM")!!
-        val startDateStr=startDateTimeFormatter.print(fromDateTime)
+                DateTimeFormatter.ofPattern("dd MMM yyyy")!!
+            else DateTimeFormatter.ofPattern("dd MMM")!!
+        val startDateStr=startDateTimeFormatter.format(fromDateTime)!!
 
         val endDateTimeFormatter=
             if (toDateTime.year!=now.year)
-                DateTimeFormat.forPattern("dd MMM yyyy")!!
-            else DateTimeFormat.forPattern("dd MMM")!!
-        val endDateStr=endDateTimeFormatter.print(toDateTime)
+                DateTimeFormatter.ofPattern("dd MMM yyyy")!!
+            else DateTimeFormatter.ofPattern("dd MMM")!!
+        val endDateStr=endDateTimeFormatter.format(toDateTime)!!
 
         return "$startDateStr - $endDateStr"
     }

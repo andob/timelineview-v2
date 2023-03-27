@@ -18,22 +18,6 @@ class MainActivity : AppCompatActivity()
         val timelineView=findViewById<TimelineView>(R.id.timelineView)!!
         val timeIntervalLabel=findViewById<TextView>(R.id.timeIntervalLabel)!!
 
-//        timelineView.dateTimeIntervalTypeChangeFlow=DateTimeIntervalTypeChangeFlow.build {
-//            from(DailyDateTimeInterval::class.java)
-//        }
-//
-//        timelineView.isCustomDateTimeIntervalSupported=false
-//
-//        timelineView.timelineRecyclerViewCellTransformer=object : TimelineRecyclerViewCell.Transformer {
-//            override fun transform(cellView : TimelineRecyclerViewCell, dateTimeInterval : DateTimeInterval) {
-//                val todayAndNow=DateTime(TimelineViewDefaults.timezone)
-//                if (dateTimeInterval.fromDateTime.isAfter(todayAndNow))
-//                    cellView.setOnClickListener(null)
-//                if (dateTimeInterval.toDateTime.isBefore(todayAndNow))
-//                    cellView.setOnClickListener(null)
-//            }
-//        }
-
         timelineView.dateTimeInterval=DailyDateTimeInterval.today()
         timelineView.setOnDateTimeIntervalChangedListener { dateTimeInterval ->
             timeIntervalLabel.text=dateTimeInterval.toString(resources = resources)

@@ -11,7 +11,7 @@
     <ro.dobrescuandrei.timelineviewv2.TimelineView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:tv_is_custom_date_time_interval_supported="true"
+        app:is_custom_date_time_interval_supported="true"
         android:id="@+id/timelineView"/>
 
     <TextView

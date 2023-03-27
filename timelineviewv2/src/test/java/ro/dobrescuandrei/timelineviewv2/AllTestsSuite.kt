@@ -11,7 +11,7 @@ import org.junit.runners.Suite
     DateTimeIntervalTypeChangeFlowTest::class,
     DailyDateTimeIntervalTests::class,
     InfiniteDateTimeIntervalTest::class,
-    JodaTimeExtensionsTest::class,
+    ZonedDateTimeExtensionsTest::class,
     MonthlyDateTimeIntervalTest::class,
     OnDateTimeIntervalChangedEventsLockTest::class,
     YearlyDateTimeIntervalTest::class,

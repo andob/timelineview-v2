@@ -2,21 +2,28 @@
 <resources>
 
     <declare-styleable name="TimelineView">
-        <attr name="tv_selected_cell_text_color" format="color" />
-        <attr name="tv_selected_cell_text_size" format="dimension" />
-        <attr name="tv_selected_cell_background_color" format="color" />
-        <attr name="tv_selected_cell_indicator_color" format="color" />
-        <attr name="tv_selected_cell_indicator_width" format="dimension" />
-        <attr name="tv_unselected_cell_text_color" format="color" />
-        <attr name="tv_unselected_cell_text_size" format="dimension" />
-        <attr name="tv_unselected_cell_background_color" format="color" />
-        <attr name="tv_up_icon" format="reference" />
-        <attr name="tv_down_icon" format="reference" />
-        <attr name="tv_calendar_icon" format="reference" />
-        <attr name="tv_left_buttons_container_background" format="reference" />
-        <attr name="tv_right_buttons_container_background" format="reference" />
-        <attr name="tv_is_custom_date_time_interval_supported" format="boolean" />
-        <attr name="tv_is_date_time_interval_type_changer_dialog_supported" format="boolean" />
+        <attr name="selected_cell_text_color" format="color" />
+        <attr name="selected_cell_text_size" format="dimension" />
+        <attr name="selected_cell_background_color" format="color" />
+        <attr name="selected_cell_indicator_color" format="color" />
+        <attr name="selected_cell_indicator_width" format="dimension" />
+        <attr name="unselected_cell_text_color" format="color" />
+        <attr name="unselected_cell_text_size" format="dimension" />
+        <attr name="unselected_cell_background_color" format="color" />
+        <attr name="up_icon" format="reference" />
+        <attr name="down_icon" format="reference" />
+        <attr name="calendar_icon" format="reference" />
+        <attr name="left_buttons_container_background" format="reference" />
+        <attr name="right_buttons_container_background" format="reference" />
+        <attr name="is_daily_date_time_interval_supported" format="boolean" />
+        <attr name="is_weekly_date_time_interval_supported" format="boolean" />
+        <attr name="is_monthly_date_time_interval_supported" format="boolean" />
+        <attr name="is_yearly_date_time_interval_supported" format="boolean" />
+        <attr name="is_infinite_date_time_interval_supported" format="boolean" />
+        <attr name="is_custom_date_time_interval_supported" format="boolean" />
+        <attr name="is_date_time_interval_type_changer_dialog_supported" format="boolean" />
+        <attr name="disable_clicking_on_past_intervals" format="boolean" />
+        <attr name="disable_clicking_on_future_intervals" format="boolean" />
     </declare-styleable>
 
 </resources>

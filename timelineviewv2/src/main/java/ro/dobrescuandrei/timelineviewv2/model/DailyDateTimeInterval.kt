@@ -2,30 +2,31 @@ package ro.dobrescuandrei.timelineviewv2.model
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
-import org.joda.time.DateTime
-import org.joda.time.LocalDate
-import org.joda.time.format.DateTimeFormat
 import ro.dobrescuandrei.timelineviewv2.R
 import ro.dobrescuandrei.timelineviewv2.TimelineView
-import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.DailyDateTimeIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
 import ro.dobrescuandrei.timelineviewv2.utils.atEndOfDay
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
-class DailyDateTimeInterval
-(
-    referenceDateTime : DateTime
-) : DateTimeInterval
-(
-    fromDateTime = referenceDateTime.atBeginningOfDay(),
-    toDateTime = referenceDateTime.atEndOfDay()
-)
+class DailyDateTimeInterval : DateTimeInterval
 {
     val isToday : Boolean
 
+    constructor(referenceDateTime : ZonedDateTime) : super(
+        fromDateTime = referenceDateTime.atBeginningOfDay(),
+        toDateTime = referenceDateTime.atEndOfDay())
+
+    constructor(referenceDateTime : LocalDateTime) : this(
+        referenceDateTime = referenceDateTime.atZone(defaultTimezone))
+
     init
     {
-        val todayAndNow=DateTime.now(TimelineViewDefaults.timezone)!!
+        val todayAndNow=ZonedDateTime.now(defaultTimezone)!!
         this.isToday=todayAndNow in fromDateTime..toDateTime
     }
 
@@ -33,11 +34,11 @@ class DailyDateTimeInterval
     {
         @JvmStatic
         fun today() = DailyDateTimeInterval(
-            referenceDateTime = DateTime.now(TimelineViewDefaults.timezone))
+            referenceDateTime = ZonedDateTime.now(defaultTimezone))
 
         @JvmStatic
         fun around(date : LocalDate) = DailyDateTimeInterval(
-            referenceDateTime = date.toDateTimeAtCurrentTime(TimelineViewDefaults.timezone))
+            referenceDateTime = date.atTime(LocalTime.now(defaultTimezone)))
     }
 
     override fun getPreviousDateTimeInterval() =
@@ -46,13 +47,13 @@ class DailyDateTimeInterval
     override fun getNextDateTimeInterval() =
         DailyDateTimeInterval(referenceDateTime = fromDateTime.plusDays(1))
 
-    override fun getShiftedDateTimeInterval(amount : Int) =
+    override fun getShiftedDateTimeInterval(amount : Long) =
         DailyDateTimeInterval(referenceDateTime = fromDateTime.plusDays(amount))
 
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String
     {
-        val now=DateTime.now(TimelineViewDefaults.timezone)!!
+        val now=ZonedDateTime.now(defaultTimezone)!!
 
         if (fromDateTime.toLocalDate()==now.minusDays(1).toLocalDate())
             return resources.getString(R.string.yesterday)
@@ -63,9 +64,9 @@ class DailyDateTimeInterval
 
         val dateFormatter=
             if (fromDateTime.year!=now.year)
-                DateTimeFormat.forPattern("dd MMM yyyy")!!
-            else DateTimeFormat.forPattern("dd MMM")!!
-        return dateFormatter.print(fromDateTime)
+                DateTimeFormatter.ofPattern("dd MMM yyyy")!!
+            else DateTimeFormatter.ofPattern("dd MMM")!!
+        return dateFormatter.format(fromDateTime)!!
     }
 
     override fun toRecyclerViewAdapter(timelineView : TimelineView) =

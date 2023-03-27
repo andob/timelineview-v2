@@ -1,32 +1,28 @@
 package ro.dobrescuandrei.timelineviewv2.model
 
 import android.content.res.Resources
-import org.joda.time.DateTime
 import ro.dobrescuandrei.timelineviewv2.TimelineView
-import ro.dobrescuandrei.timelineviewv2.TimelineViewDefaults
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.YearlyDateIntervalAdapter
 import ro.dobrescuandrei.timelineviewv2.utils.atBeginningOfDay
 import ro.dobrescuandrei.timelineviewv2.utils.atEndOfDay
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
+import java.time.temporal.TemporalAdjusters
 
-class YearlyDateTimeInterval
-(
-    referenceDateTime : DateTime
-) : DateTimeInterval
-(
-    fromDateTime = referenceDateTime
-        .dayOfYear().withMinimumValue()
-        .atBeginningOfDay(),
-
-    toDateTime = referenceDateTime
-        .dayOfYear().withMaximumValue()
-        .atEndOfDay()
-)
+class YearlyDateTimeInterval : DateTimeInterval
 {
+    constructor(referenceDateTime : ZonedDateTime) : super(
+        fromDateTime = referenceDateTime.with(TemporalAdjusters.firstDayOfYear()).atBeginningOfDay(),
+        toDateTime = referenceDateTime.with(TemporalAdjusters.lastDayOfYear()).atEndOfDay())
+
+    constructor(referenceDateTime : LocalDateTime) : this(
+        referenceDateTime = referenceDateTime.atZone(defaultTimezone))
+
     companion object
     {
         @JvmStatic
         fun aroundToday() = YearlyDateTimeInterval(
-            referenceDateTime = DateTime.now(TimelineViewDefaults.timezone))
+            referenceDateTime = ZonedDateTime.now(defaultTimezone))
     }
 
     override fun getPreviousDateTimeInterval() =
@@ -35,7 +31,7 @@ class YearlyDateTimeInterval
     override fun getNextDateTimeInterval() =
         YearlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(1))
 
-    override fun getShiftedDateTimeInterval(amount : Int) =
+    override fun getShiftedDateTimeInterval(amount : Long) =
         YearlyDateTimeInterval(referenceDateTime = fromDateTime.plusYears(amount))
 
     override fun toString(resources : Resources) =

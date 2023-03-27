@@ -1,20 +1,20 @@
 package ro.dobrescuandrei.timelineviewv2
 
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class CustomDateTimeIntervalTest
 {
     private val dateTimeInterval : DateTimeInterval = CustomDateTimeInterval(
-        fromDateTime = DateTime(2022, 1, 12, 0, 0, 0, 0),
-        toDateTime = DateTime(2022, 1, 26, 0, 0, 0, 0))
+        fromDateTime = LocalDateTime.of(2023, 1, 12, 0, 0, 0, 0),
+        toDateTime = LocalDateTime.of(2023, 1, 26, 0, 0, 0, 0))
 
-    private val dateTimeFormatter = DateTimeFormat.forPattern("dd.MM.yyyy HH:mm:ss.SSS")!!
+    private val dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS")!!
 
     @Before
     fun setup() = setupUnitTests()
@@ -22,8 +22,8 @@ class CustomDateTimeIntervalTest
     @Test
     fun testIntervalRange()
     {
-        assertEquals("12.01.2022 00:00:00.000", dateTimeFormatter.print(dateTimeInterval.fromDateTime))
-        assertEquals("26.01.2022 23:59:59.999", dateTimeFormatter.print(dateTimeInterval.toDateTime))
+        assertEquals("12.01.2023 00:00:00.000", dateTimeFormatter.format(dateTimeInterval.fromDateTime))
+        assertEquals("26.01.2023 23:59:59.999", dateTimeFormatter.format(dateTimeInterval.toDateTime))
     }
 
     @Test
@@ -31,7 +31,7 @@ class CustomDateTimeIntervalTest
     {
         assert(dateTimeInterval.getPreviousDateTimeInterval()==null)
         assert(dateTimeInterval.getNextDateTimeInterval()==null)
-        assert((-100..100).map { dateTimeInterval.getShiftedDateTimeInterval(it) }.all { it==null })
+        assert((-100..100).map { dateTimeInterval.getShiftedDateTimeInterval(it.toLong()) }.all { it==null })
     }
 
     @Test
@@ -44,8 +44,8 @@ class CustomDateTimeIntervalTest
     fun testInvertedIntervalEqualsOriginalInterval()
     {
         val invertedDateTimeInterval=CustomDateTimeInterval(
-            fromDateTime = DateTime(2022, 1, 26, 0, 0, 0, 0),
-            toDateTime = DateTime(2022, 1, 12, 0, 0, 0, 0))
+            fromDateTime = LocalDateTime.of(2023, 1, 26, 0, 0, 0, 0),
+            toDateTime = LocalDateTime.of(2023, 1, 12, 0, 0, 0, 0))
 
         assertEquals(dateTimeInterval.fromDateTime, invertedDateTimeInterval.fromDateTime)
         assertEquals(dateTimeInterval.toDateTime, invertedDateTimeInterval.toDateTime)

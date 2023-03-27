@@ -9,7 +9,7 @@ object ChangeDateTimeIntervalTypeDialog
     @JvmStatic
     fun show(timelineView : TimelineView)
     {
-        if (timelineView.isCustomDateTimeIntervalSupported)
+        if (timelineView.appearance.isCustomDateTimeIntervalSupported)
         {
             val context=timelineView.context!!
 

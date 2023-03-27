@@ -22,7 +22,7 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
     {
         setupRadioButtons(timelineView, dialog)
 
-        if (timelineView.isCustomDateTimeIntervalSupported)
+        if (timelineView.appearance.isCustomDateTimeIntervalSupported)
         {
             customIntervalButtonContainer.visibility=View.VISIBLE
             setupCustomIntervalButton(timelineView, dialog)
@@ -62,7 +62,7 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
                     val selectedIntervalType=radioButtonsToIntervalTypes[radioButton]!!
 
                     timelineView.dateTimeInterval=
-                        timelineView.dateTimeIntervalConverter.convert(
+                        DateTimeIntervalConverter().convert(
                             from = timelineView.dateTimeInterval,
                             to = selectedIntervalType)
 
@@ -78,17 +78,17 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
             dialog.dismiss()
 
             val referenceDailyDateTimeInterval=
-                timelineView.dateTimeIntervalConverter.convert(
+                DateTimeIntervalConverter().convert(
                     from = timelineView.dateTimeInterval,
                     to = DailyDateTimeInterval::class.java)
 
-            JodaDatePickerDialog.show(
+            ZonedDateTimePickerDialog.show(
                 context = timelineView.context,
                 title = timelineView.context.getString(R.string.choose_interval_start_date),
                 initialSelectedDateTime = referenceDailyDateTimeInterval.fromDateTime,
                 onDateTimeSelected = { fromDateTime ->
 
-                    JodaDatePickerDialog.show(
+                    ZonedDateTimePickerDialog.show(
                         context = timelineView.context,
                         title = timelineView.context.getString(R.string.choose_interval_end_date),
                         initialSelectedDateTime = fromDateTime,
@@ -99,12 +99,12 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
         }
     }
 
-    private val dailyRadioButton get() = findViewById<RadioButton>(R.id.tv___dailyRadioButton)!!
-    private val weeklyRadioButton get() = findViewById<RadioButton>(R.id.tv___weeklyRadioButton)!!
-    private val monthlyRadioButton get() = findViewById<RadioButton>(R.id.tv___monthlyRadioButton)!!
-    private val yearlyRadioButton get() = findViewById<RadioButton>(R.id.tv___yearlyRadioButton)!!
-    private val allTimeRadioButton get() = findViewById<RadioButton>(R.id.tv___allTimeRadioButton)!!
-    private val customIntervalButtonContainer get() = findViewById<RelativeLayout>(R.id.tv___customIntervalButtonContainer)!!
-    private val customIntervalRadioButton get() = findViewById<RadioButton>(R.id.tv___customIntervalRadioButton)!!
-    private val customIntervalButtonOverlayView get() = findViewById<View>(R.id.tv___customIntervalButtonOverlayView)!!
+    private val dailyRadioButton get() = findViewById<RadioButton>(R.id.dailyRadioButton)!!
+    private val weeklyRadioButton get() = findViewById<RadioButton>(R.id.weeklyRadioButton)!!
+    private val monthlyRadioButton get() = findViewById<RadioButton>(R.id.monthlyRadioButton)!!
+    private val yearlyRadioButton get() = findViewById<RadioButton>(R.id.yearlyRadioButton)!!
+    private val allTimeRadioButton get() = findViewById<RadioButton>(R.id.allTimeRadioButton)!!
+    private val customIntervalButtonContainer get() = findViewById<RelativeLayout>(R.id.customIntervalButtonContainer)!!
+    private val customIntervalRadioButton get() = findViewById<RadioButton>(R.id.customIntervalRadioButton)!!
+    private val customIntervalButtonOverlayView get() = findViewById<View>(R.id.customIntervalButtonOverlayView)!!
 }

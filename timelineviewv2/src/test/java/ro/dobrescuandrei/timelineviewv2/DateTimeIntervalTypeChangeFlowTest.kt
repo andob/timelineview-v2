@@ -23,7 +23,7 @@ class DateTimeIntervalTypeChangeFlowTest
     fun testEmptyFlowInstantiation()
     {
         try { DateTimeIntervalTypeChangeFlow.build {}; fail() }
-        catch (ex : Exception) {}
+        catch (_ : Exception) {}
     }
 
     @Test
