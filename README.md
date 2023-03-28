@@ -4,7 +4,7 @@
 
 <img src="https://raw.githubusercontent.com/andob/timelineview-v2/master/DEMO.gif"/>
 
-With this library, app users can pick DateTime intervals.
+With this library, app users can pick DateTime intervals. Under the hood, it uses JodaTime library in order to calculate the intervals.
 
 ### Setup
 
@@ -18,6 +18,7 @@ repositories {
 
 ```
 dependencies {
+    implementation 'net.danlew:android.joda:2.10.14'
     implementation 'ro.andob.timelineview:timelineview-v2:2.2.7'
 }
 ```
@@ -85,21 +86,21 @@ timelineView.dateTimeInterval = MonthlyDateTimeInterval.aroundToday().getNextDat
 //set selected interval = january 2019 = [01.01.2019 00:00:00 -> 31.01.2019 23:59:59]
 timelineView.dateTimeInterval = MonthlyDateTimeInterval(
     referenceDateTime = DateTime(2019, 1, 25, 8, 45))
-        
+
 //set selected interval = current year = [01.01.2020 00:00:00 -> 31.12.2020 23:59:59]
 timelineView.dateTimeInterval = YearlyDateTimeInterval.aroundToday()
-        
+
 //set selected interval = [01.01.1970 00:00:00 -> 01.01.4000 00:00:00.000]
 timelineView.dateTimeInterval = InfiniteDateTimeInterval()
-        
+
 //set selected interval = [25.01.2019 8:45 -> 31.01.2019 19:00]
 timelineView.dateTimeInterval = CustomDateTimeInterval(
-    fromDateTime = DateTime(2019, 1, 25, 8, 45), 
+    fromDateTime = DateTime(2019, 1, 25, 8, 45),
     toDateTime = DateTime(2019, 1, 31, 19, 0))
-        
+
 //get the interval
-val startDateTime = timelineView.dateTimeInterval.fromDateTime //ZonedDateTime
-val endtDateTime = timelineView.dateTimeInterval.toDateTime //ZonedDateTime
+val startDateTime = timelineView.dateTimeInterval.fromDateTime //Joda DateTime
+val endtDateTime = timelineView.dateTimeInterval.toDateTime //Joda DateTime
 ```
 
 Note that the base class of ``DailyDateTimeInterval``, ``WeeklyDateTimeInterval``, ``MonthlyDateTimeInterval``, ``YearlyDateTimeInterval``, ``CustomDateTimeInterval``, ``InfiniteDateTimeInterval`` is ``DateTimeInterval``, a class with the following structure:
@@ -133,15 +134,15 @@ timelineView.isCustomDateTimeIntervalSupported = false
 
 //keeping only DailyDateTimeInterval, MonthlyDateTimeInterval, YearlyDateTimeInterval
 //the user can now select only Day, Month, Year
-timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.build { 
+timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.build {
     from(DailyDateTimeInterval::class.java)
         .to(MonthlyDateTimeInterval::class.java)
         .to(YearlyDateTimeInterval::class.java)
 }
 
-//with DateTimeIntervalTypeChangeFlow you can specify what happens when the user press down/up 
-//buttons. For instance, in the above example, if a day is selected, by pressing up, the 
-//selected interval will become the current month. In the below example, if a day is selected, 
+//with DateTimeIntervalTypeChangeFlow you can specify what happens when the user press down/up
+//buttons. For instance, in the above example, if a day is selected, by pressing up, the
+//selected interval will become the current month. In the below example, if a day is selected,
 //by pressing up, the selected interval will become the current year
 timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.build {
     from(DailyDateTimeInterval::class.java)
@@ -178,7 +179,7 @@ TimelineViewDefaults.timezone = DateTimeZone.forTimeZone(TimeZone.getTimeZone("E
 
 //by default, all TimelineViews should support only Daily and Monthly intervals
 TimelineViewDefaults.dateTimeIntervalTypeChangeFlowFactory = {
-    DateTimeIntervalTypeChangeFlow.build { 
+    DateTimeIntervalTypeChangeFlow.build {
         from(DailyDateTimeInterval::class.java)
             .to(MonthlyDateTimeInterval::class.java)
     }
@@ -193,19 +194,19 @@ You can customise the look and feel of the TimelineView with XML:
 <ro.dobrescuandrei.timelineviewv2.TimelineView
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    app:selected_cell_text_color="#ffffff"
-    app:selected_cell_text_size="18sp"
-    app:selected_cell_background_color="#000000"
-    app:selected_cell_indicator_color="#ffffff"
-    app:selected_cell_indicator_width="8dp"
-    app:unselected_cell_text_color="#00ff00"
-    app:unselected_cell_text_size="16sp"
-    app:unselected_cell_background_color="#aaaaaa"
-    app:up_icon="@drawable/ic_arrow_up_white_24dp"
-    app:down_icon="@drawable/ic_arrow_down_white_24dp"
-    app:calendar_icon="@drawable/ic_calendar_range_outline_white_24dp"
-    app:left_buttons_container_background="@drawable/fading_right_gradient_background"
-    app:right_buttons_container_background="@drawable/fading_left_gradient_background"
+    app:tv_selected_cell_text_color="#ffffff"
+    app:tv_selected_cell_text_size="18sp"
+    app:tv_selected_cell_background_color="#000000"
+    app:tv_selected_cell_indicator_color="#ffffff"
+    app:tv_selected_cell_indicator_width="8dp"
+    app:tv_unselected_cell_text_color="#00ff00"
+    app:tv_unselected_cell_text_size="16sp"
+    app:tv_unselected_cell_background_color="#aaaaaa"
+    app:tv_up_icon="@drawable/ic_arrow_up_white_24dp"
+    app:tv_down_icon="@drawable/ic_arrow_down_white_24dp"
+    app:tv_calendar_icon="@drawable/ic_calendar_range_outline_white_24dp"
+    app:tv_left_buttons_container_background="@drawable/fading_right_gradient_background"
+    app:tv_right_buttons_container_background="@drawable/fading_left_gradient_background"
     android:id="@+id/timelineView"/>
 ```
 
