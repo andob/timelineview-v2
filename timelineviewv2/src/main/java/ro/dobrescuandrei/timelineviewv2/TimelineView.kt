@@ -17,39 +17,39 @@ import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerView
 import ro.dobrescuandrei.timelineviewv2.recycler.TimelineRecyclerViewCell
 import java.time.ZonedDateTime
 
-open class TimelineView : BaseCustomView
+class TimelineView : BaseCustomView
 {
     val appearance : TimelineViewAppearance
 
     var onDateTimeIntervalChangedListener : OnDateTimeIntervalChangedListener? = null
 
-    var timelineRecyclerViewCellTransformer : ((TimelineRecyclerViewCell, DateTimeInterval) -> Unit)? = null ; private set
+    var timelineRecyclerViewCellTransformer : TimelineRecyclerViewCell.Transformer? = null
+
+    constructor(context : Context) : super(context)
+    {
+        this.appearance=TimelineViewAppearance(context)
+        initializeViewAppearance()
+    }
+
+    constructor(context : Context, appearance : TimelineViewAppearance) : super(context)
+    {
+        this.appearance=appearance
+        initializeViewAppearance()
+    }
 
     constructor(context : Context, attributeSet : AttributeSet) : super(context, attributeSet)
     {
         if (!isInEditMode)
         {
             val attributes=context.obtainStyledAttributes(attributeSet, R.styleable.TimelineView)
-
             this.appearance=TimelineViewAppearance(context, attributes)
-            decrementDateIntervalTypeButton.setImageResource(appearance.downIconResourceId)
-            incrementDateIntervalTypeButton.setImageResource(appearance.upIconResourceId)
-            changeDateIntervalTypeLeftButton.setImageResource(appearance.calendarIconResourceId)
-            changeDateIntervalTypeRightButton.setImageResource(appearance.calendarIconResourceId)
-            leftButtonsContainer.setBackgroundResource(appearance.leftButtonsContainerBackgroundResourceId)
-            rightButtonsContainer.setBackgroundResource(appearance.rightButtonsContainerBackgroundResourceId)
-            rootContainer.setBackgroundColor(appearance.unselectedCellBackgroundColor)
-
-            this.dateTimeIntervalTypeChangeFlow=this.appearance.createDateTimeIntervalTypeChangeFlow()
-
-            changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
-            changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+            initializeViewAppearance()
 
             val shouldDisablePast=attributes.hasValue(R.styleable.TimelineView_disable_clicking_on_past_intervals)
             val shouldDisableFuture=attributes.hasValue(R.styleable.TimelineView_disable_clicking_on_future_intervals)
             if (shouldDisablePast||shouldDisableFuture)
             {
-                timelineRecyclerViewCellTransformer={ cellView, dateTimeInterval ->
+                timelineRecyclerViewCellTransformer=TimelineRecyclerViewCell.Transformer { cellView, dateTimeInterval ->
                     val now=ZonedDateTime.now(DateTimeInterval.defaultTimezone)
                     if (shouldDisablePast&&dateTimeInterval.fromDateTime.isBefore(now))
                         cellView.setOnClickListener(null)
@@ -60,10 +60,28 @@ open class TimelineView : BaseCustomView
 
             attributes.recycle()
         }
-        else this.appearance=TimelineViewAppearance(context)
+        else
+        {
+            this.appearance=TimelineViewAppearance(context)
+            initializeViewAppearance()
+        }
     }
 
-    override fun getLayoutId() = R.layout.timeline_view
+    private fun initializeViewAppearance()
+    {
+        decrementDateIntervalTypeButton.setImageResource(appearance.downIconResourceId)
+        incrementDateIntervalTypeButton.setImageResource(appearance.upIconResourceId)
+        changeDateIntervalTypeLeftButton.setImageResource(appearance.calendarIconResourceId)
+        changeDateIntervalTypeRightButton.setImageResource(appearance.calendarIconResourceId)
+        leftButtonsContainer.setBackgroundResource(appearance.leftButtonsContainerBackgroundResourceId)
+        rightButtonsContainer.setBackgroundResource(appearance.rightButtonsContainerBackgroundResourceId)
+        rootContainer.setBackgroundColor(appearance.unselectedCellBackgroundColor)
+
+        this.dateTimeIntervalTypeChangeFlow=this.appearance.createDateTimeIntervalTypeChangeFlow()
+
+        changeDateIntervalTypeLeftButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+        changeDateIntervalTypeRightButton.setOnClickListener { ChangeDateTimeIntervalTypeDialog.show(timelineView = this) }
+    }
 
     override fun onWindowFocusChanged(windowHasFocus : Boolean)
     {
@@ -86,7 +104,7 @@ open class TimelineView : BaseCustomView
         recyclerView.scrollMiddleCellToMiddleOfTheScreen()
     }
 
-    var firstTimeDateTimeIntervalSetterWasCalled = true
+    private var firstTimeDateTimeIntervalSetterWasCalled = true
     var dateTimeInterval : DateTimeInterval = DailyDateTimeInterval.today()
     set(dateTimeInterval)
     {
@@ -118,6 +136,7 @@ open class TimelineView : BaseCustomView
         }
     }
 
+    @JvmSynthetic
     fun setOnDateTimeIntervalChangedListener(listener : (DateTimeInterval) -> Unit)
     {
         this.onDateTimeIntervalChangedListener=OnDateTimeIntervalChangedListener { listener(it) }
@@ -215,12 +234,13 @@ open class TimelineView : BaseCustomView
         onDateTimeIntervalChangedListener=aux
     }
 
-    private val rootContainer get() = findViewById<View>(R.id.rootContainer)!!
-    private val recyclerView get() = findViewById<TimelineRecyclerView>(R.id.recyclerView)!!
-    private val leftButtonsContainer get() = findViewById<LinearLayout>(R.id.leftButtonsContainer)!!
-    private val decrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.decrementDateIntervalTypeButton)!!
-    private val changeDateIntervalTypeLeftButton get() = findViewById<ImageView>(R.id.changeDateIntervalTypeLeftButton)!!
-    private val rightButtonsContainer get() = findViewById<LinearLayout>(R.id.rightButtonsContainer)!!
-    private val incrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.incrementDateIntervalTypeButton)!!
-    private val changeDateIntervalTypeRightButton get() = findViewById<ImageView>(R.id.changeDateIntervalTypeRightButton)!!
+    override fun getLayoutId() = R.layout.timeline_view
+    private val rootContainer get() = findViewById<View>(R.id.tv___rootContainer)!!
+    private val recyclerView get() = findViewById<TimelineRecyclerView>(R.id.tv___recyclerView)!!
+    private val leftButtonsContainer get() = findViewById<LinearLayout>(R.id.tv___leftButtonsContainer)!!
+    private val decrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.tv___decrementDateIntervalTypeButton)!!
+    private val changeDateIntervalTypeLeftButton get() = findViewById<ImageView>(R.id.tv___changeDateIntervalTypeLeftButton)!!
+    private val rightButtonsContainer get() = findViewById<LinearLayout>(R.id.tv___rightButtonsContainer)!!
+    private val incrementDateIntervalTypeButton get() = findViewById<ImageView>(R.id.tv___incrementDateIntervalTypeButton)!!
+    private val changeDateIntervalTypeRightButton get() = findViewById<ImageView>(R.id.tv___changeDateIntervalTypeRightButton)!!
 }

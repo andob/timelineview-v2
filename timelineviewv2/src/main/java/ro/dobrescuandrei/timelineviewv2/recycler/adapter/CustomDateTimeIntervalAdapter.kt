@@ -23,7 +23,7 @@ class CustomDateTimeIntervalAdapter : BaseTimelineRecyclerViewAdapter<CustomDate
                 ChangeDateTimeIntervalTypeDialog.show(timelineView = timelineView)
         }
 
-        timelineView.timelineRecyclerViewCellTransformer?.invoke(cellView, referenceDateTimeInterval)
+        timelineView.timelineRecyclerViewCellTransformer?.transform(cellView, referenceDateTimeInterval)
     }
 
     override fun getItemCount() = 1

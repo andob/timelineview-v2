@@ -52,7 +52,7 @@ project.afterEvaluate {
                 from components.release
                 groupId 'ro.andob.timelineview'
                 artifactId 'timelineview-v2'
-                version '2.2.7'
+                version '2.5.0-alpha06  '
             }
         }
     }

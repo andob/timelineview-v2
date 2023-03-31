@@ -34,7 +34,7 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
                 }
             }
 
-            timelineView.timelineRecyclerViewCellTransformer?.invoke(cellView, dateTimeInterval)
+            timelineView.timelineRecyclerViewCellTransformer?.transform(cellView, dateTimeInterval)
         }
     }
 
