@@ -4,7 +4,7 @@
 
 <img src="https://raw.githubusercontent.com/andob/timelineview-v2/master/DEMO.gif"/>
 
-With this library, app users can pick DateTime intervals. Under the hood, it uses JodaTime library in order to calculate the intervals.
+With this library, app users can pick DateTime intervals. The library uses the Java 8 Date/Time API (min SDK 26 / Android Oreo).
 
 ### Setup
 
@@ -18,51 +18,61 @@ repositories {
 
 ```
 dependencies {
-    implementation 'net.danlew:android.joda:2.10.14'
-    implementation 'ro.andob.timelineview:timelineview-v2:2.2.7'
+    implementation 'ro.andob.timelineview:timelineview-v2:2.5.0'
 }
 ```
 
 Use it:
 
 ```xml
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#777777"
-    tools:context=".MainActivity">
-
-    <ro.dobrescuandrei.timelineviewv2.TimelineView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/timelineView"/>
-
-</LinearLayout>
+<ro.dobrescuandrei.timelineviewv2.TimelineView
+	android:layout_width="match_parent"
+	android:layout_height="50dp"
+	android:id="@+id/timelineView"/>
 ```
 
 ```kotlin
-class MainActivity : AppCompatActivity()
-{
-    @SuppressLint("SetTextI18n")
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        timelineView.dateTimeInterval = DailyDateTimeInterval.today()
-        timelineView.setOnDateTimeIntervalChangedListener { dateTimeInterval ->
-            //todo presenter.loadData(dateTimeInterval)
-        }
-    }
+timelineView.dateTimeInterval = DailyDateTimeInterval.today()
+timelineView.setOnDateTimeIntervalChangedListener { dateTimeInterval ->
+	//todo loadData(dateTimeInterval)
 }
 ```
 
 ### TimelineView API
 
-**1. The ``dateTimeInterval`` property**
+**1. "DateTimeInterval" models**
+
+There are multiple model classes representing date/time intervals:
+
+- ``DailyDateTimeInterval`` represents the interval from a day at 00:00 until today at 23:59
+- ``WeeklyDateTimeInterval`` represents the interval from the day at start of week at 00:00 until day at end of week at 23:59
+- ``MonthlyDateTimeInterval`` represents the interval from the day at start of month at 00:00 until day at end of month at 23:59
+- ``YearlyDateTimeInterval`` represents the interval from the day at start of year at 00:00 until day at end of year at 23:59
+- ``CustomDateTimeInterval`` represents an arbitrary interval
+- ``InfiniteDateTimeInterval`` represents the interval from the beginning of the Unix Era (1st January 1970) until far in the future
+
+The base class of them is:
+
+```kotlin
+abstract class DateTimeInterval
+(
+    val fromDateTime : ZonedDateTime,
+    val toDateTime : ZonedDateTime
+) : Serializable
+```
+
+Some examples:
+
+```kotlin
+val today = DailyDateTimeInterval.today()
+val yesterday = today.getPreviousDateTimeInterval()
+val tomorrow = today.getNextDateTimeInterval()
+val thisMonth = MonthlyDateTimeInterval.around(today.fromDateTime)
+val previousMonth = thisMonth.getPreviousDateTimeInterval()
+val twentyTwenty = YearlyDateTimeInterval.around(LocalDate.of(2020, 1, 1))
+```
+
+**2. The ``dateTimeInterval`` property**
 
 Use this property to get or set the selected DateTime interval. Each time this property is set, the UI updates and the DateTime interval changed event is triggered. Examples:
 
@@ -103,111 +113,49 @@ val startDateTime = timelineView.dateTimeInterval.fromDateTime //Joda DateTime
 val endtDateTime = timelineView.dateTimeInterval.toDateTime //Joda DateTime
 ```
 
-Note that the base class of ``DailyDateTimeInterval``, ``WeeklyDateTimeInterval``, ``MonthlyDateTimeInterval``, ``YearlyDateTimeInterval``, ``CustomDateTimeInterval``, ``InfiniteDateTimeInterval`` is ``DateTimeInterval``, a class with the following structure:
-
-```kotlin
-abstract class DateTimeInterval
-(
-    val fromDateTime : DateTime,
-    val toDateTime : DateTime
-) : Serializable
-```
-
-**2. Subscribing to date time interval change events.**
+**3. Subscribing to date time interval change events.**
 
 This event is triggered each time the user selects an interval from the UI and each time the ``dateTimeInterval`` property is set programatically.
 
 ```kotlin
 timelineView.setOnDateTimeIntervalChangedListener { dateTimeInterval ->
-    //todo presenter.loadData(dateTimeInterval)
+    //todo loadData(dateTimeInterval)
 }
 ```
 
-**3. Disabling interval types**
+**4. Setting default timezone**
 
-By default, the user can choose between Daily, Weekly, Monthly, Yearly, All time and Custom interval options. To disable some of them:
+The default timezone on all dates is UTC, but it can be changed:
 
 ```kotlin
-//disabling CustomDateTimeInterval:
-//The user cannot select custom interval option from the popup
-timelineView.isCustomDateTimeIntervalSupported = false
-
-//keeping only DailyDateTimeInterval, MonthlyDateTimeInterval, YearlyDateTimeInterval
-//the user can now select only Day, Month, Year
-timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.build {
-    from(DailyDateTimeInterval::class.java)
-        .to(MonthlyDateTimeInterval::class.java)
-        .to(YearlyDateTimeInterval::class.java)
-}
-
-//with DateTimeIntervalTypeChangeFlow you can specify what happens when the user press down/up
-//buttons. For instance, in the above example, if a day is selected, by pressing up, the
-//selected interval will become the current month. In the below example, if a day is selected,
-//by pressing up, the selected interval will become the current year
-timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.build {
-    from(DailyDateTimeInterval::class.java)
-        .to(YearlyDateTimeInterval::class.java)
-        .to(MonthlyDateTimeInterval::class.java)
-}
-
-//keeping only DailyDateTimeInterval. The user can only select daily intervals:
-timelineView.dateTimeIntervalTypeChangeFlow = DateTimeIntervalTypeChangeFlow.build {
-    from(DailyDateTimeInterval::class.java)
-}
+DateTimeInterval.defaultTimezone = ZoneId.of("Europe/Bucharest")
 ```
 
-**4. Customising the horizontal scrolling RecyclerView cells**
+**5. XML attributes**
 
-For instance, if we want to disable clicking on intervals from the future:
-
-```kotlin
-timelineView.timelineRecyclerViewCellTransformer = object : TimelineRecyclerViewCell.Transformer {
-    override fun transform(cellView : TimelineRecyclerViewCell, dateTimeInterval : DateTimeInterval) {
-        if (dateTimeInterval.fromDateTime.isAfterNow)
-            cellView.setOnClickListener(null)
-    }
-}
 ```
-
-**5. TimelineViewDefaults**
-
-Singleton class used to keep default TimelineView settings:
-
-```kotlin
-//by default, all TimelineViews should use this TimeZone
-TimelineViewDefaults.timezone = DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Bucharest"))
-
-//by default, all TimelineViews should support only Daily and Monthly intervals
-TimelineViewDefaults.dateTimeIntervalTypeChangeFlowFactory = {
-    DateTimeIntervalTypeChangeFlow.build {
-        from(DailyDateTimeInterval::class.java)
-            .to(MonthlyDateTimeInterval::class.java)
-    }
-}
-```
-
-**6. Customising the appearance**
-
-You can customise the look and feel of the TimelineView with XML:
-
-```xml
-<ro.dobrescuandrei.timelineviewv2.TimelineView
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    app:tv_selected_cell_text_color="#ffffff"
-    app:tv_selected_cell_text_size="18sp"
-    app:tv_selected_cell_background_color="#000000"
-    app:tv_selected_cell_indicator_color="#ffffff"
-    app:tv_selected_cell_indicator_width="8dp"
-    app:tv_unselected_cell_text_color="#00ff00"
-    app:tv_unselected_cell_text_size="16sp"
-    app:tv_unselected_cell_background_color="#aaaaaa"
-    app:tv_up_icon="@drawable/ic_arrow_up_white_24dp"
-    app:tv_down_icon="@drawable/ic_arrow_down_white_24dp"
-    app:tv_calendar_icon="@drawable/ic_calendar_range_outline_white_24dp"
-    app:tv_left_buttons_container_background="@drawable/fading_right_gradient_background"
-    app:tv_right_buttons_container_background="@drawable/fading_left_gradient_background"
-    android:id="@+id/timelineView"/>
+<attr name="selected_cell_text_color" format="color"/>
+<attr name="selected_cell_text_size" format="dimension"/>
+<attr name="selected_cell_background_color" format="color"/>
+<attr name="selected_cell_indicator_color" format="color"/>
+<attr name="selected_cell_indicator_width" format="dimension"/>
+<attr name="unselected_cell_text_color" format="color"/>
+<attr name="unselected_cell_text_size" format="dimension"/>
+<attr name="unselected_cell_background_color" format="color"/>
+<attr name="up_icon" format="reference"/>
+<attr name="down_icon" format="reference"/>
+<attr name="calendar_icon" format="reference"/>
+<attr name="left_buttons_container_background" format="reference"/>
+<attr name="right_buttons_container_background" format="reference"/>
+<attr name="is_daily_date_time_interval_supported" format="boolean"/>
+<attr name="is_weekly_date_time_interval_supported" format="boolean"/>
+<attr name="is_monthly_date_time_interval_supported" format="boolean"/>
+<attr name="is_yearly_date_time_interval_supported" format="boolean"/>
+<attr name="is_infinite_date_time_interval_supported" format="boolean"/>
+<attr name="is_custom_date_time_interval_supported" format="boolean"/>
+<attr name="is_date_time_interval_type_changer_dialog_supported" format="boolean"/>
+<attr name="disable_clicking_on_past_intervals" format="boolean"/>
+<attr name="disable_clicking_on_future_intervals" format="boolean"/>
 ```
 
 ### Why is it named "v2"?
