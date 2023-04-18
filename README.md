@@ -1,10 +1,10 @@
 ## timelineview-v2
 
-### DateTime interval picker view for Android
+### Date/time interval picker view for Android
 
 <img src="https://raw.githubusercontent.com/andob/timelineview-v2/master/DEMO.gif"/>
 
-With this library, app users can pick DateTime intervals. The library uses the Java 8 Date/Time API (minimum required API level / Android version is API level 26 / Android 8 Oreo).
+With this library, app users can pick date/time intervals. The library uses the Java 8 Date/time API (minimum required API level / Android version is API level 26 / Android 8 Oreo).
 
 ### Setup
 
@@ -95,22 +95,22 @@ timelineView.dateTimeInterval = MonthlyDateTimeInterval.aroundToday().getNextDat
 
 //set selected interval = january 2019 = [01.01.2019 00:00:00 -> 31.01.2019 23:59:59]
 timelineView.dateTimeInterval = MonthlyDateTimeInterval(
-    referenceDateTime = DateTime(2019, 1, 25, 8, 45))
+    LocalDate.of(2019, 1, 25, 8, 45))
 
 //set selected interval = current year = [01.01.2020 00:00:00 -> 31.12.2020 23:59:59]
 timelineView.dateTimeInterval = YearlyDateTimeInterval.aroundToday()
 
-//set selected interval = [01.01.1970 00:00:00 -> 01.01.4000 00:00:00.000]
+//set selected interval = [01.01.1970 00:00:00 -> ...]
 timelineView.dateTimeInterval = InfiniteDateTimeInterval()
 
 //set selected interval = [25.01.2019 8:45 -> 31.01.2019 19:00]
 timelineView.dateTimeInterval = CustomDateTimeInterval(
-    fromDateTime = DateTime(2019, 1, 25, 8, 45),
-    toDateTime = DateTime(2019, 1, 31, 19, 0))
+    fromDateTime = LocalDate.of(2019, 1, 25, 8, 45),
+    toDateTime = LocalDate.of(2019, 1, 31, 19, 0))
 
 //get the interval
-val startDateTime = timelineView.dateTimeInterval.fromDateTime //Joda DateTime
-val endtDateTime = timelineView.dateTimeInterval.toDateTime //Joda DateTime
+val startDateTime = timelineView.dateTimeInterval.fromDateTime //ZonedDateTime
+val endtDateTime = timelineView.dateTimeInterval.toDateTime //ZonedDateTime
 ```
 
 **3. Subscribing to date time interval change events.**
