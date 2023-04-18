@@ -4,7 +4,7 @@
 
 <img src="https://raw.githubusercontent.com/andob/timelineview-v2/master/DEMO.gif"/>
 
-With this library, app users can pick DateTime intervals. The library uses the Java 8 Date/Time API (min SDK 26 / Android Oreo).
+With this library, app users can pick DateTime intervals. The library uses the Java 8 Date/Time API (minimum required API level / Android version is API level 26 / Android 8 Oreo).
 
 ### Setup
 
@@ -165,7 +165,7 @@ This is a remake of a in-house library I started in 2017, used across some apps.
 ### License
 
 ```
-Copyright 2020 - 2021 Andrei Dobrescu
+Copyright 2020 - 2022 Andrei Dobrescu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
