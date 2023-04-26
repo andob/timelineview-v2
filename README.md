@@ -134,28 +134,28 @@ DateTimeInterval.defaultTimezone = ZoneId.of("Europe/Bucharest")
 **5. XML attributes**
 
 ```
-<attr name="selected_cell_text_color" format="color"/>
-<attr name="selected_cell_text_size" format="dimension"/>
-<attr name="selected_cell_background_color" format="color"/>
-<attr name="selected_cell_indicator_color" format="color"/>
-<attr name="selected_cell_indicator_width" format="dimension"/>
-<attr name="unselected_cell_text_color" format="color"/>
-<attr name="unselected_cell_text_size" format="dimension"/>
-<attr name="unselected_cell_background_color" format="color"/>
-<attr name="up_icon" format="reference"/>
-<attr name="down_icon" format="reference"/>
-<attr name="calendar_icon" format="reference"/>
-<attr name="left_buttons_container_background" format="reference"/>
-<attr name="right_buttons_container_background" format="reference"/>
-<attr name="is_daily_date_time_interval_supported" format="boolean"/>
-<attr name="is_weekly_date_time_interval_supported" format="boolean"/>
-<attr name="is_monthly_date_time_interval_supported" format="boolean"/>
-<attr name="is_yearly_date_time_interval_supported" format="boolean"/>
-<attr name="is_infinite_date_time_interval_supported" format="boolean"/>
-<attr name="is_custom_date_time_interval_supported" format="boolean"/>
-<attr name="is_date_time_interval_type_changer_dialog_supported" format="boolean"/>
-<attr name="disable_clicking_on_past_intervals" format="boolean"/>
-<attr name="disable_clicking_on_future_intervals" format="boolean"/>
+✅ selected_cell_text_color: The color of the text for the selected interval.
+✅ selected_cell_text_size: The size of the text for the selected interval.
+✅ selected_cell_background_color: The background color for the selected interval.
+✅ selected_cell_indicator_color: The color of the indicator for the selected interval.
+✅ selected_cell_indicator_width: The width of the indicator for the selected interval.
+✅ unselected_cell_text_color: The color of the text for the unselected interval.
+✅ unselected_cell_text_size: The size of the text for the unselected interval.
+✅ unselected_cell_background_color: The background color for the unselected interval.
+✅ up_icon: The icon resource for the "up" button.
+✅ down_icon: The icon resource for the "down" button.
+✅ calendar_icon: The icon resource for the calendar button.
+✅ left_buttons_container_background: The background for the container of the left buttons.
+✅ right_buttons_container_background: The background for the container of the right buttons.
+✅ is_daily_date_time_interval_supported: Whether or not daily intervals are supported.
+✅ is_weekly_date_time_interval_supported: Whether or not weekly intervals are supported.
+✅ is_monthly_date_time_interval_supported: Whether or not monthly intervals are supported.
+✅ is_yearly_date_time_interval_supported: Whether or not yearly intervals are supported.
+✅ is_infinite_date_time_interval_supported: Whether or not infinite intervals are supported.
+✅ is_custom_date_time_interval_supported: Whether or not custom intervals are supported.
+✅ is_date_time_interval_type_changer_dialog_supported: Whether or not a dialog to change the interval type is supported.
+✅ disable_clicking_on_past_intervals: Whether or not clicking on past intervals is disabled.
+✅ disable_clicking_on_future_intervals: Whether or not clicking on future intervals is disabled.
 ```
 
 ### Why is it named "v2"?
@@ -165,7 +165,7 @@ This is a remake of a in-house library I started in 2017, used across some apps.
 ### License
 
 ```
-Copyright 2020 - 2022 Andrei Dobrescu
+Copyright 2020 - 2023 Andrei Dobrescu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
