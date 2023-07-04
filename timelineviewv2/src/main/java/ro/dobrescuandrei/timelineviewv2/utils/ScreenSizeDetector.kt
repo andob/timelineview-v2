@@ -7,10 +7,10 @@ import android.os.Build
 import android.view.WindowInsets
 import android.view.WindowManager
 
-object ScreenSize
+object ScreenSizeDetector
 {
     @JvmStatic
-    fun get(context : Context) : Point
+    fun getScreenSize(context : Context) : Point
     {
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.R)
         {
@@ -27,10 +27,4 @@ object ScreenSize
         display.getSize(size)
         return size
     }
-
-    @JvmStatic
-    fun width(context : Context) = get(context).x
-
-    @JvmStatic
-    fun height(context : Context) = get(context).y
 }

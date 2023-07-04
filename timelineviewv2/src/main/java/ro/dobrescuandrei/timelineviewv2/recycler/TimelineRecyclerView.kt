@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ro.dobrescuandrei.timelineviewv2.base.BaseTimelineRecyclerViewAdapter
 import ro.dobrescuandrei.timelineviewv2.recycler.adapter.InfiniteScrollingTimelineRecyclerViewAdapter
-import ro.dobrescuandrei.timelineviewv2.utils.ScreenSize
+import ro.dobrescuandrei.timelineviewv2.utils.ScreenSizeDetector
 
 class TimelineRecyclerView : RecyclerView
 {
@@ -46,6 +46,6 @@ class TimelineRecyclerView : RecyclerView
         if (adapter!=null&&adapter is InfiniteScrollingTimelineRecyclerViewAdapter)
             (layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(
                 /*position*/ adapter!!.itemCount/2,
-                /*offset*/ (ScreenSize.width(context = context)-adapter!!.cellWidthInPixels)/2)
+                /*offset*/ (ScreenSizeDetector.getScreenSize(context).x-adapter!!.cellWidthInPixels)/2)
     }
 }
