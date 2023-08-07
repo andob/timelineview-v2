@@ -10,6 +10,6 @@ class App : Application()
     {
         super.onCreate()
 
-        DateTimeInterval.defaultTimezone=ZoneId.of("Europe/Bucharest")
+        DateTimeInterval.defaultTimezone = ZoneId.of("Europe/Bucharest")
     }
 }

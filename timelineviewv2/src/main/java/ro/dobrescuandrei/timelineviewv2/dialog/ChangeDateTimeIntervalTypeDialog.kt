@@ -11,11 +11,11 @@ object ChangeDateTimeIntervalTypeDialog
     {
         if (timelineView.appearance.isCustomDateTimeIntervalSupported)
         {
-            val context=timelineView.context!!
+            val context = timelineView.context!!
 
-            val dialogView=ChangeDateTimeIntervalTypeDialogView(context)
+            val dialogView = ChangeDateTimeIntervalTypeDialogView(context)
 
-            val dialog=AlertDialog.Builder(context)
+            val dialog = AlertDialog.Builder(context)
                 .setTitle(context.getString(R.string.change_interval_type))
                 .setView(dialogView)
                 .show()!!

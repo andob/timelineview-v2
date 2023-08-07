@@ -17,9 +17,9 @@ fun setupUnitTests()
     if (areUnitTestsInitialized)
         return
 
-    DateTimeInterval.defaultTimezone=ZoneId.of("Europe/Bucharest")
+    DateTimeInterval.defaultTimezone = ZoneId.of("Europe/Bucharest")
 
-    mockResources=Mockito.mock(Resources::class.java)
+    mockResources = Mockito.mock(Resources::class.java)
     Mockito.`when`(mockResources.getString(R.string.all_time)).thenReturn("All time")
     Mockito.`when`(mockResources.getString(R.string.yesterday)).thenReturn("Yesterday")
     Mockito.`when`(mockResources.getString(R.string.today)).thenReturn("Today")
@@ -33,5 +33,5 @@ fun setupUnitTests()
     Mockito.`when`(mockResources.getString(R.string.choose_interval_start_date)).thenReturn("Choose interval start date")
     Mockito.`when`(mockResources.getString(R.string.choose_interval_end_date)).thenReturn("Choose interval end date")
 
-    areUnitTestsInitialized=true
+    areUnitTestsInitialized = true
 }

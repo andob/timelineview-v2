@@ -19,7 +19,7 @@ class ZonedDateTimeExtensionsTest
     @Test
     fun testDateTimeAtBeginningOfDay()
     {
-        val dateTime=ZonedDateTime.of(LocalDateTime.of(2021, 1, 17, 16, 19, 0, 0), DateTimeInterval.defaultTimezone)
+        val dateTime = ZonedDateTime.of(LocalDateTime.of(2021, 1, 17, 16, 19, 0, 0), DateTimeInterval.defaultTimezone)
         assertEquals("17.01.2021 16:19:00.000", dateTimeFormatter.format(dateTime))
         assertEquals("17.01.2021 00:00:00.000", dateTimeFormatter.format(dateTime.atBeginningOfDay()))
     }
@@ -27,7 +27,7 @@ class ZonedDateTimeExtensionsTest
     @Test
     fun testDateTimeAtEndOfDay()
     {
-        val dateTime=ZonedDateTime.of(LocalDateTime.of(2021, 1, 17, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
+        val dateTime = ZonedDateTime.of(LocalDateTime.of(2021, 1, 17, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
         assertEquals("17.01.2021 16:21:00.000", dateTimeFormatter.format(dateTime))
         assertEquals("17.01.2021 23:59:59.999", dateTimeFormatter.format(dateTime.atEndOfDay()))
     }
@@ -35,9 +35,9 @@ class ZonedDateTimeExtensionsTest
     @Test
     fun testMinimumFromDateTimes()
     {
-        val dateTime1=ZonedDateTime.of(LocalDateTime.of(2021, 1, 16, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
-        val dateTime2=ZonedDateTime.of(LocalDateTime.of(2021, 1, 17, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
-        val dateTime3=ZonedDateTime.of(LocalDateTime.of(2021, 1, 18, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
+        val dateTime1 = ZonedDateTime.of(LocalDateTime.of(2021, 1, 16, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
+        val dateTime2 = ZonedDateTime.of(LocalDateTime.of(2021, 1, 17, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
+        val dateTime3 = ZonedDateTime.of(LocalDateTime.of(2021, 1, 18, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
 
         assertEquals(dateTime1, min(dateTime1, dateTime2))
         assertEquals(dateTime1, min(dateTime1, dateTime3))
@@ -47,9 +47,9 @@ class ZonedDateTimeExtensionsTest
     @Test
     fun testMaximumFromDateTimes()
     {
-        val dateTime1=ZonedDateTime.of(LocalDateTime.of(2021, 1, 16, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
-        val dateTime2=ZonedDateTime.of(LocalDateTime.of(2021, 1, 17, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
-        val dateTime3=ZonedDateTime.of(LocalDateTime.of(2021, 1, 18, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
+        val dateTime1 = ZonedDateTime.of(LocalDateTime.of(2021, 1, 16, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
+        val dateTime2 = ZonedDateTime.of(LocalDateTime.of(2021, 1, 17, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
+        val dateTime3 = ZonedDateTime.of(LocalDateTime.of(2021, 1, 18, 16, 21, 0, 0), DateTimeInterval.defaultTimezone)
 
         assertEquals(dateTime2, max(dateTime1, dateTime2))
         assertEquals(dateTime3, max(dateTime1, dateTime3))

@@ -30,22 +30,22 @@ class DailyDateTimeIntervalTests
     {
         assertEquals("20 Jan 2006", dateTimeInterval.toString(mockResources))
 
-        val nextDay=dateTimeInterval.getNextDateTimeInterval()!!
+        val nextDay = dateTimeInterval.getNextDateTimeInterval()!!
         assertEquals("21.01.2006 00:00:00.000", dateTimeFormatter.format(nextDay.fromDateTime))
         assertEquals("21.01.2006 23:59:59.999", dateTimeFormatter.format(nextDay.toDateTime))
         assertEquals("21 Jan 2006", nextDay.toString(mockResources))
 
-        val nextNextDay=dateTimeInterval.getShiftedDateTimeInterval(2)!!
+        val nextNextDay = dateTimeInterval.getShiftedDateTimeInterval(2)!!
         assertEquals("22.01.2006 00:00:00.000", dateTimeFormatter.format(nextNextDay.fromDateTime))
         assertEquals("22.01.2006 23:59:59.999", dateTimeFormatter.format(nextNextDay.toDateTime))
         assertEquals("22 Jan 2006", nextNextDay.toString(mockResources))
 
-        val prevDay=dateTimeInterval.getPreviousDateTimeInterval()!!
+        val prevDay = dateTimeInterval.getPreviousDateTimeInterval()!!
         assertEquals("19.01.2006 00:00:00.000", dateTimeFormatter.format(prevDay.fromDateTime))
         assertEquals("19.01.2006 23:59:59.999", dateTimeFormatter.format(prevDay.toDateTime))
         assertEquals("19 Jan 2006", prevDay.toString(mockResources))
 
-        val prevPrevDay=dateTimeInterval.getShiftedDateTimeInterval(-2)!!
+        val prevPrevDay = dateTimeInterval.getShiftedDateTimeInterval(-2)!!
         assertEquals("18.01.2006 00:00:00.000", dateTimeFormatter.format(prevPrevDay.fromDateTime))
         assertEquals("18.01.2006 23:59:59.999", dateTimeFormatter.format(prevPrevDay.toDateTime))
         assertEquals("18 Jan 2006", prevPrevDay.toString(mockResources))
@@ -54,13 +54,13 @@ class DailyDateTimeIntervalTests
     @Test
     fun testIntervalAroundToday()
     {
-        val year=DailyDateTimeInterval.today().fromDateTime.year
-        val month=DailyDateTimeInterval.today().fromDateTime.monthValue
+        val year = DailyDateTimeInterval.today().fromDateTime.year
+        val month = DailyDateTimeInterval.today().fromDateTime.monthValue
             .let { month -> if (month<10) "0$month" else month.toString() }
-        val dayOfMonth=DailyDateTimeInterval.today().fromDateTime.dayOfMonth
+        val dayOfMonth = DailyDateTimeInterval.today().fromDateTime.dayOfMonth
             .let { day -> if (day<10) "0$day" else day.toString() }
 
-        val today=DailyDateTimeInterval.today()
+        val today = DailyDateTimeInterval.today()
         assertEquals("$dayOfMonth.$month.$year 00:00:00.000", dateTimeFormatter.format(today.fromDateTime))
         assertEquals("$dayOfMonth.$month.$year 23:59:59.999", dateTimeFormatter.format(today.toDateTime))
     }
@@ -68,11 +68,11 @@ class DailyDateTimeIntervalTests
     @Test
     fun testIntervalToString()
     {
-        val today=DailyDateTimeInterval.today()
-        val tomorrow=today.getNextDateTimeInterval()
-        val dayAfterTomorrow=tomorrow.getNextDateTimeInterval()
-        val yesterday=today.getPreviousDateTimeInterval()
-        val dayBeforeYesterday=yesterday.getPreviousDateTimeInterval()
+        val today = DailyDateTimeInterval.today()
+        val tomorrow = today.getNextDateTimeInterval()
+        val dayAfterTomorrow = tomorrow.getNextDateTimeInterval()
+        val yesterday = today.getPreviousDateTimeInterval()
+        val dayBeforeYesterday = yesterday.getPreviousDateTimeInterval()
 
         assertEquals("Today", today.toString(mockResources))
         assertEquals("Tomorrow", tomorrow.toString(mockResources))
@@ -96,9 +96,9 @@ class DailyDateTimeIntervalTests
             dstChangeDay : DailyDateTimeInterval,
             dayAfterDstChangeDay : DailyDateTimeInterval) -> (Unit))
         {
-            val dstChangeDate=DailyDateTimeInterval(LocalDateTime.of(2021, 3, 28, 0, 0, 0, 0))
-            val dayBeforeDstChangeDay=DailyDateTimeInterval(LocalDateTime.of(2021, 3, 27, 0, 0, 0, 0))
-            val dayAfterDstChangeDay=DailyDateTimeInterval(LocalDateTime.of(2021, 3, 29, 0, 0, 0, 0))
+            val dstChangeDate = DailyDateTimeInterval(LocalDateTime.of(2021, 3, 28, 0, 0, 0, 0))
+            val dayBeforeDstChangeDay = DailyDateTimeInterval(LocalDateTime.of(2021, 3, 27, 0, 0, 0, 0))
+            val dayAfterDstChangeDay = DailyDateTimeInterval(LocalDateTime.of(2021, 3, 29, 0, 0, 0, 0))
 
             println("coming from DST change day, go previous and next")
             consumer(dstChangeDate.getPreviousDateTimeInterval(), dstChangeDate, dstChangeDate.getNextDateTimeInterval())
@@ -138,9 +138,9 @@ class DailyDateTimeIntervalTests
             dstChangeDay : DailyDateTimeInterval,
             dayAfterDstChangeDay : DailyDateTimeInterval) -> (Unit))
         {
-            val dstChangeDate=DailyDateTimeInterval(LocalDateTime.of(2021, 10, 31, 0, 0, 0, 0))
-            val dayBeforeDstChangeDay=DailyDateTimeInterval(LocalDateTime.of(2021, 10, 30, 0, 0, 0, 0))
-            val dayAfterDstChangeDay=DailyDateTimeInterval(LocalDateTime.of(2021, 11, 1, 0, 0, 0, 0))
+            val dstChangeDate = DailyDateTimeInterval(LocalDateTime.of(2021, 10, 31, 0, 0, 0, 0))
+            val dayBeforeDstChangeDay = DailyDateTimeInterval(LocalDateTime.of(2021, 10, 30, 0, 0, 0, 0))
+            val dayAfterDstChangeDay = DailyDateTimeInterval(LocalDateTime.of(2021, 11, 1, 0, 0, 0, 0))
 
             println("coming from DST change day, go previous and next")
             consumer(dstChangeDate.getPreviousDateTimeInterval(), dstChangeDate, dstChangeDate.getNextDateTimeInterval())

@@ -33,22 +33,22 @@ class WeeklyDateTimeIntervalTest
     {
         assertEquals("16 - 22 Jan 2006", dateTimeInterval.toString(mockResources))
 
-        val nextWeek=dateTimeInterval.getNextDateTimeInterval()!!
+        val nextWeek = dateTimeInterval.getNextDateTimeInterval()!!
         assertEquals("23.01.2006 00:00:00.000", dateTimeFormatter.format(nextWeek.fromDateTime))
         assertEquals("29.01.2006 23:59:59.999", dateTimeFormatter.format(nextWeek.toDateTime))
         assertEquals("23 - 29 Jan 2006", nextWeek.toString(mockResources))
 
-        val nextNextWeek=dateTimeInterval.getShiftedDateTimeInterval(2)!!
+        val nextNextWeek = dateTimeInterval.getShiftedDateTimeInterval(2)!!
         assertEquals("30.01.2006 00:00:00.000", dateTimeFormatter.format(nextNextWeek.fromDateTime))
         assertEquals("05.02.2006 23:59:59.999", dateTimeFormatter.format(nextNextWeek.toDateTime))
         assertEquals("30 Jan - 05 Feb 2006", nextNextWeek.toString(mockResources))
 
-        val previousWeek=dateTimeInterval.getPreviousDateTimeInterval()!!
+        val previousWeek = dateTimeInterval.getPreviousDateTimeInterval()!!
         assertEquals("09.01.2006 00:00:00.000", dateTimeFormatter.format(previousWeek.fromDateTime))
         assertEquals("15.01.2006 23:59:59.999", dateTimeFormatter.format(previousWeek.toDateTime))
         assertEquals("09 - 15 Jan 2006", previousWeek.toString(mockResources))
 
-        val prevPreviousWeek=dateTimeInterval.getShiftedDateTimeInterval(-2)!!
+        val prevPreviousWeek = dateTimeInterval.getShiftedDateTimeInterval(-2)!!
         assertEquals("02.01.2006 00:00:00.000", dateTimeFormatter.format(prevPreviousWeek.fromDateTime))
         assertEquals("08.01.2006 23:59:59.999", dateTimeFormatter.format(prevPreviousWeek.toDateTime))
         assertEquals("02 - 08 Jan 2006", prevPreviousWeek.toString(mockResources))
@@ -61,17 +61,17 @@ class WeeklyDateTimeIntervalTest
 
         fun ZonedDateTime.formatted() = "${dayOfMonth.withLeadingZero()}.${monthValue.withLeadingZero()}.$year"
 
-        val formattedMinDay=DateTimeIntervalConverter().convert(
+        val formattedMinDay = DateTimeIntervalConverter().convert(
             from = DailyDateTimeInterval.today(),
             to = WeeklyDateTimeInterval::class.java
         ).fromDateTime.formatted()
 
-        val formattedMaxDay=DateTimeIntervalConverter().convert(
+        val formattedMaxDay = DateTimeIntervalConverter().convert(
             from = DailyDateTimeInterval.today(),
             to = WeeklyDateTimeInterval::class.java
         ).toDateTime.formatted()
 
-        val interval=WeeklyDateTimeInterval.aroundToday()
+        val interval = WeeklyDateTimeInterval.aroundToday()
         assertEquals("$formattedMinDay 00:00:00.000", dateTimeFormatter.format(interval.fromDateTime))
         assertEquals("$formattedMaxDay 23:59:59.999", dateTimeFormatter.format(interval.toDateTime))
     }

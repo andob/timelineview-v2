@@ -10,17 +10,17 @@ import ro.dobrescuandrei.timelineviewv2.model.DailyDateTimeInterval
 class MainActivity : AppCompatActivity()
 {
     @SuppressLint("SetTextI18n")
-    override fun onCreate(savedInstanceState: Bundle?)
+    override fun onCreate(savedInstanceState : Bundle?)
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val timelineView=findViewById<TimelineView>(R.id.timelineView)!!
-        val timeIntervalLabel=findViewById<TextView>(R.id.timeIntervalLabel)!!
+        val timelineView = findViewById<TimelineView>(R.id.timelineView)!!
+        val timeIntervalLabel = findViewById<TextView>(R.id.timeIntervalLabel)!!
 
-        timelineView.dateTimeInterval=DailyDateTimeInterval.today()
+        timelineView.dateTimeInterval = DailyDateTimeInterval.today()
         timelineView.setOnDateTimeIntervalChangedListener { dateTimeInterval ->
-            timeIntervalLabel.text=dateTimeInterval.toString(resources = resources)
+            timeIntervalLabel.text = dateTimeInterval.toString(resources = resources)
         }
     }
 }

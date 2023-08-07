@@ -43,7 +43,7 @@ class CustomDateTimeIntervalTest
     @Test
     fun testInvertedIntervalEqualsOriginalInterval()
     {
-        val invertedDateTimeInterval=CustomDateTimeInterval(
+        val invertedDateTimeInterval = CustomDateTimeInterval(
             fromDateTime = LocalDateTime.of(2023, 1, 26, 0, 0, 0, 0),
             toDateTime = LocalDateTime.of(2023, 1, 12, 0, 0, 0, 0))
 

@@ -14,7 +14,7 @@ class TimelineRecyclerViewCell
 (
     context : Context,
     val appearance : TimelineViewAppearance
-): BaseCustomView(context)
+) : BaseCustomView(context)
 {
     fun interface Transformer { fun transform(cell : TimelineRecyclerViewCell, interval : DateTimeInterval) }
 
@@ -24,7 +24,7 @@ class TimelineRecyclerViewCell
 
     fun setDateTimeInterval(dateTimeInterval : DateTimeInterval)
     {
-        intervalDescriptionLabel.text=dateTimeInterval.toString(resources = context.resources)
+        intervalDescriptionLabel.text = dateTimeInterval.toString(resources = context.resources)
     }
 
     override fun isSelected() : Boolean
@@ -34,7 +34,7 @@ class TimelineRecyclerViewCell
 
     fun setIsSelected(isSelected : Boolean)
     {
-        _isSelected=isSelected
+        _isSelected = isSelected
 
         if (_isSelected)
         {
@@ -42,23 +42,23 @@ class TimelineRecyclerViewCell
             intervalDescriptionLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, appearance.selectedCellTextSizeInPx.toFloat())
             cell.setBackgroundColor(appearance.selectedCellBackgroundColor)
             selectedIndicatorView.setBackgroundColor(appearance.selectedCellIndicatorColor)
-            selectedIndicatorView.layoutParams=FrameLayout.LayoutParams(
+            selectedIndicatorView.layoutParams = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 appearance.selectedCellIndicatorHeightInPx)
-            selectedIndicatorView.visibility=View.VISIBLE
+            selectedIndicatorView.visibility = View.VISIBLE
         }
         else
         {
             intervalDescriptionLabel.setTextColor(appearance.unselectedCellTextColor)
             intervalDescriptionLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, appearance.unselectedCellTextSizeInPx.toFloat())
             cell.setBackgroundColor(appearance.unselectedCellBackgroundColor)
-            selectedIndicatorView.visibility=View.GONE
+            selectedIndicatorView.visibility = View.GONE
         }
     }
 
     fun setWidthInPixels(width : Int)
     {
-        itemsContainer.layoutParams=FrameLayout.LayoutParams(width,
+        itemsContainer.layoutParams = FrameLayout.LayoutParams(width,
             FrameLayout.LayoutParams.MATCH_PARENT)
     }
 

@@ -13,8 +13,8 @@ import ro.dobrescuandrei.timelineviewv2.model.*
 
 class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
 {
-    constructor(context: Context?) : super(context)
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context : Context?) : super(context)
+    constructor(context : Context?, attrs : AttributeSet?) : super(context, attrs)
 
     override fun getLayoutId() = R.layout.change_date_time_interval_type_dialog_view
 
@@ -24,19 +24,19 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
 
         if (timelineView.appearance.isCustomDateTimeIntervalSupported)
         {
-            customIntervalButtonContainer.visibility=View.VISIBLE
+            customIntervalButtonContainer.visibility = View.VISIBLE
             setupCustomIntervalButton(timelineView, dialog)
         }
         else
         {
-            customIntervalButtonContainer.visibility=View.GONE
+            customIntervalButtonContainer.visibility = View.GONE
             customIntervalButtonOverlayView.setOnClickListener(null)
         }
     }
 
     private fun setupRadioButtons(timelineView : TimelineView, dialog : AlertDialog)
     {
-        val radioButtonsToIntervalTypes=mapOf(
+        val radioButtonsToIntervalTypes = mapOf(
             dailyRadioButton to DailyDateTimeInterval::class.java as Class<DateTimeInterval>,
             weeklyRadioButton to WeeklyDateTimeInterval::class.java as Class<DateTimeInterval>,
             monthlyRadioButton to MonthlyDateTimeInterval::class.java as Class<DateTimeInterval>,
@@ -44,24 +44,24 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
             allTimeRadioButton to InfiniteDateTimeInterval::class.java as Class<DateTimeInterval>,
             customIntervalRadioButton to CustomDateTimeInterval::class.java as Class<DateTimeInterval>)
 
-        val supportedIntervalTypes=timelineView.dateTimeIntervalTypeChangeFlow.toList()
+        val supportedIntervalTypes = timelineView.dateTimeIntervalTypeChangeFlow.toList()
 
         for ((radioButton, intervalType) in radioButtonsToIntervalTypes)
         {
             if (supportedIntervalTypes.find { it==intervalType }!=null
-                ||intervalType==CustomDateTimeInterval::class.java)
-                radioButton.visibility=View.VISIBLE
-            else radioButton.visibility=View.GONE
+                || intervalType==CustomDateTimeInterval::class.java)
+                radioButton.visibility = View.VISIBLE
+            else radioButton.visibility = View.GONE
 
             if (intervalType==timelineView.dateTimeInterval::class.java)
-                radioButton.isChecked=true
+                radioButton.isChecked = true
 
             radioButton.setOnCheckedChangeListener { radioButton, isChecked ->
                 if (radioButton.isChecked)
                 {
-                    val selectedIntervalType=radioButtonsToIntervalTypes[radioButton]!!
+                    val selectedIntervalType = radioButtonsToIntervalTypes[radioButton]!!
 
-                    timelineView.dateTimeInterval=
+                    timelineView.dateTimeInterval = 
                         DateTimeIntervalConverter().convert(
                             from = timelineView.dateTimeInterval,
                             to = selectedIntervalType)
@@ -77,7 +77,7 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
         customIntervalButtonOverlayView.setOnClickListener {
             dialog.dismiss()
 
-            val referenceDailyDateTimeInterval=
+            val referenceDailyDateTimeInterval = 
                 DateTimeIntervalConverter().convert(
                     from = timelineView.dateTimeInterval,
                     to = DailyDateTimeInterval::class.java)
@@ -93,7 +93,7 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
                         title = timelineView.context.getString(R.string.choose_interval_end_date),
                         initialSelectedDateTime = fromDateTime,
                         onDateTimeSelected = { toDateTime ->
-                            timelineView.dateTimeInterval=CustomDateTimeInterval(fromDateTime, toDateTime)
+                            timelineView.dateTimeInterval = CustomDateTimeInterval(fromDateTime, toDateTime)
                         })
                 })
         }

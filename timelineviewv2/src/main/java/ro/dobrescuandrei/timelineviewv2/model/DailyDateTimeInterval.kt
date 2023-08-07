@@ -26,8 +26,8 @@ class DailyDateTimeInterval : DateTimeInterval
 
     init
     {
-        val todayAndNow=ZonedDateTime.now(defaultTimezone)!!
-        this.isToday=todayAndNow in fromDateTime..toDateTime
+        val todayAndNow = ZonedDateTime.now(defaultTimezone)!!
+        this.isToday = todayAndNow in fromDateTime..toDateTime
     }
 
     companion object
@@ -53,7 +53,7 @@ class DailyDateTimeInterval : DateTimeInterval
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String
     {
-        val now=ZonedDateTime.now(defaultTimezone)!!
+        val now = ZonedDateTime.now(defaultTimezone)!!
 
         if (fromDateTime.toLocalDate()==now.minusDays(1).toLocalDate())
             return resources.getString(R.string.yesterday)
@@ -62,7 +62,7 @@ class DailyDateTimeInterval : DateTimeInterval
         if (fromDateTime.toLocalDate()==now.plusDays(1).toLocalDate())
             return resources.getString(R.string.tomorrow)
 
-        val dateFormatter=
+        val dateFormatter = 
             if (fromDateTime.year!=now.year)
                 DateTimeFormatter.ofPattern("dd MMM yyyy")!!
             else DateTimeFormatter.ofPattern("dd MMM")!!

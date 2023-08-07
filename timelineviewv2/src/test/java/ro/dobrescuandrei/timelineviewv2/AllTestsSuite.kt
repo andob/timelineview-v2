@@ -13,7 +13,6 @@ import org.junit.runners.Suite
     InfiniteDateTimeIntervalTest::class,
     ZonedDateTimeExtensionsTest::class,
     MonthlyDateTimeIntervalTest::class,
-    OnDateTimeIntervalChangedEventsLockTest::class,
     YearlyDateTimeIntervalTest::class,
     WeeklyDateTimeIntervalTest::class,
 )

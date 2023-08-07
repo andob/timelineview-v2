@@ -31,22 +31,22 @@ class YearlyDateTimeIntervalTest
     {
         assertEquals("2021", dateTimeInterval.toString(mockResources))
 
-        val _2022=dateTimeInterval.getNextDateTimeInterval()!!
+        val _2022 = dateTimeInterval.getNextDateTimeInterval()!!
         assertEquals("01.01.2022 00:00:00.000", dateTimeFormatter.format(_2022.fromDateTime))
         assertEquals("31.12.2022 23:59:59.999", dateTimeFormatter.format(_2022.toDateTime))
         assertEquals("2022", _2022.toString(mockResources))
 
-        val _2023=dateTimeInterval.getShiftedDateTimeInterval(2)!!
+        val _2023 = dateTimeInterval.getShiftedDateTimeInterval(2)!!
         assertEquals("01.01.2023 00:00:00.000", dateTimeFormatter.format(_2023.fromDateTime))
         assertEquals("31.12.2023 23:59:59.999", dateTimeFormatter.format(_2023.toDateTime))
         assertEquals("2023", _2023.toString(mockResources))
 
-        val _2020=dateTimeInterval.getPreviousDateTimeInterval()!!
+        val _2020 = dateTimeInterval.getPreviousDateTimeInterval()!!
         assertEquals("01.01.2020 00:00:00.000", dateTimeFormatter.format(_2020.fromDateTime))
         assertEquals("31.12.2020 23:59:59.999", dateTimeFormatter.format(_2020.toDateTime))
         assertEquals("2020", _2020.toString(mockResources))
 
-        val _2019=dateTimeInterval.getShiftedDateTimeInterval(-2)!!
+        val _2019 = dateTimeInterval.getShiftedDateTimeInterval(-2)!!
         assertEquals("01.01.2019 00:00:00.000", dateTimeFormatter.format(_2019.fromDateTime))
         assertEquals("31.12.2019 23:59:59.999", dateTimeFormatter.format(_2019.toDateTime))
         assertEquals("2019", _2019.toString(mockResources))
@@ -55,8 +55,8 @@ class YearlyDateTimeIntervalTest
     @Test
     fun testIntervalAroundToday()
     {
-        val year=DailyDateTimeInterval.today().fromDateTime.year
-        val interval=YearlyDateTimeInterval.aroundToday()
+        val year = DailyDateTimeInterval.today().fromDateTime.year
+        val interval = YearlyDateTimeInterval.aroundToday()
         assertEquals("01.01.$year 00:00:00.000", dateTimeFormatter.format(interval.fromDateTime))
         assertEquals("31.12.$year 23:59:59.999", dateTimeFormatter.format(interval.toDateTime))
         assertEquals(year.toString(), interval.toString(mockResources))

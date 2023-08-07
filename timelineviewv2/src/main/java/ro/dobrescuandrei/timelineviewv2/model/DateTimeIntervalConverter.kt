@@ -6,10 +6,10 @@ class DateTimeIntervalConverter
 {
     fun <FROM : DateTimeInterval, TO : DateTimeInterval> convert(from : FROM, to : Class<TO>) : TO
     {
-        val inputInterval=from
-        val inputType=from::class.java
-        val outputType=to
-        val outputInterval=when(outputType)
+        val inputInterval = from
+        val inputType = from::class.java
+        val outputType = to
+        val outputInterval = when(outputType)
         {
             InfiniteDateTimeInterval::class.java ->
                 InfiniteDateTimeInterval()
@@ -21,11 +21,11 @@ class DateTimeIntervalConverter
 
             else ->
             {
-                val todayAndNow=ZonedDateTime.now(DateTimeInterval.defaultTimezone)!!
+                val todayAndNow = ZonedDateTime.now(DateTimeInterval.defaultTimezone)!!
 
-                val referenceDateTime=
+                val referenceDateTime = 
                     if (outputType.isLowerOrderTypeOf(inputType)
-                        &&inputInterval.contains(todayAndNow))
+                        && inputInterval.contains(todayAndNow))
                         todayAndNow
                     else inputInterval.fromDateTime
 

@@ -19,18 +19,18 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
 
     public BaseTimelineRecyclerViewAdapter(Context context, TimelineView timelineView)
     {
-        this.context=context;
-        this.timelineView=timelineView;
-        this.referenceDateTimeInterval=(DATE_TIME_INTERVAL)timelineView.getDateTimeInterval();
+        this.context = context;
+        this.timelineView = timelineView;
+        this.referenceDateTimeInterval = (DATE_TIME_INTERVAL)timelineView.getDateTimeInterval();
     }
 
     @NonNull
     @Override
     public TimelineRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        TimelineRecyclerViewHolder viewHolder=new TimelineRecyclerViewHolder(context, timelineView.getAppearance());
+        TimelineRecyclerViewHolder viewHolder = new TimelineRecyclerViewHolder(context, timelineView.getAppearance());
 
-        int widthInPixels=getCellWidthInPixels();
+        int widthInPixels = getCellWidthInPixels();
         if (widthInPixels==ViewGroup.LayoutParams.MATCH_PARENT)
             viewHolder.getCellView().setWidthInPixels(ScreenSizeDetector.getScreenSize(context).x);
         else viewHolder.getCellView().setWidthInPixels(getCellWidthInPixels());
@@ -42,7 +42,7 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
 
     public void dispose()
     {
-        this.context=null;
-        this.timelineView=null;
+        this.context = null;
+        this.timelineView = null;
     }
 }
