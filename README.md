@@ -18,7 +18,7 @@ repositories {
 
 ```
 dependencies {
-    implementation 'ro.andob.timelineview:timelineview-v2:2.5.0'
+    implementation 'ro.andob.timelineview:timelineview-v2:2.5.1'
 }
 ```
 

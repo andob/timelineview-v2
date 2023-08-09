@@ -45,18 +45,11 @@ class TimelineView : BaseCustomView
             this.appearance = TimelineViewAppearance(context, attributes)
             initializeViewAppearance()
 
-            val shouldDisablePast = attributes.hasValue(R.styleable.TimelineView_disable_clicking_on_past_intervals)
-            val shouldDisableFuture = attributes.hasValue(R.styleable.TimelineView_disable_clicking_on_future_intervals)
-            if (shouldDisablePast || shouldDisableFuture)
-            {
-                timelineRecyclerViewCellTransformer = TimelineRecyclerViewCell.Transformer { cellView, dateTimeInterval ->
-                    val now = ZonedDateTime.now(DateTimeInterval.defaultTimezone)
-                    if (shouldDisablePast && dateTimeInterval.fromDateTime.isBefore(now))
-                        cellView.setOnClickListener(null)
-                    else if (shouldDisableFuture && dateTimeInterval.toDateTime.isAfter(now))
-                        cellView.setOnClickListener(null)
-                }
-            }
+            if (attributes.getBoolean(R.styleable.TimelineView_disable_clicking_on_past_intervals, false))
+                timelineRecyclerViewCellTransformer = TimelineRecyclerViewCell.createTransformerDisablingPast()
+
+            if (attributes.getBoolean(R.styleable.TimelineView_disable_clicking_on_future_intervals, false))
+                timelineRecyclerViewCellTransformer = TimelineRecyclerViewCell.createTransformerDisablingFuture()
 
             attributes.recycle()
         }
