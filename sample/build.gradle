@@ -8,11 +8,6 @@ android {
         applicationId "ro.dobrescuandrei.timelineviewv2.sample"
         minSdk 26
         targetSdk 33
-        manifestPlaceholders = [
-            configChanges: "mcc|mnc|locale|touchscreen|keyboard|keyboardHidden" +
-                "|navigation|screenLayout|fontScale|uiMode|orientation" +
-                "|density|screenSize|smallestScreenSize"
-        ]
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_17
