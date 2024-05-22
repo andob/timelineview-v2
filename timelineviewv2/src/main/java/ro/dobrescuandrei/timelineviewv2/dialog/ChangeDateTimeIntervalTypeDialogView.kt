@@ -34,6 +34,7 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun setupRadioButtons(timelineView : TimelineView, dialog : AlertDialog)
     {
         val radioButtonsToIntervalTypes = mapOf(
@@ -56,7 +57,7 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
             if (intervalType==timelineView.dateTimeInterval::class.java)
                 radioButton.isChecked = true
 
-            radioButton.setOnCheckedChangeListener { radioButton, isChecked ->
+            radioButton.setOnCheckedChangeListener { _,_ ->
                 if (radioButton.isChecked)
                 {
                     val selectedIntervalType = radioButtonsToIntervalTypes[radioButton]!!

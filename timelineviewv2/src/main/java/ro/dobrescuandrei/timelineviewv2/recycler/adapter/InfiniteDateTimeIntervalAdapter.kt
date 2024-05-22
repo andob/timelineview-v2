@@ -18,7 +18,7 @@ class InfiniteDateTimeIntervalAdapter : BaseTimelineRecyclerViewAdapter<Infinite
         cellView.setDateTimeInterval(referenceDateTimeInterval)
         cellView.setIsSelected(false)
 
-        cellView.setOnClickListener { cellView ->
+        cellView.setOnClickListener {
             if (timelineView.appearance.isDateTimeIntervalTypeChangerDialogSupported)
                 ChangeDateTimeIntervalTypeDialog.show(timelineView = timelineView)
         }

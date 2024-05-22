@@ -4,6 +4,7 @@ import java.time.ZonedDateTime
 
 class DateTimeIntervalConverter
 {
+    @Suppress("UNCHECKED_CAST")
     fun <FROM : DateTimeInterval, TO : DateTimeInterval> convert(from : FROM, to : Class<TO>) : TO
     {
         val inputInterval = from

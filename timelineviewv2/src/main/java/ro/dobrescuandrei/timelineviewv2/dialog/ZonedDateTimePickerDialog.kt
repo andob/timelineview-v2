@@ -20,7 +20,7 @@ object ZonedDateTimePickerDialog
     )
     {
         val pickerDialog = DatePickerDialog(context,
-            { datePicker, year, month, dayOfMonth ->
+            { _, year, month, dayOfMonth ->
                 val localDateTime = LocalDateTime.of(year, month+1, dayOfMonth, 0, 0, 0)
                 val zonedDateTime = ZonedDateTime.of(localDateTime, timezone)
                 onDateTimeSelected?.invoke(zonedDateTime)

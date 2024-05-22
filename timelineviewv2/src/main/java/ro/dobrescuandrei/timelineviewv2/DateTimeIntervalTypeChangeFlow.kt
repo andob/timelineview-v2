@@ -81,6 +81,7 @@ class DateTimeIntervalTypeChangeFlow
         fun <FROM : DateTimeInterval> from(type : Class<FROM>) = addType(type)
         fun <FROM : DateTimeInterval> to(type : Class<FROM>) = addType(type)
 
+        @Suppress("UNCHECKED_CAST")
         private fun <FROM : DateTimeInterval> addType(type : Class<FROM>) : Builder
         {
             if (type==CustomDateTimeInterval::class.java)

@@ -33,7 +33,7 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
         int widthInPixels = getCellWidthInPixels();
         if (widthInPixels==ViewGroup.LayoutParams.MATCH_PARENT)
             viewHolder.getCellView().setWidthInPixels(ScreenSizeDetector.getScreenSize(context).x);
-        else viewHolder.getCellView().setWidthInPixels(getCellWidthInPixels());
+        else viewHolder.getCellView().setWidthInPixels(widthInPixels);
 
         return viewHolder;
     }

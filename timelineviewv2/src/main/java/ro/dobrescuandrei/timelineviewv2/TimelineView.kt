@@ -83,7 +83,7 @@ class TimelineView : BaseCustomView
         if (windowHasFocus)
         {
             //on activity resumed, refresh if the day has passed in the meantime...
-            if (dateTimeInterval is DailyDateTimeInterval && (dateTimeInterval as DailyDateTimeInterval).isToday && 
+            if (dateTimeInterval is DailyDateTimeInterval && (dateTimeInterval as DailyDateTimeInterval).isToday &&
                 ZonedDateTime.now(DateTimeInterval.defaultTimezone).toLocalDate()!=dateTimeInterval.fromDateTime.toLocalDate())
                 dateTimeInterval = DailyDateTimeInterval.today()
         }
@@ -97,7 +97,6 @@ class TimelineView : BaseCustomView
         recyclerView.scrollMiddleCellToMiddleOfTheScreen()
     }
 
-    private var firstTimeDateTimeIntervalSetterWasCalled = true
     var dateTimeInterval : DateTimeInterval = DailyDateTimeInterval.today()
     set(dateTimeInterval)
     {
@@ -110,7 +109,7 @@ class TimelineView : BaseCustomView
         if (dateTimeInterval is CustomDateTimeInterval && !appearance.isCustomDateTimeIntervalSupported)
             throw InvalidDateTimeIntervalTypeException("Cannot use CustomDateTimeInterval!")
 
-        if (field!=dateTimeInterval || firstTimeDateTimeIntervalSetterWasCalled)
+        if (field!=dateTimeInterval || recyclerView.adapter==null)
         {
             if (field::class.java!=dateTimeInterval::class.java)
             {
@@ -124,8 +123,6 @@ class TimelineView : BaseCustomView
             recyclerView.adapter?.dispose()
 
             recyclerView.adapter = dateTimeInterval.toRecyclerViewAdapter(timelineView = this)
-
-            firstTimeDateTimeIntervalSetterWasCalled = false
         }
     }
 

@@ -14,14 +14,14 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
 
     override fun onBindViewHolder(holder : TimelineRecyclerViewHolder, position : Int)
     {
-        (position-itemCount/2).let { position ->
-            val dateTimeInterval = referenceDateTimeInterval.getShiftedDateTimeInterval(position.toLong()) as DateTimeInterval
+        (position-itemCount/2).let { normalizedPosition ->
+            val dateTimeInterval = referenceDateTimeInterval.getShiftedDateTimeInterval(normalizedPosition.toLong()) as DateTimeInterval
 
             val cellView = holder.getCellView()
             cellView.setDateTimeInterval(dateTimeInterval)
-            cellView.setIsSelected(position==0)
+            cellView.setIsSelected(normalizedPosition==0)
 
-            cellView.setOnClickListener { cellView ->
+            cellView.setOnClickListener {
                 if (cellView.isSelected)
                 {
                     if (timelineView.appearance.isDateTimeIntervalTypeChangerDialogSupported)
@@ -30,7 +30,7 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
                 else
                 {
                     try { this.timelineView.dateTimeInterval = dateTimeInterval }
-                    catch (ex : InvalidDateTimeIntervalTypeException) {}
+                    catch (_ : InvalidDateTimeIntervalTypeException) {}
                 }
             }
 
