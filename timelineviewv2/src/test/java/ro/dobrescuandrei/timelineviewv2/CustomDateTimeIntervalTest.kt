@@ -7,12 +7,15 @@ import ro.dobrescuandrei.timelineviewv2.model.CustomDateTimeInterval
 import ro.dobrescuandrei.timelineviewv2.model.DateTimeInterval
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class CustomDateTimeIntervalTest
 {
+    private val currentYear = Calendar.getInstance()[Calendar.YEAR]
+
     private val dateTimeInterval : DateTimeInterval = CustomDateTimeInterval(
-        fromDateTime = LocalDateTime.of(2023, 1, 12, 0, 0, 0, 0),
-        toDateTime = LocalDateTime.of(2023, 1, 26, 0, 0, 0, 0))
+        fromDateTime = LocalDateTime.of(currentYear, 1, 12, 0, 0, 0, 0),
+        toDateTime = LocalDateTime.of(currentYear, 1, 26, 0, 0, 0, 0))
 
     private val dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss.SSS")!!
 
@@ -22,8 +25,8 @@ class CustomDateTimeIntervalTest
     @Test
     fun testIntervalRange()
     {
-        assertEquals("12.01.2023 00:00:00.000", dateTimeFormatter.format(dateTimeInterval.fromDateTime))
-        assertEquals("26.01.2023 23:59:59.999", dateTimeFormatter.format(dateTimeInterval.toDateTime))
+        assertEquals("12.01.$currentYear 00:00:00.000", dateTimeFormatter.format(dateTimeInterval.fromDateTime))
+        assertEquals("26.01.$currentYear 23:59:59.999", dateTimeFormatter.format(dateTimeInterval.toDateTime))
     }
 
     @Test
@@ -44,8 +47,8 @@ class CustomDateTimeIntervalTest
     fun testInvertedIntervalEqualsOriginalInterval()
     {
         val invertedDateTimeInterval = CustomDateTimeInterval(
-            fromDateTime = LocalDateTime.of(2023, 1, 26, 0, 0, 0, 0),
-            toDateTime = LocalDateTime.of(2023, 1, 12, 0, 0, 0, 0))
+            fromDateTime = LocalDateTime.of(currentYear, 1, 26, 0, 0, 0, 0),
+            toDateTime = LocalDateTime.of(currentYear, 1, 12, 0, 0, 0, 0))
 
         assertEquals(dateTimeInterval.fromDateTime, invertedDateTimeInterval.fromDateTime)
         assertEquals(dateTimeInterval.toDateTime, invertedDateTimeInterval.toDateTime)
