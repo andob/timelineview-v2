@@ -42,13 +42,13 @@ class WeeklyDateTimeInterval : DateTimeInterval
         val now = ZonedDateTime.now(defaultTimezone)!!
 
         val startDateTimeFormatter = 
-            if (fromDateTime.monthValue!=toDateTime.monthValue)
+            if (fromDateTime.monthValue != toDateTime.monthValue)
                 DateTimeFormatter.ofPattern("dd MMM")!!
             else DateTimeFormatter.ofPattern("dd")!!
         val startDateStr = startDateTimeFormatter.format(fromDateTime)!!
 
         val endDateTimeFormatter = 
-            if (toDateTime.year!=now.year)
+            if (toDateTime.year != now.year)
                 DateTimeFormatter.ofPattern("dd MMM yyyy")!!
             else DateTimeFormatter.ofPattern("dd MMM")!!
         val endDateStr = endDateTimeFormatter.format(toDateTime)!!

@@ -12,7 +12,7 @@ object ScreenSizeDetector
     @JvmStatic
     fun getScreenSize(context : Context) : Point
     {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.R)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
         {
             val windowMetrics = (context as Activity).windowManager.currentWindowMetrics
             val insets = windowMetrics.windowInsets.getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())

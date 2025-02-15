@@ -25,7 +25,7 @@ class TimelineRecyclerView : RecyclerView
     {
         if (!isInEditMode)
         {
-            if (adapter!=null && adapter !is BaseTimelineRecyclerViewAdapter<*>)
+            if (adapter != null && adapter !is BaseTimelineRecyclerViewAdapter<*>)
                 throw RuntimeException("Please use BaseTimelineRecyclerViewAdapter!!!")
 
             super.setAdapter(adapter)
@@ -43,7 +43,7 @@ class TimelineRecyclerView : RecyclerView
 
     internal fun scrollMiddleCellToMiddleOfTheScreen()
     {
-        if (adapter!=null && adapter is InfiniteScrollingTimelineRecyclerViewAdapter)
+        if (adapter != null && adapter is InfiniteScrollingTimelineRecyclerViewAdapter)
             (layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(
                 /*position*/ adapter!!.itemCount/2,
                 /*offset*/ (ScreenSizeDetector.getScreenSize(context).x-adapter!!.cellWidthInPixels)/2)

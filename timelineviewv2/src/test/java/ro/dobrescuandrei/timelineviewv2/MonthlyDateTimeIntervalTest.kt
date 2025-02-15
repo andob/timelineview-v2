@@ -58,7 +58,7 @@ class MonthlyDateTimeIntervalTest
     {
         val year = DailyDateTimeInterval.today().fromDateTime.year
         val month = DailyDateTimeInterval.today().fromDateTime.monthValue
-            .let { month -> if (month<10) "0$month" else month.toString() }
+            .let { month -> if (month < 10) "0$month" else month.toString() }
         val maxDayFromMonth = DailyDateTimeInterval.today().fromDateTime.toLocalDate()!!
             .with(TemporalAdjusters.lastDayOfMonth()).dayOfMonth
 

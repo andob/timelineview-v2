@@ -19,7 +19,7 @@ abstract class InfiniteScrollingTimelineRecyclerViewAdapter : BaseTimelineRecycl
 
             val cellView = holder.getCellView()
             cellView.setDateTimeInterval(dateTimeInterval)
-            cellView.setIsSelected(normalizedPosition==0)
+            cellView.setIsSelected(normalizedPosition == 0)
 
             cellView.setOnClickListener {
                 if (cellView.isSelected)

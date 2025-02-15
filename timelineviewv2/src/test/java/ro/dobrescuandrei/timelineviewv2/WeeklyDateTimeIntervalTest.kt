@@ -57,7 +57,7 @@ class WeeklyDateTimeIntervalTest
     @Test
     fun testIntervalAroundToday()
     {
-        fun Int.withLeadingZero() = if(this<10) "0$this" else "$this"
+        fun Int.withLeadingZero() = if(this < 10) "0$this" else "$this"
 
         fun ZonedDateTime.formatted() = "${dayOfMonth.withLeadingZero()}.${monthValue.withLeadingZero()}.$year"
 

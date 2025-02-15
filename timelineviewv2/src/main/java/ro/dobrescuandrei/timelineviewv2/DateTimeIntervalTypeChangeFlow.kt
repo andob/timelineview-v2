@@ -26,8 +26,8 @@ class DateTimeIntervalTypeChangeFlow
     }
 
     fun hasNextNode() =
-        selectedPosition>=0 && selectedPosition<items.size
-        && selectedPosition+1<items.size
+        selectedPosition >= 0 && selectedPosition < items.size
+        && selectedPosition+1 < items.size
 
     fun nextNode() : Class<DateTimeInterval>?
     {
@@ -41,8 +41,8 @@ class DateTimeIntervalTypeChangeFlow
     }
 
     fun hasPreviousNode() =
-        selectedPosition>=0 && selectedPosition<items.size
-        && selectedPosition-1>=0
+        selectedPosition >= 0 && selectedPosition < items.size
+        && selectedPosition-1 >= 0
 
     fun previousNode() : Class<DateTimeInterval>?
     {
@@ -84,7 +84,7 @@ class DateTimeIntervalTypeChangeFlow
         @Suppress("UNCHECKED_CAST")
         private fun <FROM : DateTimeInterval> addType(type : Class<FROM>) : Builder
         {
-            if (type==CustomDateTimeInterval::class.java)
+            if (type == CustomDateTimeInterval::class.java)
                 throw RuntimeException("Cannot use CustomDateTimeInterval in the flow!")
 
             results.add(type as Class<DateTimeInterval>)

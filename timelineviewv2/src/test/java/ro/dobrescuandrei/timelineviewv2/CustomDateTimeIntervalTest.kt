@@ -34,7 +34,7 @@ class CustomDateTimeIntervalTest
     {
         assert(dateTimeInterval.getPreviousDateTimeInterval()==null)
         assert(dateTimeInterval.getNextDateTimeInterval()==null)
-        assert((-100..100).map { dateTimeInterval.getShiftedDateTimeInterval(it.toLong()) }.all { it==null })
+        assert((-100..100).map { dateTimeInterval.getShiftedDateTimeInterval(it.toLong()) }.all { it == null })
     }
 
     @Test

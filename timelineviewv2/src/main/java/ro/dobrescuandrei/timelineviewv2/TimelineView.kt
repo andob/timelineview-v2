@@ -109,9 +109,9 @@ class TimelineView : BaseCustomView
         if (dateTimeInterval is CustomDateTimeInterval && !appearance.isCustomDateTimeIntervalSupported)
             throw InvalidDateTimeIntervalTypeException("Cannot use CustomDateTimeInterval!")
 
-        if (field!=dateTimeInterval || recyclerView.adapter==null)
+        if (field != dateTimeInterval || recyclerView.adapter == null)
         {
-            if (field::class.java!=dateTimeInterval::class.java)
+            if (field::class.java != dateTimeInterval::class.java)
             {
                 dateTimeIntervalTypeChangeFlow.seekToNode(dateTimeInterval::class.java)
                 updateUiFromIntervalTypeChangeFlow()

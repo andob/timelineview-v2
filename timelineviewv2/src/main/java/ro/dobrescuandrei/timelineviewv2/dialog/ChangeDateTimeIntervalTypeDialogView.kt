@@ -49,12 +49,12 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
 
         for ((radioButton, intervalType) in radioButtonsToIntervalTypes)
         {
-            if (supportedIntervalTypes.find { it==intervalType }!=null
-                || intervalType==CustomDateTimeInterval::class.java)
+            if (supportedIntervalTypes.find { it == intervalType }!=null
+                || intervalType == CustomDateTimeInterval::class.java)
                 radioButton.visibility = View.VISIBLE
             else radioButton.visibility = View.GONE
 
-            if (intervalType==timelineView.dateTimeInterval::class.java)
+            if (intervalType == timelineView.dateTimeInterval::class.java)
                 radioButton.isChecked = true
 
             radioButton.setOnCheckedChangeListener { _,_ ->

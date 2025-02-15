@@ -56,9 +56,9 @@ class DailyDateTimeIntervalTests
     {
         val year = DailyDateTimeInterval.today().fromDateTime.year
         val month = DailyDateTimeInterval.today().fromDateTime.monthValue
-            .let { month -> if (month<10) "0$month" else month.toString() }
+            .let { month -> if (month < 10) "0$month" else month.toString() }
         val dayOfMonth = DailyDateTimeInterval.today().fromDateTime.dayOfMonth
-            .let { day -> if (day<10) "0$day" else day.toString() }
+            .let { day -> if (day < 10) "0$day" else day.toString() }
 
         val today = DailyDateTimeInterval.today()
         assertEquals("$dayOfMonth.$month.$year 00:00:00.000", dateTimeFormatter.format(today.fromDateTime))

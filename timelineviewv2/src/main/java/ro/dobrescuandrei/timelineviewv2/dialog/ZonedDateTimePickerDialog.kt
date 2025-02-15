@@ -29,7 +29,7 @@ object ZonedDateTimePickerDialog
             initialSelectedDateTime.monthValue-1,
             initialSelectedDateTime.dayOfMonth)
 
-        if (title!=null)
+        if (title != null)
             pickerDialog.setTitle(title)
 
         pickerDialog.show()

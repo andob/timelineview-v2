@@ -63,7 +63,7 @@ class DailyDateTimeInterval : DateTimeInterval
             return resources.getString(R.string.tomorrow)
 
         val dateFormatter = 
-            if (fromDateTime.year!=now.year)
+            if (fromDateTime.year != now.year)
                 DateTimeFormatter.ofPattern("dd MMM yyyy")!!
             else DateTimeFormatter.ofPattern("dd MMM")!!
         return dateFormatter.format(fromDateTime)!!

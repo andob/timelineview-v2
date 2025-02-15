@@ -31,7 +31,7 @@ public abstract class BaseTimelineRecyclerViewAdapter<DATE_TIME_INTERVAL extends
         TimelineRecyclerViewHolder viewHolder = new TimelineRecyclerViewHolder(context, timelineView.getAppearance());
 
         int widthInPixels = getCellWidthInPixels();
-        if (widthInPixels==ViewGroup.LayoutParams.MATCH_PARENT)
+        if (widthInPixels == ViewGroup.LayoutParams.MATCH_PARENT)
             viewHolder.getCellView().setWidthInPixels(ScreenSizeDetector.getScreenSize(context).x);
         else viewHolder.getCellView().setWidthInPixels(widthInPixels);
 
