@@ -135,7 +135,7 @@ class TimelineView : BaseCustomView
     }
 
     var dateTimeIntervalTypeChangeFlow : DateTimeIntervalTypeChangeFlow =
-        DateTimeIntervalTypeChangeFlow.build { from(DailyDateTimeInterval::class.java) }
+        DateTimeIntervalTypeChangeFlow.from(DailyDateTimeInterval::class.java).build()
     set(flow)
     {
         field = flow
@@ -150,14 +150,14 @@ class TimelineView : BaseCustomView
 
         decrementDateIntervalTypeButton.setOnClickListener {
             flow.previousNode()?.let { type ->
-                this.dateTimeInterval = DateTimeIntervalConverter().convert(from = dateTimeInterval, to = type)
+                this.dateTimeInterval = DateTimeIntervalConverter.convert(dateTimeInterval).to(type)
                 updateUiFromIntervalTypeChangeFlow()
             }
         }
 
         incrementDateIntervalTypeButton.setOnClickListener {
             flow.nextNode()?.let { type ->
-                this.dateTimeInterval = DateTimeIntervalConverter().convert(from = dateTimeInterval, to = type)
+                this.dateTimeInterval = DateTimeIntervalConverter.convert(dateTimeInterval).to(type)
                 updateUiFromIntervalTypeChangeFlow()
             }
         }

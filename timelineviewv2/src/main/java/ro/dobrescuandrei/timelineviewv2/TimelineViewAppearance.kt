@@ -102,17 +102,18 @@ class TimelineViewAppearance
 
     fun createDateTimeIntervalTypeChangeFlow() : DateTimeIntervalTypeChangeFlow
     {
-        return DateTimeIntervalTypeChangeFlow.build {
-            if (isDailyDateTimeIntervalSupported)
-                from(DailyDateTimeInterval::class.java)
-            if (isWeeklyDateTimeIntervalSupported)
-                to(WeeklyDateTimeInterval::class.java)
-            if (isMonthlyDateTimeIntervalSupported)
-                to(MonthlyDateTimeInterval::class.java)
-            if (isYearlyDateTimeIntervalSupported)
-                to(YearlyDateTimeInterval::class.java)
-            if (isInfiniteDateTimeIntervalSupported)
-                to(InfiniteDateTimeInterval::class.java)
-        }
+        val intervalTypes = mutableListOf<Class<out DateTimeInterval>>()
+        if (isDailyDateTimeIntervalSupported)
+            intervalTypes.add(DailyDateTimeInterval::class.java)
+        if (isWeeklyDateTimeIntervalSupported)
+            intervalTypes.add(WeeklyDateTimeInterval::class.java)
+        if (isMonthlyDateTimeIntervalSupported)
+            intervalTypes.add(MonthlyDateTimeInterval::class.java)
+        if (isYearlyDateTimeIntervalSupported)
+            intervalTypes.add(YearlyDateTimeInterval::class.java)
+        if (isInfiniteDateTimeIntervalSupported)
+            intervalTypes.add(InfiniteDateTimeInterval::class.java)
+
+        return DateTimeIntervalTypeChangeFlow(intervalTypes)
     }
 }

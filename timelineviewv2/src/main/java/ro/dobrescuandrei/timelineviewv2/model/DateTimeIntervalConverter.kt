@@ -2,41 +2,53 @@ package ro.dobrescuandrei.timelineviewv2.model
 
 import java.time.ZonedDateTime
 
-class DateTimeIntervalConverter
+class DateTimeIntervalConverter<FROM : DateTimeInterval>
+private constructor(private val interval : FROM)
 {
-    @Suppress("UNCHECKED_CAST")
-    fun <FROM : DateTimeInterval, TO : DateTimeInterval> convert(from : FROM, to : Class<TO>) : TO
+    companion object
     {
-        val inputInterval = from
-        val inputType = from::class.java
-        val outputType = to
-        val outputInterval = when(outputType)
+        @JvmStatic
+        fun <FROM : DateTimeInterval> convert(interval : FROM) = DateTimeIntervalConverter(interval)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <TO : DateTimeInterval> to(type : Class<TO>) : TO
+    {
+        if (type == InfiniteDateTimeInterval::class.java)
         {
-            InfiniteDateTimeInterval::class.java ->
-                InfiniteDateTimeInterval()
+            return InfiniteDateTimeInterval() as TO
+        }
 
-            CustomDateTimeInterval::class.java ->
-                CustomDateTimeInterval(
-                    fromDateTime = inputInterval.fromDateTime,
-                    toDateTime = inputInterval.toDateTime)
+        if (type == CustomDateTimeInterval::class.java)
+        {
+            return CustomDateTimeInterval(interval.fromDateTime, interval.toDateTime) as TO;
+        }
 
-            else ->
-            {
-                val todayAndNow = ZonedDateTime.now(DateTimeInterval.defaultTimezone)!!
+        val today = ZonedDateTime.now(DateTimeInterval.defaultTimezone)!!
+        val isLowerOrderType = type.isLowerOrderTypeOf(interval::class.java)
+        val referenceDateTime = if (isLowerOrderType && interval.contains(today)) today else interval.fromDateTime
 
-                val referenceDateTime = 
-                    if (outputType.isLowerOrderTypeOf(inputType)
-                        && inputInterval.contains(todayAndNow))
-                        todayAndNow
-                    else inputInterval.fromDateTime
+        if (type == DailyDateTimeInterval::class.java)
+        {
+            return DailyDateTimeInterval(referenceDateTime) as TO
+        }
 
-                outputType.constructors.find { constructor ->
-                    ZonedDateTime::class.java in constructor.parameterTypes
-                }!!.newInstance(referenceDateTime)
-            }
-        } as TO
+        if (type == WeeklyDateTimeInterval::class.java)
+        {
+            return WeeklyDateTimeInterval(referenceDateTime) as TO
+        }
 
-        return outputInterval
+        if (type == MonthlyDateTimeInterval::class.java)
+        {
+            return MonthlyDateTimeInterval(referenceDateTime) as TO
+        }
+
+        if (type == YearlyDateTimeInterval::class.java)
+        {
+            return YearlyDateTimeInterval(referenceDateTime) as TO
+        }
+
+        throw RuntimeException("Cannot convert $interval from ${interval::class.java} to ${type::class.java}")
     }
 
     private fun Class<*>.isLowerOrderTypeOf(another : Class<*>) : Boolean

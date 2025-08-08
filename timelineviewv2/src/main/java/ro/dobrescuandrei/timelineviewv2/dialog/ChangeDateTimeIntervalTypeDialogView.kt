@@ -62,10 +62,9 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
                 {
                     val selectedIntervalType = radioButtonsToIntervalTypes[radioButton]!!
 
-                    timelineView.dateTimeInterval = 
-                        DateTimeIntervalConverter().convert(
-                            from = timelineView.dateTimeInterval,
-                            to = selectedIntervalType)
+                    timelineView.dateTimeInterval = DateTimeIntervalConverter
+                        .convert(timelineView.dateTimeInterval)
+                        .to(selectedIntervalType)
 
                     dialog.dismiss()
                 }
@@ -78,10 +77,9 @@ class ChangeDateTimeIntervalTypeDialogView : BaseCustomView
         customIntervalButtonOverlayView.setOnClickListener {
             dialog.dismiss()
 
-            val referenceDailyDateTimeInterval = 
-                DateTimeIntervalConverter().convert(
-                    from = timelineView.dateTimeInterval,
-                    to = DailyDateTimeInterval::class.java)
+            val referenceDailyDateTimeInterval = DateTimeIntervalConverter
+                .convert(timelineView.dateTimeInterval)
+                .to(DailyDateTimeInterval::class.java)
 
             ZonedDateTimePickerDialog.show(
                 context = timelineView.context,

@@ -8,13 +8,13 @@ import ro.dobrescuandrei.timelineviewv2.model.*
 
 class DateTimeIntervalTypeChangeFlowTest
 {
-    private val flow = DateTimeIntervalTypeChangeFlow.build {
-        from(DailyDateTimeInterval::class.java)
-            .to(WeeklyDateTimeInterval::class.java)
-            .to(MonthlyDateTimeInterval::class.java)
-            .to(YearlyDateTimeInterval::class.java)
-            .to(InfiniteDateTimeInterval::class.java)
-    }
+    private val flow = DateTimeIntervalTypeChangeFlow
+        .from(DailyDateTimeInterval::class.java)
+        .to(WeeklyDateTimeInterval::class.java)
+        .to(MonthlyDateTimeInterval::class.java)
+        .to(YearlyDateTimeInterval::class.java)
+        .to(InfiniteDateTimeInterval::class.java)
+        .build()
 
     @Before
     fun setup() = setupUnitTests()
@@ -22,7 +22,7 @@ class DateTimeIntervalTypeChangeFlowTest
     @Test
     fun testEmptyFlowInstantiation()
     {
-        try { DateTimeIntervalTypeChangeFlow.build {}; fail() }
+        try { DateTimeIntervalTypeChangeFlow(listOf()); fail() }
         catch (_ : Exception) {}
     }
 

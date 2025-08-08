@@ -100,14 +100,14 @@ class DailyDateTimeIntervalTests
             val dayBeforeDstChangeDay = DailyDateTimeInterval(LocalDateTime.of(2021, 3, 27, 0, 0, 0, 0))
             val dayAfterDstChangeDay = DailyDateTimeInterval(LocalDateTime.of(2021, 3, 29, 0, 0, 0, 0))
 
-            println("coming from DST change day, go previous and next")
+            //coming from DST change day, go previous and next
             consumer(dstChangeDate.getPreviousDateTimeInterval(), dstChangeDate, dstChangeDate.getNextDateTimeInterval())
 
-            println("coming from day before DST change day, go next then next")
+            //coming from day before DST change day, go next then next
             consumer(dayBeforeDstChangeDay, dayBeforeDstChangeDay.getNextDateTimeInterval(),
                 dayBeforeDstChangeDay.getNextDateTimeInterval().getNextDateTimeInterval())
 
-            println("coming from day after DST change day, go previous then previous")
+            //coming from day after DST change day, go previous then previous
             consumer(dayAfterDstChangeDay.getPreviousDateTimeInterval().getPreviousDateTimeInterval(),
                 dayAfterDstChangeDay.getPreviousDateTimeInterval(), dayAfterDstChangeDay)
         }
@@ -142,14 +142,14 @@ class DailyDateTimeIntervalTests
             val dayBeforeDstChangeDay = DailyDateTimeInterval(LocalDateTime.of(2021, 10, 30, 0, 0, 0, 0))
             val dayAfterDstChangeDay = DailyDateTimeInterval(LocalDateTime.of(2021, 11, 1, 0, 0, 0, 0))
 
-            println("coming from DST change day, go previous and next")
+            //coming from DST change day, go previous and next
             consumer(dstChangeDate.getPreviousDateTimeInterval(), dstChangeDate, dstChangeDate.getNextDateTimeInterval())
 
-            println("coming from day before DST change day, go next then next")
+            //coming from day before DST change day, go next then next
             consumer(dayBeforeDstChangeDay, dayBeforeDstChangeDay.getNextDateTimeInterval(),
                 dayBeforeDstChangeDay.getNextDateTimeInterval().getNextDateTimeInterval())
 
-            println("coming from day after DST change day, go previous then previous")
+            //coming from day after DST change day, go previous then previous
             consumer(dayAfterDstChangeDay.getPreviousDateTimeInterval().getPreviousDateTimeInterval(),
                 dayAfterDstChangeDay.getPreviousDateTimeInterval(), dayAfterDstChangeDay)
         }

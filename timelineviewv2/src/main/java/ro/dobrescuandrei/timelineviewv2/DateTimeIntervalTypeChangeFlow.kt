@@ -6,20 +6,35 @@ import java.util.*
 
 class DateTimeIntervalTypeChangeFlow
 {
-    private val items = LinkedList<Class<DateTimeInterval>>()
+    private val items = LinkedList<Class<out DateTimeInterval>>()
     private var selectedPosition = 0
 
-    constructor(intervalTypes : List<Class<DateTimeInterval>>) : super()
+    constructor(intervalTypes : List<Class<out DateTimeInterval>>) : super()
     {
         if (intervalTypes.isEmpty())
-            throw RuntimeException("Invalid DateTimeIntervalTypeChange.Flow!!!")
+        {
+            throw RuntimeException("DateTimeIntervalTypeChangeFlow cannot be empty!")
+        }
+
+        for (intervalType in intervalTypes)
+        {
+            if (!DateTimeInterval::class.java.isAssignableFrom(intervalType))
+            {
+                throw RuntimeException("Please add only DateTimeInterval types to the flow!")
+            }
+
+            if (CustomDateTimeInterval::class.java.isAssignableFrom(intervalType))
+            {
+                throw RuntimeException("Cannot use CustomDateTimeInterval type in the flow!")
+            }
+        }
 
         items.addAll(intervalTypes)
     }
 
     fun toList() = items
 
-    fun getFirstNode() : Class<DateTimeInterval>
+    fun getFirstNode() : Class<out DateTimeInterval>
     {
         selectedPosition = 0
         return items[selectedPosition]
@@ -29,7 +44,7 @@ class DateTimeIntervalTypeChangeFlow
         selectedPosition >= 0 && selectedPosition < items.size
         && selectedPosition+1 < items.size
 
-    fun nextNode() : Class<DateTimeInterval>?
+    fun nextNode() : Class<out DateTimeInterval>?
     {
         if (hasNextNode())
         {
@@ -44,7 +59,7 @@ class DateTimeIntervalTypeChangeFlow
         selectedPosition >= 0 && selectedPosition < items.size
         && selectedPosition-1 >= 0
 
-    fun previousNode() : Class<DateTimeInterval>?
+    fun previousNode() : Class<out DateTimeInterval>?
     {
         if (hasPreviousNode())
         {
@@ -57,40 +72,23 @@ class DateTimeIntervalTypeChangeFlow
 
     fun seekToNode(node : Class<out DateTimeInterval>)
     {
-        selectedPosition = items.indexOf(node)
+        if (items.contains(node))
+        {
+            selectedPosition = items.indexOf(node)
+        }
     }
 
     companion object
     {
         @JvmStatic
-        fun build(builderBlock : Builder.() -> (Unit)) : DateTimeIntervalTypeChangeFlow
-        {
-            val builder = Builder()
-            builderBlock.invoke(builder)
-            return builder.build()
-        }
-
-        @JvmStatic
-        fun builder() = Builder()
+        fun from(type : Class<out DateTimeInterval>) = Builder(type)
     }
 
     class Builder
     {
-        private val results = mutableListOf<Class<DateTimeInterval>>()
-
-        fun <FROM : DateTimeInterval> from(type : Class<FROM>) = addType(type)
-        fun <FROM : DateTimeInterval> to(type : Class<FROM>) = addType(type)
-
-        @Suppress("UNCHECKED_CAST")
-        private fun <FROM : DateTimeInterval> addType(type : Class<FROM>) : Builder
-        {
-            if (type == CustomDateTimeInterval::class.java)
-                throw RuntimeException("Cannot use CustomDateTimeInterval in the flow!")
-
-            results.add(type as Class<DateTimeInterval>)
-            return this
-        }
-
-        fun build() = DateTimeIntervalTypeChangeFlow(results)
+        private val types = mutableListOf<Class<out DateTimeInterval>>()
+        constructor(type : Class<out DateTimeInterval>) { types.add(type) }
+        fun to(type : Class<out DateTimeInterval>) = also { types.add(type) }
+        fun build() = DateTimeIntervalTypeChangeFlow(types)
     }
 }
