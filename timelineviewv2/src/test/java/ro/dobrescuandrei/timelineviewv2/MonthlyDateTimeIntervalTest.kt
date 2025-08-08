@@ -61,6 +61,7 @@ class MonthlyDateTimeIntervalTest
             .let { month -> if (month < 10) "0$month" else month.toString() }
         val maxDayFromMonth = DailyDateTimeInterval.today().fromDateTime.toLocalDate()!!
             .with(TemporalAdjusters.lastDayOfMonth()).dayOfMonth
+            .let { day -> if (day < 10) "0$day" else day.toString() }
 
         val interval = MonthlyDateTimeInterval.aroundToday()
         assertEquals("01.$month.$year 00:00:00.000", dateTimeFormatter.format(interval.fromDateTime))
@@ -71,6 +72,7 @@ class MonthlyDateTimeIntervalTest
     }
 
     @Test
+    @Suppress("SimplifiableCallChain")
     fun testIntervalToString()
     {
         val currentYear = DailyDateTimeInterval.today().fromDateTime.year

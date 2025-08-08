@@ -1,5 +1,6 @@
 package ro.dobrescuandrei.timelineviewv2
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Looper
@@ -37,6 +38,7 @@ class TimelineView : BaseCustomView
         initializeViewAppearance()
     }
 
+    @SuppressLint("UseKtx")
     constructor(context : Context, attributeSet : AttributeSet) : super(context, attributeSet)
     {
         if (!isInEditMode)

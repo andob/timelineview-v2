@@ -39,7 +39,7 @@ class WeeklyDateTimeInterval : DateTimeInterval
     @SuppressLint("SimpleDateFormat")
     override fun toString(resources : Resources) : String
     {
-        val now = ZonedDateTime.now(defaultTimezone)!!
+        val now = ZonedDateTime.now(fromDateTime.zone)!!
 
         val startDateTimeFormatter = 
             if (fromDateTime.monthValue != toDateTime.monthValue)
