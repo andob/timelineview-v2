@@ -4,10 +4,10 @@ apply plugin: 'maven-publish'
 
 android {
     namespace 'ro.dobrescuandrei.timelineviewv2'
-    compileSdk 35
+    compileSdk = 36
     defaultConfig {
-        minSdk 26
-        targetSdk 35
+        minSdk = 26
+        targetSdk = 36
     }
     compileOptions {
         targetCompatibility JavaVersion.VERSION_17
@@ -32,7 +32,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.18.0'
+    testImplementation 'org.mockito:mockito-core:5.20.0'
     testImplementation 'org.mockito:mockito-inline:5.2.0'
 }
 
@@ -51,7 +51,7 @@ project.afterEvaluate {
                 from components.release
                 groupId 'ro.andob.timelineview'
                 artifactId 'timelineview-v2'
-                version '2.5.3'
+                version '2.5.4'
             }
         }
     }
