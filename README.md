@@ -165,7 +165,7 @@ This is a remake of a in-house library I started in 2017, used across some apps.
 ### License
 
 ```
-Copyright 2020 - 2023 Andrei Dobrescu
+Copyright 2020 - present Andrei Dobrescu
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
